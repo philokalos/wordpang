@@ -82,5 +82,9 @@ export function generateHint(
     }
     case 'firstLetter':
       return `첫 글자: ${wordEntry.word[0]}`;
+    case 'vowelCount': {
+      const vowels = wordEntry.word.split('').filter((c) => 'AEIOU'.includes(c)).length;
+      return `모음 수: ${vowels}개`;
+    }
   }
 }

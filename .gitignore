@@ -1,8 +1,11 @@
-node_modules
-dist
+node_modules/
+.expo/
+dist/
 *.local
 *.tsbuildinfo
 .DS_Store
+ios/
+android/
 
 # Claude Code
 .claude/

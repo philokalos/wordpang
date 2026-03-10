@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import {
   evaluateGuess,
   isValidWord,
@@ -27,29 +26,16 @@ describe('evaluateGuess', () => {
   });
 
   it('should handle duplicate letters correctly — one correct, one absent', () => {
-    // Target: APPLE (has two P's)
-    // Guess:  PAPER (P at 0: present, A at 1: present, P at 2: correct, E at 3: present, R at 4: absent)
     const result = evaluateGuess('PAPER', 'APPLE');
     expect(result).toEqual(['present', 'present', 'correct', 'present', 'absent']);
   });
 
   it('should not over-count present letters', () => {
-    // Target: HELLO (one L at index 2, one L at index 3)
-    // Guess:  LLAMA — L at 0: present, L at 1: present, A at 2: absent, M at 3: absent, A at 4: absent
     const result = evaluateGuess('LLAMA', 'HELLO');
     expect(result).toEqual(['present', 'present', 'absent', 'absent', 'absent']);
   });
 
   it('should handle correct taking precedence over present for duplicates', () => {
-    // Target: BOOKS (one O at index 1, one O at index 2)
-    // Guess:  ROBOT — R: absent, O: correct, B: present, O: correct, T: absent
-    // Wait — target is BOOKS: B-O-O-K-S
-    // Guess: ROBOT: R-O-B-O-T
-    // R at 0: absent (B at 0 in target)
-    // O at 1: correct (O at 1 in target)
-    // B at 2: present (B at 0 in target, not matched yet)
-    // O at 3: present (O at 2 in target)
-    // T at 4: absent
     const result = evaluateGuess('ROBOT', 'BOOKS');
     expect(result).toEqual(['absent', 'correct', 'present', 'present', 'absent']);
   });
@@ -67,8 +53,6 @@ describe('evaluateGuess', () => {
   });
 
   it('should handle single duplicate in guess, single in target', () => {
-    // Target: CRANE, Guess: CREEP
-    // C: correct, R: correct, E: present, E: absent (only one E in target), P: absent
     const result = evaluateGuess('CREEP', 'CRANE');
     expect(result).toEqual(['correct', 'correct', 'present', 'absent', 'absent']);
   });
@@ -131,5 +115,14 @@ describe('generateHint', () => {
 
   it('should generate first letter hint', () => {
     expect(generateHint(wordEntry, 'firstLetter')).toBe('첫 글자: A');
+  });
+
+  it('should generate vowel count hint', () => {
+    expect(generateHint(wordEntry, 'vowelCount')).toBe('모음 수: 2개');
+  });
+
+  it('should count vowels correctly for consonant-heavy word', () => {
+    const word = { word: 'RHYTHM', meaning: '리듬', pronunciation: '리듬', example: 'Feel the rhythm.' };
+    expect(generateHint(word, 'vowelCount')).toBe('모음 수: 0개');
   });
 });

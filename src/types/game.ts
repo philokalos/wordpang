@@ -4,7 +4,7 @@ export type LetterStatus = 'correct' | 'present' | 'absent';
 
 export type GameStatus = 'playing' | 'won' | 'lost';
 
-export type HintType = 'example' | 'firstLetter';
+export type HintType = 'example' | 'firstLetter' | 'vowelCount';
 
 export interface Hint {
   type: HintType;
