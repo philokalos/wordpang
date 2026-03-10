@@ -216,4 +216,38 @@ describe('useWordle', () => {
     expect(result.current.keyStatuses).toEqual({});
     expect(result.current.keyStatuses instanceof Map).toBe(false);
   });
+
+  it('should detect loss when maxAttempts exhausted', () => {
+    jest.useFakeTimers();
+    const { result } = renderHook(() => useWordle('easy')); // 4 letters, 6 attempts
+
+    // Set a known target
+    const knownTarget = {
+      word: 'BEAR',
+      meaning: '곰',
+      pronunciation: '베어',
+      example: 'The bear is sleeping in the cave.',
+    };
+    act(() => {
+      result.current.startWithWord(knownTarget);
+    });
+
+    // Submit 6 wrong-but-valid guesses (not BEAR)
+    const wrongWords = ['BAKE', 'BARN', 'BEAN', 'BELL', 'BIRD', 'BLOW'];
+    for (const word of wrongWords) {
+      act(() => {
+        word.split('').forEach((l) => result.current.addLetter(l));
+      });
+      act(() => {
+        result.current.submitGuess();
+      });
+      act(() => {
+        jest.runAllTimers();
+      });
+    }
+
+    expect(result.current.gameStatus).toBe('lost');
+    expect(result.current.guesses).toHaveLength(6);
+    jest.useRealTimers();
+  });
 });

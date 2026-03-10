@@ -19,4 +19,18 @@ describe('DifficultyCard', () => {
     fireEvent.press(getByText('Easy'));
     expect(onPress).toHaveBeenCalled();
   });
+
+  it('should apply selected style when isSelected is true', () => {
+    const { toJSON: selectedJSON } = render(
+      <DifficultyCard difficulty="normal" isSelected={true} onPress={jest.fn()} />,
+    );
+    const { toJSON: unselectedJSON } = render(
+      <DifficultyCard difficulty="normal" isSelected={false} onPress={jest.fn()} />,
+    );
+
+    // Selected and unselected should produce different rendered output
+    const selectedStr = JSON.stringify(selectedJSON());
+    const unselectedStr = JSON.stringify(unselectedJSON());
+    expect(selectedStr).not.toEqual(unselectedStr);
+  });
 });
