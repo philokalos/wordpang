@@ -13,9 +13,10 @@ interface FlashCardProps {
   word: WordEntry;
   onKnew: () => void;
   onForgot: () => void;
+  onFlip?: () => void;
 }
 
-export default function FlashCard({ word, onKnew, onForgot }: FlashCardProps) {
+export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const rotation = useSharedValue(0);
 
@@ -30,13 +31,20 @@ export default function FlashCard({ word, onKnew, onForgot }: FlashCardProps) {
   }));
 
   const handleFlip = () => {
+    onFlip?.();
     rotation.value = withTiming(isFlipped ? 0 : 1, { duration: 400 });
     setIsFlipped(!isFlipped);
   };
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={handleFlip} style={styles.cardContainer}>
+      <Pressable
+        onPress={handleFlip}
+        accessibilityRole="button"
+        accessibilityLabel="플래시카드, 탭하여 뒤집기"
+        accessibilityHint="카드를 뒤집어 뜻을 확인합니다"
+        style={styles.cardContainer}
+      >
         <Animated.View style={[styles.card, styles.front, frontStyle]}>
           <Text style={styles.wordText}>{word.word}</Text>
           <Text style={styles.tapHint}>탭하여 뒤집기</Text>
@@ -53,12 +61,16 @@ export default function FlashCard({ word, onKnew, onForgot }: FlashCardProps) {
         <View style={styles.actions}>
           <Pressable
             onPress={onForgot}
+            accessibilityRole="button"
+            accessibilityLabel="다시 볼게요"
             style={({ pressed }) => [styles.forgotButton, { opacity: pressed ? 0.8 : 1 }]}
           >
             <Text style={styles.forgotText}>다시 볼게요</Text>
           </Pressable>
           <Pressable
             onPress={onKnew}
+            accessibilityRole="button"
+            accessibilityLabel="알고 있어요"
             style={({ pressed }) => [styles.knewButton, { opacity: pressed ? 0.8 : 1 }]}
           >
             <Text style={styles.knewText}>알고 있어요!</Text>

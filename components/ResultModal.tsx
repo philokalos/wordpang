@@ -46,7 +46,7 @@ export default function ResultModal({
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
-        <View style={styles.card}>
+        <View style={styles.card} accessibilityLabel="게임 결과">
           <Text style={styles.emoji}>{isWin ? '🎉' : '😢'}</Text>
           <Text style={styles.title}>{isWin ? '정답!' : '아쉬워요!'}</Text>
 
@@ -73,6 +73,8 @@ export default function ResultModal({
             <Pressable
               onPress={handleMarkLearned}
               disabled={marked}
+              accessibilityRole="button"
+              accessibilityLabel={marked ? '학습 완료' : '이 단어 배웠어요'}
               style={({ pressed }) => [
                 styles.learnedButton,
                 marked && styles.learnedButtonDone,
@@ -103,6 +105,8 @@ export default function ResultModal({
               <>
                 <Pressable
                   onPress={onNewGame}
+                  accessibilityRole="button"
+                  accessibilityLabel="다시 하기"
                   style={({ pressed }) => [
                     styles.primaryButton,
                     { opacity: pressed ? 0.8 : 1 },
@@ -113,6 +117,8 @@ export default function ResultModal({
 
                 <Pressable
                   onPress={onChangeDifficulty}
+                  accessibilityRole="button"
+                  accessibilityLabel="난이도 변경"
                   style={({ pressed }) => [
                     styles.secondaryButton,
                     { opacity: pressed ? 0.8 : 1 },

@@ -11,7 +11,11 @@ export default function AchievementBadge({ achievement }: AchievementBadgeProps)
   const unlocked = !!achievement.unlockedAt;
 
   return (
-    <View style={[styles.badge, !unlocked && styles.locked]}>
+    <View
+      style={[styles.badge, !unlocked && styles.locked]}
+      accessibilityLabel={`${achievement.title}, ${unlocked ? '달성' : '미달성'}`}
+      accessibilityRole="summary"
+    >
       <Text style={styles.icon}>{unlocked ? achievement.icon : '🔒'}</Text>
       <View style={styles.info}>
         <Text style={[styles.title, !unlocked && styles.lockedText]}>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import type { Difficulty, GameStatus, LetterStatus, Hint, HintType } from '../src/types/game';
 import { DIFFICULTY_CONFIG, HINT_COSTS, MAX_HINT_POINTS } from '../src/types/game';
 import type { WordEntry, WordCategory } from '../src/types/word';
@@ -58,6 +58,14 @@ export function useWordle(options: UseWordleOptions = {}): UseWordleReturn {
 
   const revealTimerRef = useRef<ReturnType<typeof setTimeout>>();
   const shakeTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  // Cleanup timers on unmount
+  useEffect(() => {
+    return () => {
+      if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
+      if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current);
+    };
+  }, []);
 
   const config = DIFFICULTY_CONFIG[difficulty];
 

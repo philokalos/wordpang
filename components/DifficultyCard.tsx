@@ -16,6 +16,9 @@ export default function DifficultyCard({ difficulty, isSelected, onPress }: Diff
   return (
     <Pressable
       onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`${config.label} 난이도, ${config.wordLength}글자`}
+      accessibilityState={{ selected: isSelected }}
       style={({ pressed }) => [
         styles.card,
         isSelected && styles.cardSelected,

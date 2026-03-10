@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
 import { useReview } from '../hooks/useReview';
+import { useSound } from '../hooks/useSound';
 import { getWordList } from '../src/data';
 import type { WordEntry } from '../src/types/word';
 import FlashCard from '../components/FlashCard';
@@ -14,6 +15,7 @@ type Tab = 'collection' | 'quiz';
 export default function ReviewScreen() {
   const router = useRouter();
   const { entries, dueWords, dueCount, markReviewed, refresh } = useReview();
+  const { play } = useSound();
   const [tab, setTab] = useState<Tab>('collection');
   const [quizIndex, setQuizIndex] = useState(0);
 
@@ -30,6 +32,7 @@ export default function ReviewScreen() {
   const currentWordEntry = currentDueWord ? findWordEntry(currentDueWord.word) : undefined;
 
   const handleKnew = async () => {
+    play('pop');
     if (currentDueWord) {
       await markReviewed(currentDueWord.word);
     }
@@ -42,11 +45,16 @@ export default function ReviewScreen() {
   };
 
   const handleForgot = () => {
+    play('shake');
     if (quizIndex + 1 < dueWords.length) {
       setQuizIndex((prev) => prev + 1);
     } else {
       setQuizIndex(0);
     }
+  };
+
+  const handleFlip = () => {
+    play('flip');
   };
 
   return (
@@ -92,6 +100,7 @@ export default function ReviewScreen() {
                 word={currentWordEntry}
                 onKnew={handleKnew}
                 onForgot={handleForgot}
+                onFlip={handleFlip}
               />
             </>
           ) : (

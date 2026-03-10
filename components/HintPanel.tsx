@@ -56,7 +56,9 @@ export default function HintPanel({
                 disabled ? styles.buttonDisabled : styles.buttonEnabled,
                 { opacity: pressed && !disabled ? 0.7 : 1 },
               ]}
-              accessibilityLabel={`get ${type} hint`}
+              accessibilityRole="button"
+              accessibilityLabel={`${label} 힌트`}
+              accessibilityState={{ disabled }}
             >
               <Text style={styles.buttonText}>
                 {icon} {label}

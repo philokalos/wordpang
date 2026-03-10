@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import type { Difficulty } from '../src/types/game';
+import type { Difficulty, HintType } from '../src/types/game';
 import type { WordCategory } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
@@ -123,7 +123,13 @@ export default function GameScreen() {
     game.addLetter(letter);
   };
 
+  const handleRequestHint = (type: HintType) => {
+    play('pop');
+    game.requestHint(type);
+  };
+
   const handleMarkLearned = async () => {
+    play('pop');
     await markLearned(game.targetWord.word);
     await review.addWord(game.targetWord.word);
   };
@@ -166,7 +172,7 @@ export default function GameScreen() {
           hints={game.hints}
           hintPointsUsed={game.hintPointsUsed}
           gameStatus={game.gameStatus}
-          onRequestHint={game.requestHint}
+          onRequestHint={handleRequestHint}
         />
 
         <View style={styles.keyboardArea}>

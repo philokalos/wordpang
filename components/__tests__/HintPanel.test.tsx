@@ -17,9 +17,9 @@ describe('HintPanel', () => {
   it('should render 3 hint buttons', () => {
     const { getByLabelText } = render(<HintPanel {...defaultProps} />);
 
-    expect(getByLabelText('get example hint')).toBeTruthy();
-    expect(getByLabelText('get firstLetter hint')).toBeTruthy();
-    expect(getByLabelText('get vowelCount hint')).toBeTruthy();
+    expect(getByLabelText('예문 힌트')).toBeTruthy();
+    expect(getByLabelText('첫 글자 힌트')).toBeTruthy();
+    expect(getByLabelText('모음 수 힌트')).toBeTruthy();
   });
 
   it('should disable used hint buttons', () => {
@@ -31,10 +31,10 @@ describe('HintPanel', () => {
 
     const { getByLabelText } = render(<HintPanel {...props} />);
 
-    const exampleBtn = getByLabelText('get example hint');
+    const exampleBtn = getByLabelText('예문 힌트');
     expect(exampleBtn.props.accessibilityState?.disabled).toBe(true);
 
-    const firstLetterBtn = getByLabelText('get firstLetter hint');
+    const firstLetterBtn = getByLabelText('첫 글자 힌트');
     expect(firstLetterBtn.props.accessibilityState?.disabled).toBeFalsy();
   });
 

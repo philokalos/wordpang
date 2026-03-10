@@ -35,6 +35,8 @@ export default function DifficultyPrompt({
           <View style={styles.actions}>
             <Pressable
               onPress={onAccept}
+              accessibilityRole="button"
+              accessibilityLabel={isUp ? '난이도 올리기' : '난이도 내리기'}
               style={({ pressed }) => [
                 styles.primaryButton,
                 { opacity: pressed ? 0.8 : 1 },
@@ -46,6 +48,8 @@ export default function DifficultyPrompt({
             </Pressable>
             <Pressable
               onPress={onDismiss}
+              accessibilityRole="button"
+              accessibilityLabel="괜찮아요, 지금 난이도 유지할게요"
               style={({ pressed }) => [
                 styles.secondaryButton,
                 { opacity: pressed ? 0.8 : 1 },

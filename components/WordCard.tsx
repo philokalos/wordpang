@@ -25,7 +25,7 @@ export default function WordCard({ word }: WordCardProps) {
   );
 
   return (
-    <View style={styles.card}>
+    <View style={styles.card} accessibilityLabel={`${word.word}, ${word.meaning}, ${word.partOfSpeech}`}>
       <Text style={styles.word}>{word.word}</Text>
       <View style={styles.metaRow}>
         <Text style={styles.partOfSpeech}>{word.partOfSpeech}</Text>

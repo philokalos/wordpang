@@ -30,6 +30,9 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
     >
       <Pressable
         onPress={() => onSelect(undefined)}
+        accessibilityRole="button"
+        accessibilityLabel="전체"
+        accessibilityState={{ selected: !selected }}
         style={[styles.chip, !selected && styles.chipSelected]}
       >
         <Text style={[styles.chipText, !selected && styles.chipTextSelected]}>
@@ -43,6 +46,9 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
           <Pressable
             key={cat}
             onPress={() => onSelect(cat)}
+            accessibilityRole="button"
+            accessibilityLabel={config.label}
+            accessibilityState={{ selected: isSelected }}
             style={[styles.chip, isSelected && styles.chipSelected]}
           >
             <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>

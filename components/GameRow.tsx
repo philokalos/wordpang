@@ -71,7 +71,10 @@ export default function GameRow({
   });
 
   return (
-    <Animated.View style={[styles.row, rowStyle]}>
+    <Animated.View
+      style={[styles.row, rowStyle]}
+      accessibilityLabel={`줄 ${guess || '비어있음'}`}
+    >
       {tiles}
     </Animated.View>
   );
