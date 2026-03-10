@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Switch } from 'react-native';
+import { StyleSheet, View, Text, Switch, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Difficulty } from '../src/types/game';
@@ -49,12 +49,15 @@ export default function HomeScreen() {
           />
         </View>
 
-        <Text
-          style={styles.startButton}
+        <Pressable
           onPress={handleStart}
+          style={({ pressed }) => [
+            styles.startButton,
+            { opacity: pressed ? 0.8 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
+          ]}
         >
-          시작하기
-        </Text>
+          <Text style={styles.startButtonText}>시작하기</Text>
+        </Pressable>
       </View>
     </SafeAreaView>
   );
@@ -102,18 +105,19 @@ const styles = StyleSheet.create({
   },
   startButton: {
     backgroundColor: COLORS.purple,
-    color: '#ffffff',
-    fontSize: 18,
-    fontWeight: '700',
     paddingHorizontal: 48,
     paddingVertical: 16,
     borderRadius: 16,
-    overflow: 'hidden',
-    textAlign: 'center',
+    alignItems: 'center',
     shadowColor: COLORS.purple,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 12,
     elevation: 6,
+  },
+  startButtonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: '700',
   },
 });
