@@ -16,6 +16,12 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<typeof AsyncStorage.getItem>;
 const mockSetItem = AsyncStorage.setItem as jest.MockedFunction<typeof AsyncStorage.setItem>;
 
+const emptyDifficultyStats = {
+  easy: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+  normal: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+  hard: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+};
+
 beforeEach(() => {
   jest.clearAllMocks();
 });
@@ -31,6 +37,7 @@ describe('loadStats', () => {
       currentStreak: 0,
       maxStreak: 0,
       guessDistribution: {},
+      difficultyStats: emptyDifficultyStats,
     });
   });
 
@@ -41,6 +48,7 @@ describe('loadStats', () => {
       currentStreak: 2,
       maxStreak: 3,
       guessDistribution: { 3: 1, 4: 2 },
+      difficultyStats: { ...emptyDifficultyStats },
     };
     mockGetItem.mockResolvedValue(JSON.stringify(saved));
 
@@ -57,9 +65,10 @@ describe('recordGame', () => {
       currentStreak: 1,
       maxStreak: 1,
       guessDistribution: { 4: 1 },
+      difficultyStats: { ...emptyDifficultyStats },
     }));
 
-    const stats = await recordGame(true, 3);
+    const stats = await recordGame(true, 3, 'normal');
     expect(stats.totalPlayed).toBe(2);
     expect(stats.totalWon).toBe(2);
     expect(stats.currentStreak).toBe(2);
@@ -74,9 +83,10 @@ describe('recordGame', () => {
       currentStreak: 3,
       maxStreak: 3,
       guessDistribution: {},
+      difficultyStats: { ...emptyDifficultyStats },
     }));
 
-    const stats = await recordGame(false, 6);
+    const stats = await recordGame(false, 6, 'normal');
     expect(stats.totalPlayed).toBe(4);
     expect(stats.totalWon).toBe(3);
     expect(stats.currentStreak).toBe(0);
@@ -90,9 +100,10 @@ describe('recordGame', () => {
       currentStreak: 0,
       maxStreak: 0,
       guessDistribution: {},
+      difficultyStats: { ...emptyDifficultyStats },
     }));
 
-    const stats = await recordGame(true, 5);
+    const stats = await recordGame(true, 5, 'normal');
     expect(stats.guessDistribution[5]).toBe(1);
   });
 
@@ -103,17 +114,18 @@ describe('recordGame', () => {
       currentStreak: 2,
       maxStreak: 2,
       guessDistribution: {},
+      difficultyStats: { ...emptyDifficultyStats },
     }));
 
-    const stats = await recordGame(true, 3);
+    const stats = await recordGame(true, 3, 'normal');
     expect(stats.maxStreak).toBe(3);
     expect(stats.currentStreak).toBe(3);
   });
 
   it('should call saveStats after recording', async () => {
     mockGetItem.mockResolvedValue(null);
-    await recordGame(true, 4);
-    expect(mockSetItem).toHaveBeenCalledWith('wordle_stats', expect.any(String));
+    await recordGame(true, 4, 'normal');
+    expect(mockSetItem).toHaveBeenCalledWith('wordpop_stats', expect.any(String));
   });
 });
 
@@ -133,6 +145,6 @@ describe('dailyState', () => {
     };
 
     await saveDailyState(state);
-    expect(mockSetItem).toHaveBeenCalledWith('wordle_daily_state', JSON.stringify(state));
+    expect(mockSetItem).toHaveBeenCalledWith('wordpop_daily_state', JSON.stringify(state));
   });
 });

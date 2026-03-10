@@ -12,12 +12,12 @@ export default function Header({ showStats, onStatsPress }: HeaderProps) {
     <View style={styles.container}>
       <View style={styles.titleRow}>
         {showStats && <View style={styles.spacer} />}
-        <Text style={styles.title}>🌸 Wordle 🌸</Text>
+        <Text style={styles.title}>🌸 WordPop 🌸</Text>
         {showStats && onStatsPress && (
           <Text style={styles.statsButton} onPress={onStatsPress}>📊</Text>
         )}
       </View>
-      <Text style={styles.subtitle}>영어 단어 맞추기 게임</Text>
+      <Text style={styles.subtitle}>영어 단어 팝!</Text>
     </View>
   );
 }

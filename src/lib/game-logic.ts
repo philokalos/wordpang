@@ -73,6 +73,7 @@ export function updateKeyStatuses(
 export function generateHint(
   wordEntry: WordEntry,
   type: HintType,
+  guesses?: string[],
 ): string {
   switch (type) {
     case 'example': {
@@ -85,6 +86,37 @@ export function generateHint(
     case 'vowelCount': {
       const vowels = wordEntry.word.split('').filter((c) => 'AEIOU'.includes(c)).length;
       return `모음 수: ${vowels}개`;
+    }
+    case 'meaning':
+      return `뜻: ${wordEntry.meaning}`;
+    case 'letterPosition': {
+      // Find a letter position not yet revealed by guesses
+      const word = wordEntry.word;
+      const revealedPositions = new Set<number>();
+
+      if (guesses) {
+        for (const guess of guesses) {
+          for (let i = 0; i < guess.length; i++) {
+            if (guess[i] === word[i]) {
+              revealedPositions.add(i);
+            }
+          }
+        }
+      }
+
+      const unrevealed = [];
+      for (let i = 0; i < word.length; i++) {
+        if (!revealedPositions.has(i)) {
+          unrevealed.push(i);
+        }
+      }
+
+      if (unrevealed.length === 0) {
+        return `모든 위치가 이미 밝혀졌어요!`;
+      }
+
+      const pos = unrevealed[Math.floor(Math.random() * unrevealed.length)]!;
+      return `${pos + 1}번째 글자: ${word[pos]}`;
     }
   }
 }

@@ -85,6 +85,8 @@ describe('Domain Service: generateHint contracts', () => {
     meaning: '안녕',
     pronunciation: '헬로',
     example: 'Hello, how are you?',
+    category: 'school' as const,
+    partOfSpeech: 'noun',
   };
 
   it('example hint should mask the word with underscores', () => {
@@ -112,6 +114,8 @@ describe('Domain Service: generateHint contracts', () => {
       meaning: '오디오',
       pronunciation: '오디오',
       example: 'Turn on the audio.',
+      category: 'school' as const,
+      partOfSpeech: 'noun',
     };
     const hint = generateHint(aeiou, 'vowelCount');
     // A, U, I, O = 4 vowels

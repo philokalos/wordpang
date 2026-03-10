@@ -1,31 +1,43 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Difficulty } from '../src/types/game';
+import type { WordCategory } from '../src/types/word';
+import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
 import { useWordle } from '../hooks/useWordle';
 import { useSound } from '../hooks/useSound';
 import { useStats } from '../hooks/useStats';
 import { useDailyWord } from '../hooks/useDailyWord';
+import { useLearnedWords } from '../hooks/useLearnedWords';
+import { useAchievements } from '../hooks/useAchievements';
+import { useReview } from '../hooks/useReview';
 import Header from '../components/Header';
 import GameBoard from '../components/GameBoard';
 import HintPanel from '../components/HintPanel';
 import Keyboard from '../components/Keyboard';
 import ResultModal from '../components/ResultModal';
+import DifficultyPrompt from '../components/DifficultyPrompt';
 
 export default function GameScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams<{ difficulty: Difficulty; daily: string }>();
+  const params = useLocalSearchParams<{ difficulty: Difficulty; daily: string; category: string }>();
   const difficulty = (params.difficulty ?? 'normal') as Difficulty;
   const isDaily = params.daily === '1';
+  const category = params.category as WordCategory | undefined;
 
-  const game = useWordle(difficulty);
+  const game = useWordle({ difficulty, category });
   const { play } = useSound();
-  const { record } = useStats();
+  const { record, getDifficultyRecommendation } = useStats();
   const daily = useDailyWord(difficulty);
+  const { markLearned, learnedCount } = useLearnedWords();
+  const achievements = useAchievements();
+  const review = useReview();
 
   const gameEndRecorded = useRef(false);
+  const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
+  const [showDifficultyPrompt, setShowDifficultyPrompt] = useState(false);
 
   // Start with daily word if daily mode
   useEffect(() => {
@@ -47,6 +59,13 @@ export default function GameScreen() {
     }
   }, [game.isRevealing, play]);
 
+  // Track category
+  useEffect(() => {
+    if (category) {
+      achievements.trackCategory(category);
+    }
+  }, [category]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Record game result
   useEffect(() => {
     if (game.gameStatus === 'playing' || gameEndRecorded.current) return;
@@ -54,15 +73,40 @@ export default function GameScreen() {
 
     const won = game.gameStatus === 'won';
     play(won ? 'win' : 'lose');
-    record(won, game.guesses.length);
 
-    if (isDaily) {
-      daily.markDailyComplete(won, game.guesses);
-    }
+    (async () => {
+      const stats = await record(won, game.guesses.length, difficulty);
+
+      if (isDaily) {
+        daily.markDailyComplete(won, game.guesses);
+      }
+
+      // Check achievements
+      const unlocked = await achievements.check({
+        stats,
+        learnedCount,
+        reviewCount: review.totalCount,
+        lastGameWon: won,
+        lastGuessCount: game.guesses.length,
+        lastHintsUsed: game.hintsUsed,
+        lastDifficulty: difficulty,
+        isDaily,
+      });
+      if (unlocked.length > 0) {
+        setNewAchievements(unlocked);
+      }
+
+      // Check difficulty recommendation after game
+      const rec = getDifficultyRecommendation(difficulty);
+      if (rec) {
+        setTimeout(() => setShowDifficultyPrompt(true), 500);
+      }
+    })();
   }, [game.gameStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNewGame = () => {
     gameEndRecorded.current = false;
+    setNewAchievements([]);
     game.newGame();
   };
 
@@ -77,6 +121,23 @@ export default function GameScreen() {
   const handleLetterPress = (letter: string) => {
     play('pop');
     game.addLetter(letter);
+  };
+
+  const handleMarkLearned = async () => {
+    await markLearned(game.targetWord.word);
+    await review.addWord(game.targetWord.word);
+  };
+
+  const handleDifficultyAccept = () => {
+    setShowDifficultyPrompt(false);
+    const rec = getDifficultyRecommendation(difficulty);
+    if (rec === 'up') {
+      const next = difficulty === 'easy' ? 'normal' : 'hard';
+      router.replace({ pathname: '/game', params: { difficulty: next, daily: '0' } });
+    } else if (rec === 'down') {
+      const next = difficulty === 'hard' ? 'normal' : 'easy';
+      router.replace({ pathname: '/game', params: { difficulty: next, daily: '0' } });
+    }
   };
 
   return (
@@ -103,8 +164,7 @@ export default function GameScreen() {
 
         <HintPanel
           hints={game.hints}
-          hintsUsed={game.hintsUsed}
-          maxHints={3}
+          hintPointsUsed={game.hintPointsUsed}
           gameStatus={game.gameStatus}
           onRequestHint={game.requestHint}
         />
@@ -127,8 +187,17 @@ export default function GameScreen() {
         evaluations={game.evaluations}
         isDaily={isDaily}
         countdown={daily.countdown}
+        newAchievements={newAchievements.length > 0 ? newAchievements : undefined}
         onNewGame={handleNewGame}
         onChangeDifficulty={handleChangeDifficulty}
+        onMarkLearned={handleMarkLearned}
+      />
+
+      <DifficultyPrompt
+        visible={showDifficultyPrompt && game.gameStatus !== 'playing'}
+        recommendation={getDifficultyRecommendation(difficulty)}
+        onAccept={handleDifficultyAccept}
+        onDismiss={() => setShowDifficultyPrompt(false)}
       />
     </SafeAreaView>
   );

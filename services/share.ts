@@ -20,7 +20,7 @@ export async function shareResult(
   evaluations: LetterStatus[][],
   isDaily: boolean,
 ): Promise<void> {
-  const header = isDaily ? '🌸 Wordle Daily' : '🌸 Wordle';
+  const header = isDaily ? '🌸 WordPop Daily' : '🌸 WordPop';
   const score = won ? `${attempts}/${maxAttempts}` : `X/${maxAttempts}`;
   const grid = buildEmojiGrid(evaluations);
 

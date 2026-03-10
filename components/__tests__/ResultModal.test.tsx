@@ -1,6 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import ResultModal from '../ResultModal';
+import type { Achievement } from '../../src/types/achievement';
 
 // Mock Share
 jest.mock('react-native/Libraries/Share/Share', () => ({
@@ -12,6 +13,8 @@ const targetWord = {
   meaning: '사과',
   pronunciation: '애플',
   example: 'I eat an apple every day.',
+  category: 'food' as const,
+  partOfSpeech: 'noun',
 };
 
 const baseProps = {
@@ -59,6 +62,50 @@ describe('ResultModal', () => {
     expect(getByText('APPLE')).toBeTruthy();
     expect(getByText('사과')).toBeTruthy();
     expect(getByText('[애플]')).toBeTruthy();
-    expect(getByText('"I eat an apple every day."')).toBeTruthy();
+    expect(getByText('"I eat an [apple] every day."')).toBeTruthy();
+  });
+
+  it('should show "배웠어요" button when onMarkLearned provided', () => {
+    const onMarkLearned = jest.fn();
+    const { getByText } = render(
+      <ResultModal {...baseProps} gameStatus="won" onMarkLearned={onMarkLearned} />,
+    );
+    expect(getByText('이 단어 배웠어요!')).toBeTruthy();
+  });
+
+  it('should call onMarkLearned and show "학습 완료!" when button pressed', () => {
+    const onMarkLearned = jest.fn();
+    const { getByText } = render(
+      <ResultModal {...baseProps} gameStatus="won" onMarkLearned={onMarkLearned} />,
+    );
+    fireEvent.press(getByText('이 단어 배웠어요!'));
+    expect(onMarkLearned).toHaveBeenCalledTimes(1);
+    expect(getByText('학습 완료!')).toBeTruthy();
+  });
+
+  it('should show achievement badges when newAchievements provided', () => {
+    const achievements: Achievement[] = [
+      { id: 'first_win', title: '첫 승리!', description: '처음으로 단어를 맞혔어요', icon: '🏆' },
+      { id: 'streak_3', title: '3일 연속!', description: '3일 연속 게임에 성공했어요', icon: '🔥' },
+    ];
+    const { getByText } = render(
+      <ResultModal {...baseProps} gameStatus="won" newAchievements={achievements} />,
+    );
+    expect(getByText('첫 승리!')).toBeTruthy();
+    expect(getByText('3일 연속!')).toBeTruthy();
+  });
+
+  it('should show countdown in daily mode', () => {
+    const { getByText, queryByText } = render(
+      <ResultModal
+        {...baseProps}
+        gameStatus="won"
+        isDaily={true}
+        countdown="05:23:41"
+      />,
+    );
+    expect(getByText('다음 단어까지')).toBeTruthy();
+    expect(getByText('05:23:41')).toBeTruthy();
+    expect(queryByText('다시 하기')).toBeNull();
   });
 });

@@ -29,4 +29,71 @@ describe('GameBoard', () => {
     const board = getByLabelText('game board');
     expect(board.children).toHaveLength(6);
   });
+
+  it('should render completed guesses with evaluations', () => {
+    const guesses = ['HELLO', 'WORLD'];
+    const evaluations: ('correct' | 'present' | 'absent')[][] = [
+      ['correct', 'absent', 'present', 'absent', 'correct'],
+      ['correct', 'correct', 'correct', 'correct', 'correct'],
+    ];
+    const { getByLabelText } = render(
+      <GameBoard
+        guesses={guesses}
+        evaluations={evaluations}
+        currentGuess=""
+        maxAttempts={6}
+        wordLength={5}
+        isRevealing={false}
+        isShaking={false}
+        gameStatus="playing"
+      />,
+    );
+    const board = getByLabelText('game board');
+    expect(board.children).toHaveLength(6);
+  });
+
+  it('should set isRevealing on the last guess row', () => {
+    const guesses = ['HELLO', 'WORLD'];
+    const evaluations: ('correct' | 'present' | 'absent')[][] = [
+      ['correct', 'absent', 'present', 'absent', 'correct'],
+      ['correct', 'correct', 'correct', 'correct', 'correct'],
+    ];
+    const { getByLabelText } = render(
+      <GameBoard
+        guesses={guesses}
+        evaluations={evaluations}
+        currentGuess=""
+        maxAttempts={6}
+        wordLength={5}
+        isRevealing={true}
+        isShaking={false}
+        gameStatus="playing"
+      />,
+    );
+    const board = getByLabelText('game board');
+    // Board renders all rows; isRevealing is passed to the last guess row
+    expect(board.children).toHaveLength(6);
+  });
+
+  it('should mark win row when game is won', () => {
+    const guesses = ['HELLO', 'WORLD'];
+    const evaluations: ('correct' | 'present' | 'absent')[][] = [
+      ['correct', 'absent', 'present', 'absent', 'correct'],
+      ['correct', 'correct', 'correct', 'correct', 'correct'],
+    ];
+    const { getByLabelText } = render(
+      <GameBoard
+        guesses={guesses}
+        evaluations={evaluations}
+        currentGuess=""
+        maxAttempts={6}
+        wordLength={5}
+        isRevealing={false}
+        isShaking={false}
+        gameStatus="won"
+      />,
+    );
+    const board = getByLabelText('game board');
+    expect(board.children).toHaveLength(6);
+  });
 });

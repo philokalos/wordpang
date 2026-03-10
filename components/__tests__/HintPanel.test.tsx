@@ -5,8 +5,7 @@ import HintPanel from '../HintPanel';
 describe('HintPanel', () => {
   const defaultProps = {
     hints: [],
-    hintsUsed: 0,
-    maxHints: 3,
+    hintPointsUsed: 0,
     gameStatus: 'playing' as const,
     onRequestHint: jest.fn(),
   };
@@ -26,8 +25,8 @@ describe('HintPanel', () => {
   it('should disable used hint buttons', () => {
     const props = {
       ...defaultProps,
-      hints: [{ type: 'example' as const, content: '예문: test' }],
-      hintsUsed: 1,
+      hints: [{ type: 'example' as const, content: '예문: test', cost: 1 }],
+      hintPointsUsed: 1,
     };
 
     const { getByLabelText } = render(<HintPanel {...props} />);
@@ -43,10 +42,10 @@ describe('HintPanel', () => {
     const props = {
       ...defaultProps,
       hints: [
-        { type: 'example' as const, content: '예문: I eat an _____ every day.' },
-        { type: 'firstLetter' as const, content: '첫 글자: A' },
+        { type: 'example' as const, content: '예문: I eat an _____ every day.', cost: 1 },
+        { type: 'firstLetter' as const, content: '첫 글자: A', cost: 1 },
       ],
-      hintsUsed: 2,
+      hintPointsUsed: 2,
     };
 
     const { getByText } = render(<HintPanel {...props} />);
@@ -57,6 +56,6 @@ describe('HintPanel', () => {
 
   it('should show hint counter', () => {
     const { getByText } = render(<HintPanel {...defaultProps} />);
-    expect(getByText('힌트 0/3')).toBeTruthy();
+    expect(getByText('힌트 포인트 0/4')).toBeTruthy();
   });
 });

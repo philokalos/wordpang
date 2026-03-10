@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, Text, Modal, Pressable } from 'react-native';
 import type { GameStatus, LetterStatus } from '../src/types/game';
 import type { WordEntry } from '../src/types/word';
+import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
 import ShareButton from './ShareButton';
+import WordCard from './WordCard';
 
 interface ResultModalProps {
   gameStatus: GameStatus;
@@ -13,8 +15,10 @@ interface ResultModalProps {
   evaluations: LetterStatus[][];
   isDaily: boolean;
   countdown?: string;
+  newAchievements?: Achievement[];
   onNewGame: () => void;
   onChangeDifficulty: () => void;
+  onMarkLearned?: () => void;
 }
 
 export default function ResultModal({
@@ -25,11 +29,19 @@ export default function ResultModal({
   evaluations,
   isDaily,
   countdown,
+  newAchievements,
   onNewGame,
   onChangeDifficulty,
+  onMarkLearned,
 }: ResultModalProps) {
+  const [marked, setMarked] = useState(false);
   const isWin = gameStatus === 'won';
   const visible = gameStatus !== 'playing';
+
+  const handleMarkLearned = () => {
+    onMarkLearned?.();
+    setMarked(true);
+  };
 
   return (
     <Modal visible={visible} transparent animationType="fade">
@@ -44,14 +56,34 @@ export default function ResultModal({
             </Text>
           )}
 
-          <View style={styles.wordCard}>
-            <Text style={styles.word}>{targetWord.word}</Text>
-            <Text style={styles.meaning}>{targetWord.meaning}</Text>
-            <Text style={styles.pronunciation}>[{targetWord.pronunciation}]</Text>
-            <View style={styles.exampleBox}>
-              <Text style={styles.example}>"{targetWord.example}"</Text>
+          <WordCard word={targetWord} />
+
+          {newAchievements && newAchievements.length > 0 && (
+            <View style={styles.achievementSection}>
+              {newAchievements.map((a) => (
+                <View key={a.id} style={styles.achievementRow}>
+                  <Text style={styles.achievementIcon}>{a.icon}</Text>
+                  <Text style={styles.achievementText}>{a.title}</Text>
+                </View>
+              ))}
             </View>
-          </View>
+          )}
+
+          {onMarkLearned && (
+            <Pressable
+              onPress={handleMarkLearned}
+              disabled={marked}
+              style={({ pressed }) => [
+                styles.learnedButton,
+                marked && styles.learnedButtonDone,
+                { opacity: pressed && !marked ? 0.8 : 1 },
+              ]}
+            >
+              <Text style={[styles.learnedText, marked && styles.learnedTextDone]}>
+                {marked ? '학습 완료!' : '이 단어 배웠어요!'}
+              </Text>
+            </Pressable>
+          )}
 
           <View style={styles.actions}>
             <ShareButton
@@ -108,7 +140,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: COLORS.surface,
     borderRadius: 20,
-    padding: 28,
+    padding: 24,
     width: '100%',
     maxWidth: 340,
     alignItems: 'center',
@@ -117,6 +149,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 24,
     elevation: 10,
+    maxHeight: '85%',
   },
   emoji: {
     fontSize: 48,
@@ -131,45 +164,48 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.textMuted,
     marginTop: 4,
-    marginBottom: 8,
   },
-  wordCard: {
-    backgroundColor: COLORS.purpleBg,
-    borderRadius: 14,
-    padding: 16,
+  achievementSection: {
     width: '100%',
+    gap: 6,
+    marginVertical: 8,
+  },
+  achievementRow: {
+    flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 12,
-  },
-  word: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: COLORS.purpleText,
-    letterSpacing: 3,
-  },
-  meaning: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: COLORS.textPrimary,
-    marginTop: 6,
-  },
-  pronunciation: {
-    fontSize: 13,
-    color: COLORS.textMuted,
-    marginTop: 2,
-  },
-  exampleBox: {
-    backgroundColor: COLORS.surface,
-    borderRadius: 8,
+    gap: 8,
+    backgroundColor: '#fef9c3',
     padding: 10,
-    marginTop: 8,
-    width: '100%',
+    borderRadius: 10,
   },
-  example: {
+  achievementIcon: {
+    fontSize: 20,
+  },
+  achievementText: {
     fontSize: 13,
-    color: COLORS.textSecondary,
-    fontStyle: 'italic',
-    textAlign: 'center',
+    fontWeight: '700',
+    color: '#92400e',
+  },
+  learnedButton: {
+    backgroundColor: '#f0fdf4',
+    borderWidth: 2,
+    borderColor: '#bbf7d0',
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    borderRadius: 12,
+    marginVertical: 4,
+  },
+  learnedButtonDone: {
+    backgroundColor: '#dcfce7',
+    borderColor: '#86efac',
+  },
+  learnedText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#16a34a',
+  },
+  learnedTextDone: {
+    color: '#15803d',
   },
   actions: {
     width: '100%',

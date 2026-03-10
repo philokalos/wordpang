@@ -9,6 +9,11 @@ describe('StatsDisplay', () => {
     currentStreak: 5,
     maxStreak: 8,
     guessDistribution: { 1: 1, 2: 3, 3: 5, 4: 4, 5: 2 },
+    difficultyStats: {
+      easy: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+      normal: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+      hard: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+    },
   };
 
   it('should render stat values', () => {

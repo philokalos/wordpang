@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Pressable, ScrollView } from 'react-native';
 import type { Hint, HintType, GameStatus } from '../src/types/game';
+import { MAX_HINT_POINTS } from '../src/types/game';
 import { COLORS } from '../constants/colors';
 
 interface HintPanelProps {
   hints: Hint[];
-  hintsUsed: number;
-  maxHints: number;
+  hintPointsUsed: number;
   gameStatus: GameStatus;
   onRequestHint: (type: HintType) => void;
 }
@@ -15,29 +15,36 @@ interface HintButtonConfig {
   type: HintType;
   label: string;
   icon: string;
+  cost: number;
 }
 
 const HINT_BUTTONS: HintButtonConfig[] = [
-  { type: 'example', label: '예문', icon: '📝' },
-  { type: 'firstLetter', label: '첫 글자', icon: '🔤' },
-  { type: 'vowelCount', label: '모음 수', icon: '🔢' },
+  { type: 'example', label: '예문', icon: '📝', cost: 1 },
+  { type: 'firstLetter', label: '첫 글자', icon: '🔤', cost: 1 },
+  { type: 'vowelCount', label: '모음 수', icon: '🔢', cost: 1 },
+  { type: 'meaning', label: '뜻', icon: '💡', cost: 1 },
+  { type: 'letterPosition', label: '위치', icon: '📍', cost: 2 },
 ];
 
 export default function HintPanel({
   hints,
-  hintsUsed,
-  maxHints,
+  hintPointsUsed,
   gameStatus,
   onRequestHint,
 }: HintPanelProps) {
-  const canUseHint = hintsUsed < maxHints && gameStatus === 'playing';
+  const remainingPoints = MAX_HINT_POINTS - hintPointsUsed;
 
   return (
     <View style={styles.container}>
-      <View style={styles.buttonRow}>
-        {HINT_BUTTONS.map(({ type, label, icon }) => {
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.buttonRow}
+      >
+        {HINT_BUTTONS.map(({ type, label, icon, cost }) => {
           const used = hints.some((h) => h.type === type);
-          const disabled = !canUseHint || used;
+          const cantAfford = cost > remainingPoints;
+          const disabled = gameStatus !== 'playing' || used || cantAfford;
 
           return (
             <Pressable
@@ -54,12 +61,15 @@ export default function HintPanel({
               <Text style={styles.buttonText}>
                 {icon} {label}
               </Text>
+              {cost > 1 && <Text style={styles.costText}>x{cost}</Text>}
             </Pressable>
           );
         })}
-      </View>
+      </ScrollView>
 
-      <Text style={styles.counter}>힌트 {hintsUsed}/{maxHints}</Text>
+      <Text style={styles.counter}>
+        힌트 포인트 {hintPointsUsed}/{MAX_HINT_POINTS}
+      </Text>
 
       {hints.length > 0 && (
         <View style={styles.hintList}>
@@ -84,13 +94,17 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 6,
+    paddingHorizontal: 4,
   },
   button: {
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     paddingVertical: 8,
     borderRadius: 20,
     borderWidth: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
   },
   buttonEnabled: {
     backgroundColor: COLORS.pinkLight,
@@ -101,8 +115,13 @@ const styles = StyleSheet.create({
     borderColor: '#e5e7eb',
   },
   buttonText: {
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '600',
+  },
+  costText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: COLORS.pinkText,
   },
   counter: {
     fontSize: 11,

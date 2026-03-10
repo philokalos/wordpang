@@ -1,11 +1,11 @@
 export default {
   expo: {
-    name: 'Wordle',
-    slug: 'wordle',
-    version: '2.0.0',
+    name: 'WordPop',
+    slug: 'wordpop',
+    version: '3.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
-    scheme: 'wordle',
+    scheme: 'wordpop',
     userInterfaceStyle: 'light',
     newArchEnabled: true,
     splash: {
@@ -15,7 +15,7 @@ export default {
     },
     ios: {
       supportsTablet: false,
-      bundleIdentifier: 'com.philokalos.wordle',
+      bundleIdentifier: 'com.philokalos.wordpop',
     },
     plugins: ['expo-router'],
     experiments: {

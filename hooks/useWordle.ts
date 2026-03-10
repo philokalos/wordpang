@@ -1,15 +1,19 @@
 import { useState, useCallback, useRef } from 'react';
 import type { Difficulty, GameStatus, LetterStatus, Hint, HintType } from '../src/types/game';
-import { DIFFICULTY_CONFIG } from '../src/types/game';
-import type { WordEntry } from '../src/types/word';
+import { DIFFICULTY_CONFIG, HINT_COSTS, MAX_HINT_POINTS } from '../src/types/game';
+import type { WordEntry, WordCategory } from '../src/types/word';
 import { getWordList, getRandomWord } from '../src/data';
 import { evaluateGuess, isValidWord, updateKeyStatuses, generateHint } from '../src/lib/game-logic';
 import { TOTAL_REVEAL_TIME } from '../constants/animations';
 
-const MAX_HINTS = 3;
+interface UseWordleOptions {
+  difficulty?: Difficulty;
+  category?: WordCategory;
+}
 
 interface UseWordleReturn {
   difficulty: Difficulty;
+  category: WordCategory | undefined;
   targetWord: WordEntry;
   guesses: string[];
   evaluations: LetterStatus[][];
@@ -18,6 +22,7 @@ interface UseWordleReturn {
   keyStatuses: Record<string, LetterStatus>;
   hints: Hint[];
   hintsUsed: number;
+  hintPointsUsed: number;
   isRevealing: boolean;
   isShaking: boolean;
   toastMessage: string;
@@ -32,9 +37,13 @@ interface UseWordleReturn {
   startWithWord: (word: WordEntry) => void;
 }
 
-export function useWordle(initialDifficulty: Difficulty = 'normal'): UseWordleReturn {
+export function useWordle(options: UseWordleOptions = {}): UseWordleReturn {
+  const initialDifficulty = options.difficulty ?? 'normal';
+  const initialCategory = options.category;
+
   const [difficulty, setDifficulty] = useState<Difficulty>(initialDifficulty);
-  const [targetWord, setTargetWord] = useState<WordEntry>(() => getRandomWord(initialDifficulty));
+  const [category] = useState<WordCategory | undefined>(initialCategory);
+  const [targetWord, setTargetWord] = useState<WordEntry>(() => getRandomWord(initialDifficulty, initialCategory));
   const [guesses, setGuesses] = useState<string[]>([]);
   const [evaluations, setEvaluations] = useState<LetterStatus[][]>([]);
   const [currentGuess, setCurrentGuess] = useState('');
@@ -42,6 +51,7 @@ export function useWordle(initialDifficulty: Difficulty = 'normal'): UseWordleRe
   const [keyStatuses, setKeyStatuses] = useState<Record<string, LetterStatus>>({});
   const [hints, setHints] = useState<Hint[]>([]);
   const [hintsUsed, setHintsUsed] = useState(0);
+  const [hintPointsUsed, setHintPointsUsed] = useState(0);
   const [isRevealing, setIsRevealing] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
@@ -106,16 +116,20 @@ export function useWordle(initialDifficulty: Difficulty = 'normal'): UseWordleRe
   }, [gameStatus, isRevealing, currentGuess, config, difficulty, targetWord, guesses.length]);
 
   const requestHint = useCallback((type: HintType) => {
-    if (hintsUsed >= MAX_HINTS || gameStatus !== 'playing') return;
-    const content = generateHint(targetWord, type);
-    setHints((prev) => [...prev, { type, content }]);
+    const cost = HINT_COSTS[type];
+    if (hintPointsUsed + cost > MAX_HINT_POINTS || gameStatus !== 'playing') return;
+    if (hints.some((h) => h.type === type)) return;
+
+    const content = generateHint(targetWord, type, guesses);
+    setHints((prev) => [...prev, { type, content, cost }]);
     setHintsUsed((prev) => prev + 1);
-  }, [hintsUsed, gameStatus, targetWord]);
+    setHintPointsUsed((prev) => prev + cost);
+  }, [hintPointsUsed, gameStatus, targetWord, guesses, hints]);
 
   const resetGame = useCallback((diff: Difficulty, word?: WordEntry) => {
     if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
     if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current);
-    setTargetWord(word ?? getRandomWord(diff));
+    setTargetWord(word ?? getRandomWord(diff, category));
     setGuesses([]);
     setEvaluations([]);
     setCurrentGuess('');
@@ -123,10 +137,11 @@ export function useWordle(initialDifficulty: Difficulty = 'normal'): UseWordleRe
     setKeyStatuses({});
     setHints([]);
     setHintsUsed(0);
+    setHintPointsUsed(0);
     setIsRevealing(false);
     setIsShaking(false);
     setToastMessage('');
-  }, []);
+  }, [category]);
 
   const changeDifficulty = useCallback((newDifficulty: Difficulty) => {
     setDifficulty(newDifficulty);
@@ -143,6 +158,7 @@ export function useWordle(initialDifficulty: Difficulty = 'normal'): UseWordleRe
 
   return {
     difficulty,
+    category,
     targetWord,
     guesses,
     evaluations,
@@ -151,6 +167,7 @@ export function useWordle(initialDifficulty: Difficulty = 'normal'): UseWordleRe
     keyStatuses,
     hints,
     hintsUsed,
+    hintPointsUsed,
     isRevealing,
     isShaking,
     toastMessage,

@@ -107,6 +107,8 @@ describe('generateHint', () => {
     meaning: '사과',
     pronunciation: '애플',
     example: 'I eat an apple every day.',
+    category: 'food' as const,
+    partOfSpeech: 'noun',
   };
 
   it('should generate example hint with word blanked', () => {
@@ -122,7 +124,7 @@ describe('generateHint', () => {
   });
 
   it('should count vowels correctly for consonant-heavy word', () => {
-    const word = { word: 'RHYTHM', meaning: '리듬', pronunciation: '리듬', example: 'Feel the rhythm.' };
+    const word = { word: 'RHYTHM', meaning: '리듬', pronunciation: '리듬', example: 'Feel the rhythm.', category: 'school' as const, partOfSpeech: 'noun' };
     expect(generateHint(word, 'vowelCount')).toBe('모음 수: 0개');
   });
 });
