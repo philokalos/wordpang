@@ -120,28 +120,34 @@ describe('Domain Model v3: Category filtering invariants', () => {
 });
 
 describe('Domain Model v3: HintType exhaustiveness', () => {
-  it('should support exactly 5 hint types', () => {
+  it('should support exactly 8 hint types', () => {
     const hintTypes: HintType[] = [
       'example',
       'firstLetter',
       'vowelCount',
       'meaning',
       'letterPosition',
+      'pronunciation',
+      'rhyming',
+      'wordFamily',
     ];
-    expect(hintTypes).toHaveLength(5);
+    expect(hintTypes).toHaveLength(8);
   });
 
-  it('HINT_COSTS should have exactly 5 entries', () => {
-    expect(Object.keys(HINT_COSTS)).toHaveLength(5);
+  it('HINT_COSTS should have exactly 8 entries', () => {
+    expect(Object.keys(HINT_COSTS)).toHaveLength(8);
   });
 
-  it('HINT_COSTS keys should match the 5 hint types', () => {
+  it('HINT_COSTS keys should match the 8 hint types', () => {
     const expectedTypes: HintType[] = [
       'example',
       'firstLetter',
       'vowelCount',
       'meaning',
       'letterPosition',
+      'pronunciation',
+      'rhyming',
+      'wordFamily',
     ];
     expect(Object.keys(HINT_COSTS).sort()).toEqual(expectedTypes.sort());
   });
@@ -165,8 +171,8 @@ describe('Domain Model v3: Hint cost model invariants', () => {
 });
 
 describe('Domain Model v3: Achievement definitions invariants', () => {
-  it('should have exactly 15 achievements', () => {
-    expect(ACHIEVEMENT_DEFS).toHaveLength(15);
+  it('should have exactly 21 achievements', () => {
+    expect(ACHIEVEMENT_DEFS).toHaveLength(21);
   });
 
   it('all achievement IDs should be unique', () => {

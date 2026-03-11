@@ -128,11 +128,12 @@ export function useWordle(options: UseWordleOptions = {}): UseWordleReturn {
     if (hintPointsUsed + cost > MAX_HINT_POINTS || gameStatus !== 'playing') return;
     if (hints.some((h) => h.type === type)) return;
 
-    const content = generateHint(targetWord, type, guesses);
+    const { validWords } = getWordList(difficulty);
+    const content = generateHint(targetWord, type, guesses, validWords);
     setHints((prev) => [...prev, { type, content, cost }]);
     setHintsUsed((prev) => prev + 1);
     setHintPointsUsed((prev) => prev + cost);
-  }, [hintPointsUsed, gameStatus, targetWord, guesses, hints]);
+  }, [hintPointsUsed, gameStatus, targetWord, guesses, hints, difficulty]);
 
   const resetGame = useCallback((diff: Difficulty, word?: WordEntry) => {
     if (revealTimerRef.current) clearTimeout(revealTimerRef.current);

@@ -2,7 +2,7 @@ import type { Achievement } from '../src/types/achievement';
 import { ACHIEVEMENT_DEFS } from '../src/types/achievement';
 import type { GameStats } from './storage';
 import type { Difficulty } from '../src/types/game';
-import type { WordCategory } from '../src/types/word';
+import type { WordCategory, WordEntry } from '../src/types/word';
 import { loadAchievements, saveAchievements } from './storage';
 
 interface CheckContext {
@@ -15,9 +15,31 @@ interface CheckContext {
   lastHintsUsed: number;
   lastDifficulty: Difficulty;
   isDaily: boolean;
+  /** Cumulative count of wins achieved in ≤2 guesses */
+  speedWinCount?: number;
+  /** Cumulative count of wins without using any hints */
+  noHintWinCount?: number;
+  /** List of learned word strings for category mastery checks */
+  learnedWordsList?: string[];
+  /** All answer words from all difficulties for category total counts */
+  allAnswerWords?: WordEntry[];
+  /** Number of consecutive days played (regardless of win/loss) */
+  playStreak?: number;
 }
 
 const ALL_CATEGORIES: WordCategory[] = ['animal', 'food', 'school', 'nature', 'body', 'home', 'action', 'feeling'];
+
+function checkCategoryMastery(ctx: CheckContext, category: WordCategory): boolean {
+  if (!ctx.learnedWordsList || !ctx.allAnswerWords) return false;
+  const categoryWords = new Set(
+    ctx.allAnswerWords
+      .filter((w) => w.category === category)
+      .map((w) => w.word),
+  );
+  if (categoryWords.size === 0) return false;
+  const learnedSet = new Set(ctx.learnedWordsList);
+  return [...categoryWords].every((word) => learnedSet.has(word));
+}
 
 function shouldUnlock(id: string, ctx: CheckContext): boolean {
   switch (id) {
@@ -36,6 +58,17 @@ function shouldUnlock(id: string, ctx: CheckContext): boolean {
     case 'no_hints': return ctx.lastGameWon && ctx.lastHintsUsed === 0;
     case 'hard_win': return ctx.lastGameWon && ctx.lastDifficulty === 'hard';
     case 'daily_first': return ctx.isDaily && ctx.lastGameWon;
+    case 'speed_learner': {
+      // Count from guessDistribution (keys 1 and 2) or use provided cumulative count
+      const speedCount = ctx.speedWinCount
+        ?? (ctx.stats.guessDistribution[1] ?? 0) + (ctx.stats.guessDistribution[2] ?? 0);
+      return speedCount >= 5;
+    }
+    case 'no_hints_10': return (ctx.noHintWinCount ?? 0) >= 10;
+    case 'category_master_animal': return checkCategoryMastery(ctx, 'animal');
+    case 'category_master_food': return checkCategoryMastery(ctx, 'food');
+    case 'consistency': return (ctx.playStreak ?? ctx.stats.currentStreak) >= 7;
+    case 'review_expert': return ctx.reviewCount >= 30;
     default: return false;
   }
 }

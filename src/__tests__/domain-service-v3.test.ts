@@ -475,7 +475,7 @@ describe('Domain Service: Achievement Checking', () => {
 
       const result = await getAllAchievements();
 
-      expect(result).toHaveLength(15);
+      expect(result).toHaveLength(21);
 
       const firstWin = result.find((a) => a.id === 'first_win');
       expect(firstWin?.unlockedAt).toBe(1700000000000);

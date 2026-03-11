@@ -68,12 +68,53 @@ export function updateKeyStatuses(
 }
 
 /**
+ * Find a word that rhymes with the target (shares last 2+ letters).
+ * Searches validWords set, excluding the target itself.
+ */
+function findRhymingWord(word: string, validWords?: Set<string>): string | null {
+  if (!validWords) return null;
+
+  const suffix2 = word.slice(-2);
+  const suffix3 = word.length >= 3 ? word.slice(-3) : null;
+  let bestMatch: string | null = null;
+
+  for (const candidate of validWords) {
+    if (candidate === word) continue;
+    if (candidate.length !== word.length) continue;
+
+    // Prefer 3-letter suffix match
+    if (suffix3 && candidate.endsWith(suffix3)) {
+      return candidate;
+    }
+    // Fall back to 2-letter suffix match
+    if (!bestMatch && candidate.endsWith(suffix2)) {
+      bestMatch = candidate;
+    }
+  }
+
+  return bestMatch;
+}
+
+/**
+ * Generate a word family pattern like "_A_E" revealing some letters.
+ * Reveals vowels and keeps consonants hidden.
+ */
+function generateWordFamilyPattern(word: string): string {
+  const vowels = 'AEIOU';
+  return word
+    .split('')
+    .map((c) => (vowels.includes(c) ? c : '_'))
+    .join('');
+}
+
+/**
  * Generate a hint for the current word.
  */
 export function generateHint(
   wordEntry: WordEntry,
   type: HintType,
   guesses?: string[],
+  validWords?: Set<string>,
 ): string {
   switch (type) {
     case 'example': {
@@ -117,6 +158,19 @@ export function generateHint(
 
       const pos = unrevealed[Math.floor(Math.random() * unrevealed.length)]!;
       return `${pos + 1}번째 글자: ${word[pos]}`;
+    }
+    case 'pronunciation':
+      return `발음: ${wordEntry.pronunciation}`;
+    case 'rhyming': {
+      const rhyme = findRhymingWord(wordEntry.word, validWords);
+      if (rhyme) {
+        return `라이밍: ${rhyme} 와 비슷한 끝소리`;
+      }
+      return `라이밍: ...${wordEntry.word.slice(-2)} 로 끝나요`;
+    }
+    case 'wordFamily': {
+      const pattern = generateWordFamilyPattern(wordEntry.word);
+      return `단어 패턴: ${pattern}`;
     }
   }
 }

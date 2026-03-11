@@ -55,23 +55,42 @@ const DEFAULT_STATS: GameStats = {
   },
 };
 
-export async function loadStats(): Promise<GameStats> {
-  const raw = await AsyncStorage.getItem(KEYS.stats);
-  if (!raw) return { ...DEFAULT_STATS, difficultyStats: { easy: { ...DEFAULT_DIFFICULTY_STATS }, normal: { ...DEFAULT_DIFFICULTY_STATS }, hard: { ...DEFAULT_DIFFICULTY_STATS } } };
-  const parsed = JSON.parse(raw) as Partial<GameStats>;
+function freshStats(): GameStats {
   return {
     ...DEFAULT_STATS,
-    ...parsed,
     difficultyStats: {
-      easy: { ...DEFAULT_DIFFICULTY_STATS, ...parsed.difficultyStats?.easy },
-      normal: { ...DEFAULT_DIFFICULTY_STATS, ...parsed.difficultyStats?.normal },
-      hard: { ...DEFAULT_DIFFICULTY_STATS, ...parsed.difficultyStats?.hard },
+      easy: { ...DEFAULT_DIFFICULTY_STATS },
+      normal: { ...DEFAULT_DIFFICULTY_STATS },
+      hard: { ...DEFAULT_DIFFICULTY_STATS },
     },
   };
 }
 
+export async function loadStats(): Promise<GameStats> {
+  try {
+    const raw = await AsyncStorage.getItem(KEYS.stats);
+    if (!raw) return freshStats();
+    const parsed = JSON.parse(raw) as Partial<GameStats>;
+    return {
+      ...DEFAULT_STATS,
+      ...parsed,
+      difficultyStats: {
+        easy: { ...DEFAULT_DIFFICULTY_STATS, ...parsed.difficultyStats?.easy },
+        normal: { ...DEFAULT_DIFFICULTY_STATS, ...parsed.difficultyStats?.normal },
+        hard: { ...DEFAULT_DIFFICULTY_STATS, ...parsed.difficultyStats?.hard },
+      },
+    };
+  } catch {
+    return freshStats();
+  }
+}
+
 export async function saveStats(stats: GameStats): Promise<void> {
-  await AsyncStorage.setItem(KEYS.stats, JSON.stringify(stats));
+  try {
+    await AsyncStorage.setItem(KEYS.stats, JSON.stringify(stats));
+  } catch {
+    // Silently fail — stats will reload defaults next time
+  }
 }
 
 export async function recordGame(
@@ -101,75 +120,115 @@ export async function recordGame(
 }
 
 export async function loadDailyState(): Promise<DailyState | null> {
-  const raw = await AsyncStorage.getItem(KEYS.dailyState);
-  if (!raw) return null;
-  return JSON.parse(raw) as DailyState;
+  try {
+    const raw = await AsyncStorage.getItem(KEYS.dailyState);
+    if (!raw) return null;
+    return JSON.parse(raw) as DailyState;
+  } catch {
+    return null;
+  }
 }
 
 export async function saveDailyState(state: DailyState): Promise<void> {
-  await AsyncStorage.setItem(KEYS.dailyState, JSON.stringify(state));
+  try {
+    await AsyncStorage.setItem(KEYS.dailyState, JSON.stringify(state));
+  } catch {
+    // Silently fail — daily state will reset next session
+  }
 }
 
 // Learned words
 export async function loadLearnedWords(): Promise<LearnedWord[]> {
-  const raw = await AsyncStorage.getItem(KEYS.learnedWords);
-  if (!raw) return [];
-  return JSON.parse(raw) as LearnedWord[];
+  try {
+    const raw = await AsyncStorage.getItem(KEYS.learnedWords);
+    if (!raw) return [];
+    return JSON.parse(raw) as LearnedWord[];
+  } catch {
+    return [];
+  }
 }
 
 export async function markWordLearned(word: string): Promise<LearnedWord[]> {
-  const words = await loadLearnedWords();
-  const existing = words.find((w) => w.word === word);
-  if (existing) {
-    existing.timesCorrect += 1;
-  } else {
-    words.push({ word, firstSeen: Date.now(), timesCorrect: 1 });
+  try {
+    const words = await loadLearnedWords();
+    const existing = words.find((w) => w.word === word);
+    if (existing) {
+      existing.timesCorrect += 1;
+    } else {
+      words.push({ word, firstSeen: Date.now(), timesCorrect: 1 });
+    }
+    await AsyncStorage.setItem(KEYS.learnedWords, JSON.stringify(words));
+    return words;
+  } catch {
+    return [];
   }
-  await AsyncStorage.setItem(KEYS.learnedWords, JSON.stringify(words));
-  return words;
 }
 
 // Review entries
 export async function loadReviewEntries(): Promise<ReviewEntry[]> {
-  const raw = await AsyncStorage.getItem(KEYS.reviewEntries);
-  if (!raw) return [];
-  return JSON.parse(raw) as ReviewEntry[];
+  try {
+    const raw = await AsyncStorage.getItem(KEYS.reviewEntries);
+    if (!raw) return [];
+    return JSON.parse(raw) as ReviewEntry[];
+  } catch {
+    return [];
+  }
 }
 
 export async function saveReviewEntry(entry: ReviewEntry): Promise<void> {
-  const entries = await loadReviewEntries();
-  const idx = entries.findIndex((e) => e.word === entry.word);
-  if (idx >= 0) {
-    entries[idx] = entry;
-  } else {
-    entries.push(entry);
+  try {
+    const entries = await loadReviewEntries();
+    const idx = entries.findIndex((e) => e.word === entry.word);
+    if (idx >= 0) {
+      entries[idx] = entry;
+    } else {
+      entries.push(entry);
+    }
+    await AsyncStorage.setItem(KEYS.reviewEntries, JSON.stringify(entries));
+  } catch {
+    // Silently fail — review entry will be retried next session
   }
-  await AsyncStorage.setItem(KEYS.reviewEntries, JSON.stringify(entries));
 }
 
 // Achievements
 export async function loadAchievements(): Promise<Achievement[]> {
-  const raw = await AsyncStorage.getItem(KEYS.achievements);
-  if (!raw) return [];
-  return JSON.parse(raw) as Achievement[];
+  try {
+    const raw = await AsyncStorage.getItem(KEYS.achievements);
+    if (!raw) return [];
+    return JSON.parse(raw) as Achievement[];
+  } catch {
+    return [];
+  }
 }
 
 export async function saveAchievements(achievements: Achievement[]): Promise<void> {
-  await AsyncStorage.setItem(KEYS.achievements, JSON.stringify(achievements));
+  try {
+    await AsyncStorage.setItem(KEYS.achievements, JSON.stringify(achievements));
+  } catch {
+    // Silently fail — achievements will reload defaults next time
+  }
 }
 
 // Played categories tracking
 export async function loadPlayedCategories(): Promise<WordCategory[]> {
-  const raw = await AsyncStorage.getItem(KEYS.playedCategories);
-  if (!raw) return [];
-  return JSON.parse(raw) as WordCategory[];
+  try {
+    const raw = await AsyncStorage.getItem(KEYS.playedCategories);
+    if (!raw) return [];
+    return JSON.parse(raw) as WordCategory[];
+  } catch {
+    return [];
+  }
 }
 
 export async function addPlayedCategory(category: WordCategory): Promise<WordCategory[]> {
-  const cats = await loadPlayedCategories();
-  if (!cats.includes(category)) {
-    cats.push(category);
-    await AsyncStorage.setItem(KEYS.playedCategories, JSON.stringify(cats));
+  try {
+    const cats = await loadPlayedCategories();
+    if (!cats.includes(category)) {
+      cats.push(category);
+      await AsyncStorage.setItem(KEYS.playedCategories, JSON.stringify(cats));
+    }
+    return cats;
+  } catch {
+    return [];
   }
-  return cats;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Switch, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,14 +12,28 @@ import SketchyButton from '../components/sketchy/SketchyButton';
 import Header from '../components/Header';
 import DifficultyCard from '../components/DifficultyCard';
 import CategoryChip from '../components/CategoryChip';
+import { useStats } from '../hooks/useStats';
+import { useOnboarding } from '../hooks/useOnboarding';
 
 const DIFFICULTIES: Difficulty[] = ['easy', 'normal', 'hard'];
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { stats } = useStats();
+  const { isLoading, isOnboardingDone } = useOnboarding();
   const [selected, setSelected] = useState<Difficulty>('normal');
   const [dailyMode, setDailyMode] = useState(false);
   const [category, setCategory] = useState<WordCategory | undefined>(undefined);
+
+  useEffect(() => {
+    if (!isLoading && !isOnboardingDone) {
+      router.replace('/onboarding' as never);
+    }
+  }, [isLoading, isOnboardingDone, router]);
+
+  if (isLoading || !isOnboardingDone) {
+    return null;
+  }
 
   const handleStart = () => {
     router.push({
@@ -36,6 +50,14 @@ export default function HomeScreen() {
     <PaperBackground>
       <SafeAreaView style={styles.container} edges={['top']}>
         <Header />
+
+        {stats.currentStreak > 0 && (
+          <View style={[styles.streakBadge, SKETCHY_RADIUS.small]}>
+            <Text style={styles.streakText}>
+              {'\uD83D\uDD25'} {stats.currentStreak}일 연속!
+            </Text>
+          </View>
+        )}
 
         <View style={styles.content}>
           <Text style={styles.label}>난이도를 선택하세요!</Text>
@@ -109,6 +131,20 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  streakBadge: {
+    alignSelf: 'center',
+    backgroundColor: COLORS.present,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    marginTop: 4,
+    borderWidth: 1.5,
+    borderColor: COLORS.presentBorder,
+  },
+  streakText: {
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: '#ffffff',
   },
   content: {
     flex: 1,

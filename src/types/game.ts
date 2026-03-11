@@ -4,7 +4,7 @@ export type LetterStatus = 'correct' | 'present' | 'absent';
 
 export type GameStatus = 'playing' | 'won' | 'lost';
 
-export type HintType = 'example' | 'firstLetter' | 'vowelCount' | 'meaning' | 'letterPosition';
+export type HintType = 'example' | 'firstLetter' | 'vowelCount' | 'meaning' | 'letterPosition' | 'pronunciation' | 'rhyming' | 'wordFamily';
 
 export interface Hint {
   type: HintType;
@@ -41,6 +41,9 @@ export const HINT_COSTS: Record<HintType, number> = {
   vowelCount: 1,
   meaning: 1,
   letterPosition: 2,
+  pronunciation: 1,
+  rhyming: 1,
+  wordFamily: 2,
 };
 
 export const MAX_HINT_POINTS = 4;

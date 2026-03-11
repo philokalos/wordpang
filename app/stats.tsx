@@ -9,6 +9,8 @@ import { useAchievements } from '../hooks/useAchievements';
 import PaperBackground from '../components/sketchy/PaperBackground';
 import StatsDisplay from '../components/StatsDisplay';
 import AchievementBadge from '../components/AchievementBadge';
+import CategoryProgress from '../components/CategoryProgress';
+import BackupPanel from '../components/BackupPanel';
 
 export default function StatsScreen() {
   const router = useRouter();
@@ -29,6 +31,8 @@ export default function StatsScreen() {
         <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
           <StatsDisplay stats={stats} winRate={winRate} />
 
+          <CategoryProgress />
+
           <View style={styles.achievementSection}>
             <Text style={styles.sectionTitle}>
               배지 ({unlockedCount}/{totalCount})
@@ -39,6 +43,8 @@ export default function StatsScreen() {
               ))}
             </View>
           </View>
+
+          <BackupPanel />
         </ScrollView>
       </SafeAreaView>
     </PaperBackground>

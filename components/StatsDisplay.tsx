@@ -9,8 +9,21 @@ interface StatsDisplayProps {
   winRate: number;
 }
 
+function findMostCommonGuess(distribution: Record<number, number>): number | null {
+  let maxCount = 0;
+  let maxGuess: number | null = null;
+  for (const [guess, count] of Object.entries(distribution)) {
+    if (count > maxCount) {
+      maxCount = count;
+      maxGuess = Number(guess);
+    }
+  }
+  return maxGuess;
+}
+
 export default function StatsDisplay({ stats, winRate }: StatsDisplayProps) {
   const maxDistValue = Math.max(1, ...Object.values(stats.guessDistribution));
+  const mostCommonGuess = findMostCommonGuess(stats.guessDistribution);
 
   return (
     <View style={styles.container}>
@@ -26,11 +39,21 @@ export default function StatsDisplay({ stats, winRate }: StatsDisplayProps) {
         {[1, 2, 3, 4, 5, 6, 7].map((n) => {
           const count = stats.guessDistribution[n] ?? 0;
           const widthPct = count > 0 ? Math.max(15, (count / maxDistValue) * 100) : 15;
+          const isHighlighted = n === mostCommonGuess && count > 0;
 
           return (
             <View key={n} style={styles.distRow}>
-              <Text style={styles.distLabel}>{n}</Text>
-              <View style={[styles.distBar, SKETCHY_RADIUS.small, { width: `${widthPct}%` }]}>
+              <Text style={[styles.distLabel, isHighlighted && styles.distLabelHighlight]}>
+                {n}
+              </Text>
+              <View
+                style={[
+                  styles.distBar,
+                  SKETCHY_RADIUS.small,
+                  { width: `${widthPct}%` },
+                  isHighlighted && styles.distBarHighlight,
+                ]}
+              >
                 <Text style={styles.distCount}>{count}</Text>
               </View>
             </View>
@@ -99,6 +122,14 @@ const styles = StyleSheet.create({
     paddingVertical: 3,
     minWidth: 24,
     alignItems: 'flex-end',
+  },
+  distBarHighlight: {
+    backgroundColor: COLORS.purple,
+    borderWidth: 2,
+    borderColor: COLORS.purpleDark,
+  },
+  distLabelHighlight: {
+    color: COLORS.purpleDark,
   },
   distCount: {
     fontSize: 13,

@@ -25,7 +25,10 @@ const HINT_BUTTONS: HintButtonConfig[] = [
   { type: 'firstLetter', label: '첫 글자', icon: '🔤', cost: 1 },
   { type: 'vowelCount', label: '모음 수', icon: '🔢', cost: 1 },
   { type: 'meaning', label: '뜻', icon: '💡', cost: 1 },
+  { type: 'pronunciation', label: '발음 힌트', icon: '🗣️', cost: 1 },
+  { type: 'rhyming', label: '라이밍 힌트', icon: '🎵', cost: 1 },
   { type: 'letterPosition', label: '위치', icon: '📍', cost: 2 },
+  { type: 'wordFamily', label: '단어 패턴', icon: '🧩', cost: 2 },
 ];
 
 // Pre-compute irregular radii for hint buttons
