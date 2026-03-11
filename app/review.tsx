@@ -3,10 +3,13 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import { useReview } from '../hooks/useReview';
 import { useSound } from '../hooks/useSound';
 import { getWordList } from '../src/data';
 import type { WordEntry } from '../src/types/word';
+import PaperBackground from '../components/sketchy/PaperBackground';
+import DoodleDecoration from '../components/sketchy/DoodleDecoration';
 import FlashCard from '../components/FlashCard';
 import ReviewList from '../components/ReviewList';
 
@@ -58,68 +61,74 @@ export default function ReviewScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
-        </Pressable>
-        <Text style={styles.title}>복습</Text>
-        <View style={styles.spacer} />
-      </View>
-
-      <View style={styles.tabs}>
-        <Pressable
-          onPress={() => setTab('collection')}
-          style={[styles.tab, tab === 'collection' && styles.tabActive]}
-        >
-          <Text style={[styles.tabText, tab === 'collection' && styles.tabTextActive]}>
-            컬렉션 ({entries.length})
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => setTab('quiz')}
-          style={[styles.tab, tab === 'quiz' && styles.tabActive]}
-        >
-          <Text style={[styles.tabText, tab === 'quiz' && styles.tabTextActive]}>
-            퀴즈 ({dueCount})
-          </Text>
-        </Pressable>
-      </View>
-
-      {tab === 'collection' ? (
-        <ReviewList entries={entries} />
-      ) : (
-        <View style={styles.quizArea}>
-          {currentWordEntry ? (
-            <>
-              <Text style={styles.quizProgress}>
-                {quizIndex + 1} / {dueWords.length}
-              </Text>
-              <FlashCard
-                key={currentDueWord?.word}
-                word={currentWordEntry}
-                onKnew={handleKnew}
-                onForgot={handleForgot}
-                onFlip={handleFlip}
-              />
-            </>
-          ) : (
-            <View style={styles.emptyQuiz}>
-              <Text style={styles.emptyEmoji}>🎉</Text>
-              <Text style={styles.emptyText}>복습할 단어가 없어요!</Text>
-              <Text style={styles.emptySubtext}>나중에 다시 확인해 보세요</Text>
-            </View>
-          )}
+    <PaperBackground>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.header}>
+          <Pressable onPress={() => router.back()} style={styles.backButton}>
+            <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
+          </Pressable>
+          <Text style={styles.title}>복습</Text>
+          <View style={styles.spacer} />
         </View>
-      )}
-    </SafeAreaView>
+
+        <View style={[styles.tabs, SKETCHY_RADIUS.medium]}>
+          <Pressable
+            onPress={() => setTab('collection')}
+            style={[styles.tab, SKETCHY_RADIUS.small, tab === 'collection' && styles.tabActive]}
+          >
+            <Text style={[styles.tabText, tab === 'collection' && styles.tabTextActive]}>
+              컬렉션 ({entries.length})
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setTab('quiz')}
+            style={[styles.tab, SKETCHY_RADIUS.small, tab === 'quiz' && styles.tabActive]}
+          >
+            <Text style={[styles.tabText, tab === 'quiz' && styles.tabTextActive]}>
+              퀴즈 ({dueCount})
+            </Text>
+          </Pressable>
+        </View>
+
+        {tab === 'collection' ? (
+          <ReviewList entries={entries} />
+        ) : (
+          <View style={styles.quizArea}>
+            {currentWordEntry ? (
+              <>
+                <Text style={styles.quizProgress}>
+                  {quizIndex + 1} / {dueWords.length}
+                </Text>
+                <FlashCard
+                  key={currentDueWord?.word}
+                  word={currentWordEntry}
+                  onKnew={handleKnew}
+                  onForgot={handleForgot}
+                  onFlip={handleFlip}
+                />
+              </>
+            ) : (
+              <View style={styles.emptyQuiz}>
+                <View style={styles.emptyDoodleRow}>
+                  <DoodleDecoration type="star" size={18} seed={50} />
+                  <Text style={styles.emptyEmoji}>🎉</Text>
+                  <DoodleDecoration type="star" size={18} seed={51} />
+                </View>
+                <Text style={styles.emptyText}>복습할 단어가 없어요!</Text>
+                <Text style={styles.emptySubtext}>나중에 다시 확인해 보세요</Text>
+                <DoodleDecoration type="squiggle" size={48} seed={52} style={styles.emptySquiggle} />
+              </View>
+            )}
+          </View>
+        )}
+      </SafeAreaView>
+    </PaperBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
   },
   header: {
     flexDirection: 'row',
@@ -132,13 +141,13 @@ const styles = StyleSheet.create({
     width: 60,
   },
   backText: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.purpleText,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 22,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   spacer: {
@@ -148,25 +157,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 16,
     backgroundColor: COLORS.surface,
-    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
     padding: 4,
   },
   tab: {
     flex: 1,
     paddingVertical: 10,
     alignItems: 'center',
-    borderRadius: 10,
   },
   tabActive: {
     backgroundColor: COLORS.purpleBg,
   },
   tabText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
   },
   tabTextActive: {
     color: COLORS.purpleText,
+    fontFamily: SKETCHY_FONTS.bold,
   },
   quizArea: {
     flex: 1,
@@ -175,8 +185,8 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   quizProgress: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginBottom: 16,
   },
@@ -188,13 +198,24 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyText: {
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 17,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
   },
   emptySubtext: {
-    fontSize: 13,
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,
+  },
+  emptyDoodleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4,
+  },
+  emptySquiggle: {
+    marginTop: 16,
+    opacity: 0.5,
   },
 });

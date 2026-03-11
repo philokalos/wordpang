@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import SketchyButton from './sketchy/SketchyButton';
 
 interface PracticeResult {
   word: string;
@@ -31,7 +33,7 @@ export default function SessionSummary({
 
       <View style={styles.results}>
         {results.map((r, i) => (
-          <View key={i} style={styles.resultRow}>
+          <View key={i} style={[styles.resultRow, SKETCHY_RADIUS.small]}>
             <Text style={styles.resultIcon}>{r.correct ? '✅' : '❌'}</Text>
             <Text style={styles.resultWord}>{r.word}</Text>
             <Text style={styles.resultGuesses}>{r.guessCount}번</Text>
@@ -39,12 +41,12 @@ export default function SessionSummary({
         ))}
       </View>
 
-      <Pressable
+      <SketchyButton
+        label="돌아가기"
         onPress={onClose}
-        style={({ pressed }) => [styles.button, { opacity: pressed ? 0.8 : 1 }]}
-      >
-        <Text style={styles.buttonText}>돌아가기</Text>
-      </Pressable>
+        seed={401}
+        variant="primary"
+      />
     </View>
   );
 }
@@ -61,13 +63,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    fontSize: 24,
-    fontWeight: '800',
+    fontSize: 26,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   score: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 20,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.purpleText,
     marginTop: 4,
   },
@@ -81,8 +83,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
     padding: 12,
-    borderRadius: 10,
     gap: 10,
   },
   resultIcon: {
@@ -90,25 +93,14 @@ const styles = StyleSheet.create({
   },
   resultWord: {
     flex: 1,
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
     letterSpacing: 1,
   },
   resultGuesses: {
-    fontSize: 13,
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
-    fontWeight: '600',
-  },
-  button: {
-    backgroundColor: COLORS.purple,
-    paddingHorizontal: 36,
-    paddingVertical: 14,
-    borderRadius: 14,
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '700',
   },
 });

@@ -6,6 +6,7 @@ import type { Difficulty, HintType } from '../src/types/game';
 import type { WordCategory } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import { useWordle } from '../hooks/useWordle';
 import { useSound } from '../hooks/useSound';
 import { useStats } from '../hooks/useStats';
@@ -13,6 +14,7 @@ import { useDailyWord } from '../hooks/useDailyWord';
 import { useLearnedWords } from '../hooks/useLearnedWords';
 import { useAchievements } from '../hooks/useAchievements';
 import { useReview } from '../hooks/useReview';
+import PaperBackground from '../components/sketchy/PaperBackground';
 import Header from '../components/Header';
 import GameBoard from '../components/GameBoard';
 import HintPanel from '../components/HintPanel';
@@ -147,72 +149,73 @@ export default function GameScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <Header showStats onStatsPress={handleStatsPress} />
+    <PaperBackground>
+      <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+        <Header showStats onStatsPress={handleStatsPress} />
 
-      <View style={styles.content}>
-        {game.toastMessage ? (
-          <View style={styles.toast}>
-            <Text style={styles.toastText}>{game.toastMessage}</Text>
-          </View>
-        ) : null}
+        <View style={styles.content}>
+          {game.toastMessage ? (
+            <View style={[styles.toast, SKETCHY_RADIUS.small]}>
+              <Text style={styles.toastText}>{game.toastMessage}</Text>
+            </View>
+          ) : null}
 
-        <GameBoard
-          guesses={game.guesses}
-          evaluations={game.evaluations}
-          currentGuess={game.currentGuess}
-          maxAttempts={game.maxAttempts}
-          wordLength={game.wordLength}
-          isRevealing={game.isRevealing}
-          isShaking={game.isShaking}
-          gameStatus={game.gameStatus}
-        />
-
-        <HintPanel
-          hints={game.hints}
-          hintPointsUsed={game.hintPointsUsed}
-          gameStatus={game.gameStatus}
-          onRequestHint={handleRequestHint}
-        />
-
-        <View style={styles.keyboardArea}>
-          <Keyboard
-            keyStatuses={game.keyStatuses}
-            onLetter={handleLetterPress}
-            onEnter={game.submitGuess}
-            onBackspace={game.removeLetter}
+          <GameBoard
+            guesses={game.guesses}
+            evaluations={game.evaluations}
+            currentGuess={game.currentGuess}
+            maxAttempts={game.maxAttempts}
+            wordLength={game.wordLength}
+            isRevealing={game.isRevealing}
+            isShaking={game.isShaking}
+            gameStatus={game.gameStatus}
           />
+
+          <HintPanel
+            hints={game.hints}
+            hintPointsUsed={game.hintPointsUsed}
+            gameStatus={game.gameStatus}
+            onRequestHint={handleRequestHint}
+          />
+
+          <View style={styles.keyboardArea}>
+            <Keyboard
+              keyStatuses={game.keyStatuses}
+              onLetter={handleLetterPress}
+              onEnter={game.submitGuess}
+              onBackspace={game.removeLetter}
+            />
+          </View>
         </View>
-      </View>
 
-      <ResultModal
-        gameStatus={game.gameStatus}
-        targetWord={game.targetWord}
-        attempts={game.guesses.length}
-        maxAttempts={game.maxAttempts}
-        evaluations={game.evaluations}
-        isDaily={isDaily}
-        countdown={daily.countdown}
-        newAchievements={newAchievements.length > 0 ? newAchievements : undefined}
-        onNewGame={handleNewGame}
-        onChangeDifficulty={handleChangeDifficulty}
-        onMarkLearned={handleMarkLearned}
-      />
+        <ResultModal
+          gameStatus={game.gameStatus}
+          targetWord={game.targetWord}
+          attempts={game.guesses.length}
+          maxAttempts={game.maxAttempts}
+          evaluations={game.evaluations}
+          isDaily={isDaily}
+          countdown={daily.countdown}
+          newAchievements={newAchievements.length > 0 ? newAchievements : undefined}
+          onNewGame={handleNewGame}
+          onChangeDifficulty={handleChangeDifficulty}
+          onMarkLearned={handleMarkLearned}
+        />
 
-      <DifficultyPrompt
-        visible={showDifficultyPrompt && game.gameStatus !== 'playing'}
-        recommendation={getDifficultyRecommendation(difficulty)}
-        onAccept={handleDifficultyAccept}
-        onDismiss={() => setShowDifficultyPrompt(false)}
-      />
-    </SafeAreaView>
+        <DifficultyPrompt
+          visible={showDifficultyPrompt && game.gameStatus !== 'playing'}
+          recommendation={getDifficultyRecommendation(difficulty)}
+          onAccept={handleDifficultyAccept}
+          onDismiss={() => setShowDifficultyPrompt(false)}
+        />
+      </SafeAreaView>
+    </PaperBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
   },
   content: {
     flex: 1,
@@ -221,18 +224,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   toast: {
-    backgroundColor: '#1f2937',
+    backgroundColor: COLORS.textPrimary,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderRadius: 8,
     position: 'absolute',
     top: 0,
     zIndex: 10,
   },
   toastText: {
-    color: '#ffffff',
-    fontWeight: '700',
-    fontSize: 13,
+    color: COLORS.surface,
+    fontFamily: SKETCHY_FONTS.bold,
+    fontSize: 14,
   },
   keyboardArea: {
     marginTop: 'auto',

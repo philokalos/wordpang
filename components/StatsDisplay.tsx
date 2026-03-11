@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import type { GameStats } from '../services/storage';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 
 interface StatsDisplayProps {
   stats: GameStats;
@@ -29,7 +30,7 @@ export default function StatsDisplay({ stats, winRate }: StatsDisplayProps) {
           return (
             <View key={n} style={styles.distRow}>
               <Text style={styles.distLabel}>{n}</Text>
-              <View style={[styles.distBar, { width: `${widthPct}%` }]}>
+              <View style={[styles.distBar, SKETCHY_RADIUS.small, { width: `${widthPct}%` }]}>
                 <Text style={styles.distCount}>{count}</Text>
               </View>
             </View>
@@ -61,19 +62,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   statValue: {
-    fontSize: 24,
-    fontWeight: '800',
+    fontSize: 26,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   statLabel: {
-    fontSize: 11,
+    fontSize: 12,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
-    fontWeight: '600',
     marginTop: 2,
   },
   distTitle: {
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
     textAlign: 'center',
   },
@@ -86,23 +87,22 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   distLabel: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
     width: 16,
     textAlign: 'right',
   },
   distBar: {
     backgroundColor: COLORS.correct,
-    borderRadius: 4,
     paddingHorizontal: 8,
     paddingVertical: 3,
     minWidth: 24,
     alignItems: 'flex-end',
   },
   distCount: {
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 13,
+    fontFamily: SKETCHY_FONTS.bold,
     color: '#ffffff',
   },
 });

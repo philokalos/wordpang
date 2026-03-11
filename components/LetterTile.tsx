@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -12,6 +12,8 @@ import type { LetterStatus } from '../src/types/game';
 import { COLORS, STATUS_COLORS } from '../constants/colors';
 import { getTileSize } from '../constants/layout';
 import { FLIP_DURATION, POP_DURATION, BOUNCE_DURATION, EASING } from '../constants/animations';
+import { SKETCHY_FONTS } from '../constants/theme';
+import { seededRandom } from '../utils/sketchy';
 
 interface LetterTileProps {
   letter: string;
@@ -37,6 +39,18 @@ export default function LetterTile({
   const bounceY = useSharedValue(0);
 
   const tileSize = getTileSize(wordLength);
+
+  // Stable irregular borderRadius per tile based on letter+delay as seed
+  const sketchyRadius = useMemo(() => {
+    const seed = (letter.charCodeAt(0) || 65) * 31 + delay;
+    const rand = seededRandom(seed);
+    return {
+      borderTopLeftRadius: 5 + Math.round(rand() * 6),
+      borderTopRightRadius: 7 + Math.round(rand() * 6),
+      borderBottomLeftRadius: 6 + Math.round(rand() * 6),
+      borderBottomRightRadius: 4 + Math.round(rand() * 6),
+    };
+  }, [letter, delay]);
 
   useEffect(() => {
     if (isRevealing && status) {
@@ -105,6 +119,7 @@ export default function LetterTile({
     <Animated.View
       style={[
         styles.tile,
+        sketchyRadius,
         { width: tileSize, height: tileSize },
         animatedStyle,
       ]}
@@ -113,7 +128,7 @@ export default function LetterTile({
       <Animated.Text
         style={[
           styles.letter,
-          { fontSize: tileSize * 0.5 },
+          { fontSize: tileSize * 0.55 },
           textStyle,
         ]}
       >
@@ -128,9 +143,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderRadius: 8,
   },
   letter: {
-    fontWeight: '800',
+    fontFamily: SKETCHY_FONTS.bold,
   },
 });

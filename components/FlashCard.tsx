@@ -8,6 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { WordEntry } from '../src/types/word';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 
 interface FlashCardProps {
   word: WordEntry;
@@ -45,12 +46,12 @@ export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardP
         accessibilityHint="카드를 뒤집어 뜻을 확인합니다"
         style={styles.cardContainer}
       >
-        <Animated.View style={[styles.card, styles.front, frontStyle]}>
+        <Animated.View style={[styles.card, styles.front, SKETCHY_RADIUS.large, frontStyle]}>
           <Text style={styles.wordText}>{word.word}</Text>
           <Text style={styles.tapHint}>탭하여 뒤집기</Text>
         </Animated.View>
 
-        <Animated.View style={[styles.card, styles.back, backStyle]}>
+        <Animated.View style={[styles.card, styles.back, SKETCHY_RADIUS.large, backStyle]}>
           <Text style={styles.meaning}>{word.meaning}</Text>
           <Text style={styles.pronunciation}>[{word.pronunciation}]</Text>
           <Text style={styles.example}>"{word.example}"</Text>
@@ -63,7 +64,7 @@ export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardP
             onPress={onForgot}
             accessibilityRole="button"
             accessibilityLabel="다시 볼게요"
-            style={({ pressed }) => [styles.forgotButton, { opacity: pressed ? 0.8 : 1 }]}
+            style={({ pressed }) => [styles.forgotButton, SKETCHY_RADIUS.medium, { opacity: pressed ? 0.8 : 1 }]}
           >
             <Text style={styles.forgotText}>다시 볼게요</Text>
           </Pressable>
@@ -71,7 +72,7 @@ export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardP
             onPress={onKnew}
             accessibilityRole="button"
             accessibilityLabel="알고 있어요"
-            style={({ pressed }) => [styles.knewButton, { opacity: pressed ? 0.8 : 1 }]}
+            style={({ pressed }) => [styles.knewButton, SKETCHY_RADIUS.medium, { opacity: pressed ? 0.8 : 1 }]}
           >
             <Text style={styles.knewText}>알고 있어요!</Text>
           </Pressable>
@@ -94,47 +95,45 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
-    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 4,
+    borderWidth: 2,
   },
   front: {
     backgroundColor: COLORS.purple,
+    borderColor: COLORS.purpleDark,
   },
   back: {
     backgroundColor: COLORS.surface,
-    borderWidth: 2,
-    borderColor: '#e9d5ff',
+    borderColor: COLORS.tileBorder,
   },
   wordText: {
-    fontSize: 32,
-    fontWeight: '800',
+    fontSize: 34,
+    fontFamily: SKETCHY_FONTS.bold,
     color: '#ffffff',
     letterSpacing: 4,
   },
   tapHint: {
-    fontSize: 12,
+    fontSize: 13,
+    fontFamily: SKETCHY_FONTS.regular,
     color: 'rgba(255,255,255,0.7)',
     marginTop: 8,
   },
   meaning: {
-    fontSize: 22,
-    fontWeight: '800',
+    fontSize: 24,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   pronunciation: {
-    fontSize: 14,
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,
   },
   example: {
-    fontSize: 13,
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
     fontStyle: 'italic',
     textAlign: 'center',
@@ -147,27 +146,25 @@ const styles = StyleSheet.create({
   forgotButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: '#fef2f2',
+    backgroundColor: '#FFEBEE',
     borderWidth: 2,
-    borderColor: '#fecaca',
+    borderColor: COLORS.pink,
   },
   forgotText: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#ef4444',
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.pinkText,
   },
   knewButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#E8F5E9',
     borderWidth: 2,
-    borderColor: '#bbf7d0',
+    borderColor: COLORS.correct,
   },
   knewText: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#22c55e',
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.correctBorder,
   },
 });

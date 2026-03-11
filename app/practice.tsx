@@ -3,11 +3,14 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import { useReview } from '../hooks/useReview';
 import { useWordle } from '../hooks/useWordle';
 import { useSound } from '../hooks/useSound';
 import { getWordList } from '../src/data';
 import type { WordEntry } from '../src/types/word';
+import PaperBackground from '../components/sketchy/PaperBackground';
+import DoodleDecoration from '../components/sketchy/DoodleDecoration';
 import GameBoard from '../components/GameBoard';
 import Keyboard from '../components/Keyboard';
 import SessionSummary from '../components/SessionSummary';
@@ -94,84 +97,94 @@ export default function PracticeScreen() {
 
   if (totalWords === 0) {
     return (
-      <SafeAreaView style={styles.container} edges={['top']}>
-        <View style={styles.header}>
-          <Pressable onPress={() => router.back()} style={styles.backButton}>
-            <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
-          </Pressable>
-          <Text style={styles.title}>연습</Text>
-          <View style={styles.spacer} />
-        </View>
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyEmoji}>📚</Text>
-          <Text style={styles.emptyText}>연습할 단어가 없어요</Text>
-          <Text style={styles.emptySubtext}>게임에서 단어를 학습하면 여기에 나타나요!</Text>
-        </View>
-      </SafeAreaView>
+      <PaperBackground>
+        <SafeAreaView style={styles.container} edges={['top']}>
+          <View style={styles.header}>
+            <Pressable onPress={() => router.back()} style={styles.backButton}>
+              <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
+            </Pressable>
+            <Text style={styles.title}>연습</Text>
+            <View style={styles.spacer} />
+          </View>
+          <View style={styles.emptyState}>
+            <View style={styles.emptyDoodleRow}>
+              <DoodleDecoration type="star" size={18} seed={40} />
+              <Text style={styles.emptyEmoji}>📚</Text>
+              <DoodleDecoration type="star" size={18} seed={41} />
+            </View>
+            <Text style={styles.emptyText}>연습할 단어가 없어요</Text>
+            <Text style={styles.emptySubtext}>게임에서 단어를 학습하면 여기에 나타나요!</Text>
+            <DoodleDecoration type="squiggle" size={48} seed={42} style={styles.emptySquiggle} />
+          </View>
+        </SafeAreaView>
+      </PaperBackground>
     );
   }
 
   if (isComplete) {
     const correctCount = results.filter((r) => r.correct).length;
     return (
-      <SafeAreaView style={styles.container} edges={['top']}>
-        <SessionSummary
-          results={results}
-          correctCount={correctCount}
-          totalCount={totalWords}
-          onClose={() => router.back()}
-        />
-      </SafeAreaView>
+      <PaperBackground>
+        <SafeAreaView style={styles.container} edges={['top']}>
+          <SessionSummary
+            results={results}
+            correctCount={correctCount}
+            totalCount={totalWords}
+            onClose={() => router.back()}
+          />
+        </SafeAreaView>
+      </PaperBackground>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-      <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
-        </Pressable>
-        <Text style={styles.title}>
-          연습 {currentIndex + 1}/{totalWords}
-        </Text>
-        <View style={styles.spacer} />
-      </View>
-
-      <View style={styles.content}>
-        {game.toastMessage ? (
-          <View style={styles.toast}>
-            <Text style={styles.toastText}>{game.toastMessage}</Text>
-          </View>
-        ) : null}
-
-        <GameBoard
-          guesses={game.guesses}
-          evaluations={game.evaluations}
-          currentGuess={game.currentGuess}
-          maxAttempts={game.maxAttempts}
-          wordLength={game.wordLength}
-          isRevealing={game.isRevealing}
-          isShaking={game.isShaking}
-          gameStatus={game.gameStatus}
-        />
-
-        <View style={styles.keyboardArea}>
-          <Keyboard
-            keyStatuses={game.keyStatuses}
-            onLetter={handleLetterPress}
-            onEnter={game.submitGuess}
-            onBackspace={game.removeLetter}
-          />
+    <PaperBackground>
+      <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+        <View style={styles.header}>
+          <Pressable onPress={() => router.back()} style={styles.backButton}>
+            <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
+          </Pressable>
+          <Text style={styles.title}>
+            연습 {currentIndex + 1}/{totalWords}
+          </Text>
+          <View style={styles.spacer} />
         </View>
-      </View>
-    </SafeAreaView>
+
+        <View style={styles.content}>
+          {game.toastMessage ? (
+            <View style={[styles.toast, SKETCHY_RADIUS.small]}>
+              <Text style={styles.toastText}>{game.toastMessage}</Text>
+            </View>
+          ) : null}
+
+          <GameBoard
+            guesses={game.guesses}
+            evaluations={game.evaluations}
+            currentGuess={game.currentGuess}
+            maxAttempts={game.maxAttempts}
+            wordLength={game.wordLength}
+            isRevealing={game.isRevealing}
+            isShaking={game.isShaking}
+            gameStatus={game.gameStatus}
+          />
+
+          <View style={styles.keyboardArea}>
+            <Keyboard
+              keyStatuses={game.keyStatuses}
+              onLetter={handleLetterPress}
+              onEnter={game.submitGuess}
+              onBackspace={game.removeLetter}
+            />
+          </View>
+        </View>
+      </SafeAreaView>
+    </PaperBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
   },
   header: {
     flexDirection: 'row',
@@ -184,13 +197,13 @@ const styles = StyleSheet.create({
     width: 60,
   },
   backText: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.purpleText,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 22,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   spacer: {
@@ -203,18 +216,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   toast: {
-    backgroundColor: '#1f2937',
+    backgroundColor: COLORS.textPrimary,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderRadius: 8,
     position: 'absolute',
     top: 0,
     zIndex: 10,
   },
   toastText: {
-    color: '#ffffff',
-    fontWeight: '700',
-    fontSize: 13,
+    color: COLORS.surface,
+    fontFamily: SKETCHY_FONTS.bold,
+    fontSize: 14,
   },
   keyboardArea: {
     marginTop: 'auto',
@@ -232,14 +244,25 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyText: {
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 17,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
   },
   emptySubtext: {
-    fontSize: 13,
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,
     textAlign: 'center',
+  },
+  emptyDoodleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 4,
+  },
+  emptySquiggle: {
+    marginTop: 16,
+    opacity: 0.5,
   },
 });

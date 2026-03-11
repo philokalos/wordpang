@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, Text, Modal, Pressable } from 'react-native';
 import type { DifficultyRecommendation } from '../hooks/useStats';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import SketchyButton from './sketchy/SketchyButton';
 
 interface DifficultyPromptProps {
   visible: boolean;
@@ -28,24 +30,17 @@ export default function DifficultyPrompt({
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
-        <View style={styles.card}>
+        <View style={[styles.card, SKETCHY_RADIUS.large]}>
           <Text style={styles.emoji}>{emoji}</Text>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.message}>{message}</Text>
           <View style={styles.actions}>
-            <Pressable
+            <SketchyButton
+              label={isUp ? '난이도 올리기' : '난이도 내리기'}
               onPress={onAccept}
-              accessibilityRole="button"
-              accessibilityLabel={isUp ? '난이도 올리기' : '난이도 내리기'}
-              style={({ pressed }) => [
-                styles.primaryButton,
-                { opacity: pressed ? 0.8 : 1 },
-              ]}
-            >
-              <Text style={styles.primaryText}>
-                {isUp ? '난이도 올리기' : '난이도 내리기'}
-              </Text>
-            </Pressable>
+              seed={301}
+              variant="primary"
+            />
             <Pressable
               onPress={onDismiss}
               accessibilityRole="button"
@@ -74,7 +69,8 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: COLORS.surface,
-    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: COLORS.tileBorder,
     padding: 28,
     width: '100%',
     maxWidth: 320,
@@ -85,33 +81,23 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 22,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
     textAlign: 'center',
   },
   message: {
-    fontSize: 14,
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
     textAlign: 'center',
     marginTop: 8,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   actions: {
     width: '100%',
     gap: 10,
     marginTop: 20,
-  },
-  primaryButton: {
-    backgroundColor: COLORS.purple,
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  primaryText: {
-    color: '#ffffff',
-    fontSize: 15,
-    fontWeight: '700',
   },
   secondaryButton: {
     paddingVertical: 10,
@@ -119,7 +105,7 @@ const styles = StyleSheet.create({
   },
   secondaryText: {
     color: COLORS.textMuted,
-    fontSize: 13,
-    fontWeight: '600',
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.regular,
   },
 });

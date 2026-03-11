@@ -3,6 +3,7 @@ import { StyleSheet, Text, Pressable } from 'react-native';
 import type { LetterStatus } from '../src/types/game';
 import { shareResult } from '../services/share';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 
 interface ShareButtonProps {
   won: boolean;
@@ -28,6 +29,7 @@ export default function ShareButton({
       onPress={handleShare}
       style={({ pressed }) => [
         styles.button,
+        SKETCHY_RADIUS.medium,
         { opacity: pressed ? 0.8 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
       ]}
     >
@@ -39,18 +41,14 @@ export default function ShareButton({
 const styles = StyleSheet.create({
   button: {
     backgroundColor: COLORS.correct,
+    borderWidth: 2,
+    borderColor: COLORS.correctBorder,
     paddingVertical: 12,
-    borderRadius: 12,
     alignItems: 'center',
-    shadowColor: COLORS.correct,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
   },
   text: {
     color: '#ffffff',
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.bold,
   },
 });

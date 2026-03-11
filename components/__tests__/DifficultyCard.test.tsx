@@ -21,16 +21,17 @@ describe('DifficultyCard', () => {
   });
 
   it('should apply selected style when isSelected is true', () => {
-    const { toJSON: selectedJSON } = render(
+    const { getByRole: getSelected } = render(
       <DifficultyCard difficulty="normal" isSelected={true} onPress={jest.fn()} />,
     );
-    const { toJSON: unselectedJSON } = render(
+    const { getByRole: getUnselected } = render(
       <DifficultyCard difficulty="normal" isSelected={false} onPress={jest.fn()} />,
     );
 
-    // Selected and unselected should produce different rendered output
-    const selectedStr = JSON.stringify(selectedJSON());
-    const unselectedStr = JSON.stringify(unselectedJSON());
-    expect(selectedStr).not.toEqual(unselectedStr);
+    // Selected card should have selected accessibility state
+    const selectedBtn = getSelected('button');
+    const unselectedBtn = getUnselected('button');
+    expect(selectedBtn.props.accessibilityState.selected).toBe(true);
+    expect(unselectedBtn.props.accessibilityState.selected).toBe(false);
   });
 });

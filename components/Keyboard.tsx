@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import type { LetterStatus } from '../src/types/game';
 import { COLORS } from '../constants/colors';
 import { KEY_HEIGHT, KEY_GAP, getKeyWidth } from '../constants/layout';
+import { SKETCHY_FONTS } from '../constants/theme';
+import { seededRandom } from '../utils/sketchy';
 
 interface KeyboardProps {
   keyStatuses: Record<string, LetterStatus>;
@@ -24,6 +26,21 @@ const KEY_BG: Record<LetterStatus, string> = {
   absent: COLORS.absent,
 };
 
+// Pre-compute irregular border radii for all keys
+const KEY_RADII = (() => {
+  const radii: Record<string, { borderTopLeftRadius: number; borderTopRightRadius: number; borderBottomLeftRadius: number; borderBottomRightRadius: number }> = {};
+  ROWS.flat().forEach((key, i) => {
+    const rand = seededRandom(i * 37 + 100);
+    radii[key] = {
+      borderTopLeftRadius: 5 + Math.round(rand() * 5),
+      borderTopRightRadius: 6 + Math.round(rand() * 5),
+      borderBottomLeftRadius: 6 + Math.round(rand() * 5),
+      borderBottomRightRadius: 5 + Math.round(rand() * 5),
+    };
+  });
+  return radii;
+})();
+
 export default function Keyboard({
   keyStatuses,
   onLetter,
@@ -40,6 +57,9 @@ export default function Keyboard({
       onLetter(key);
     }
   }, [onLetter, onEnter, onBackspace]);
+
+  const specialKeyWidth = useMemo(() => getKeyWidth(true), []);
+  const normalKeyWidth = useMemo(() => getKeyWidth(false), []);
 
   return (
     <View style={styles.container} accessibilityLabel="keyboard">
@@ -58,8 +78,9 @@ export default function Keyboard({
                 onPress={() => handlePress(key)}
                 style={({ pressed }) => [
                   styles.key,
+                  KEY_RADII[key],
                   {
-                    width: getKeyWidth(isSpecial),
+                    width: isSpecial ? specialKeyWidth : normalKeyWidth,
                     backgroundColor: bgColor,
                     opacity: pressed ? 0.7 : 1,
                     transform: [{ scale: pressed ? 0.95 : 1 }],
@@ -99,13 +120,14 @@ const styles = StyleSheet.create({
   },
   key: {
     height: KEY_HEIGHT,
-    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
   },
   keyText: {
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.bold,
   },
   specialKeyText: {
     fontSize: 18,

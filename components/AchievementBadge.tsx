@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 
 interface AchievementBadgeProps {
   achievement: Achievement;
@@ -12,7 +13,7 @@ export default function AchievementBadge({ achievement }: AchievementBadgeProps)
 
   return (
     <View
-      style={[styles.badge, !unlocked && styles.locked]}
+      style={[styles.badge, SKETCHY_RADIUS.medium, !unlocked && styles.locked]}
       accessibilityLabel={`${achievement.title}, ${unlocked ? '달성' : '미달성'}`}
       accessibilityRole="summary"
     >
@@ -34,14 +35,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
     padding: 14,
-    borderRadius: 14,
     gap: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 1,
   },
   locked: {
     opacity: 0.5,
@@ -53,12 +50,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   description: {
-    fontSize: 12,
+    fontSize: 13,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
     marginTop: 2,
   },

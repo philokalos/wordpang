@@ -3,8 +3,10 @@ import { StyleSheet, View, Text, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS } from '../constants/theme';
 import { useStats } from '../hooks/useStats';
 import { useAchievements } from '../hooks/useAchievements';
+import PaperBackground from '../components/sketchy/PaperBackground';
 import StatsDisplay from '../components/StatsDisplay';
 import AchievementBadge from '../components/AchievementBadge';
 
@@ -14,37 +16,38 @@ export default function StatsScreen() {
   const { achievements, unlockedCount, totalCount } = useAchievements();
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <Pressable onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
-        </Pressable>
-        <Text style={styles.title}>통계</Text>
-        <View style={styles.spacer} />
-      </View>
-
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
-        <StatsDisplay stats={stats} winRate={winRate} />
-
-        <View style={styles.achievementSection}>
-          <Text style={styles.sectionTitle}>
-            배지 ({unlockedCount}/{totalCount})
-          </Text>
-          <View style={styles.badgeList}>
-            {achievements.map((a) => (
-              <AchievementBadge key={a.id} achievement={a} />
-            ))}
-          </View>
+    <PaperBackground>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.header}>
+          <Pressable onPress={() => router.back()} style={styles.backButton}>
+            <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
+          </Pressable>
+          <Text style={styles.title}>통계</Text>
+          <View style={styles.spacer} />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+        <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
+          <StatsDisplay stats={stats} winRate={winRate} />
+
+          <View style={styles.achievementSection}>
+            <Text style={styles.sectionTitle}>
+              배지 ({unlockedCount}/{totalCount})
+            </Text>
+            <View style={styles.badgeList}>
+              {achievements.map((a) => (
+                <AchievementBadge key={a.id} achievement={a} />
+              ))}
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </PaperBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
   },
   header: {
     flexDirection: 'row',
@@ -57,13 +60,13 @@ const styles = StyleSheet.create({
     width: 60,
   },
   backText: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.purpleText,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 22,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   spacer: {
@@ -80,8 +83,8 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 20,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   badgeList: {

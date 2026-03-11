@@ -5,6 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Difficulty } from '../src/types/game';
 import type { WordCategory } from '../src/types/word';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import PaperBackground from '../components/sketchy/PaperBackground';
+import DoodleDecoration from '../components/sketchy/DoodleDecoration';
+import SketchyButton from '../components/sketchy/SketchyButton';
 import Header from '../components/Header';
 import DifficultyCard from '../components/DifficultyCard';
 import CategoryChip from '../components/CategoryChip';
@@ -29,78 +33,82 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <Header />
+    <PaperBackground>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <Header />
 
-      <View style={styles.content}>
-        <Text style={styles.label}>난이도를 선택하세요!</Text>
+        <View style={styles.content}>
+          <Text style={styles.label}>난이도를 선택하세요!</Text>
 
-        <View style={styles.cards}>
-          {DIFFICULTIES.map((diff) => (
-            <DifficultyCard
-              key={diff}
-              difficulty={diff}
-              isSelected={diff === selected}
-              onPress={() => setSelected(diff)}
+          <View style={styles.cards}>
+            {DIFFICULTIES.map((diff) => (
+              <DifficultyCard
+                key={diff}
+                difficulty={diff}
+                isSelected={diff === selected}
+                onPress={() => setSelected(diff)}
+              />
+            ))}
+          </View>
+
+          <Text style={styles.categoryLabel}>주제 선택</Text>
+          <CategoryChip selected={category} onSelect={setCategory} />
+
+          <View style={[styles.dailyRow, SKETCHY_RADIUS.medium]}>
+            <Text style={styles.dailyLabel}>오늘의 단어 모드</Text>
+            <Switch
+              value={dailyMode}
+              onValueChange={setDailyMode}
+              trackColor={{ false: COLORS.tileBorder, true: COLORS.purple }}
+              thumbColor={dailyMode ? '#ffffff' : COLORS.surfaceAlt}
             />
-          ))}
+          </View>
+
+          <View style={styles.navRow}>
+            <Pressable
+              onPress={() => router.push('/review' as never)}
+              style={({ pressed }) => [styles.navButton, SKETCHY_RADIUS.medium, { opacity: pressed ? 0.8 : 1 }]}
+            >
+              <Text style={styles.navIcon}>📚</Text>
+              <Text style={styles.navText}>복습</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push('/practice' as never)}
+              style={({ pressed }) => [styles.navButton, SKETCHY_RADIUS.medium, { opacity: pressed ? 0.8 : 1 }]}
+            >
+              <Text style={styles.navIcon}>🏋️</Text>
+              <Text style={styles.navText}>연습</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => router.push('/stats')}
+              style={({ pressed }) => [styles.navButton, SKETCHY_RADIUS.medium, { opacity: pressed ? 0.8 : 1 }]}
+            >
+              <Text style={styles.navIcon}>📊</Text>
+              <Text style={styles.navText}>통계</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.startRow}>
+            <DoodleDecoration type="squiggle" size={32} seed={10} style={styles.squiggleLeft} />
+            <SketchyButton
+              label="시작하기"
+              onPress={handleStart}
+              seed={100}
+              variant="primary"
+              wobble
+              style={styles.startButton}
+            />
+            <DoodleDecoration type="squiggle" size={32} seed={11} style={styles.squiggleRight} />
+          </View>
         </View>
-
-        <Text style={styles.categoryLabel}>주제 선택</Text>
-        <CategoryChip selected={category} onSelect={setCategory} />
-
-        <View style={styles.dailyRow}>
-          <Text style={styles.dailyLabel}>오늘의 단어 모드</Text>
-          <Switch
-            value={dailyMode}
-            onValueChange={setDailyMode}
-            trackColor={{ false: '#e5e7eb', true: '#c4b5fd' }}
-            thumbColor={dailyMode ? COLORS.purple : '#f3f4f6'}
-          />
-        </View>
-
-        <View style={styles.navRow}>
-          <Pressable
-            onPress={() => router.push('/review' as never)}
-            style={({ pressed }) => [styles.navButton, { opacity: pressed ? 0.8 : 1 }]}
-          >
-            <Text style={styles.navIcon}>📚</Text>
-            <Text style={styles.navText}>복습</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => router.push('/practice' as never)}
-            style={({ pressed }) => [styles.navButton, { opacity: pressed ? 0.8 : 1 }]}
-          >
-            <Text style={styles.navIcon}>🏋️</Text>
-            <Text style={styles.navText}>연습</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => router.push('/stats')}
-            style={({ pressed }) => [styles.navButton, { opacity: pressed ? 0.8 : 1 }]}
-          >
-            <Text style={styles.navIcon}>📊</Text>
-            <Text style={styles.navText}>통계</Text>
-          </Pressable>
-        </View>
-
-        <Pressable
-          onPress={handleStart}
-          style={({ pressed }) => [
-            styles.startButton,
-            { opacity: pressed ? 0.8 : 1, transform: [{ scale: pressed ? 0.97 : 1 }] },
-          ]}
-        >
-          <Text style={styles.startButtonText}>시작하기</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </PaperBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
   },
   content: {
     flex: 1,
@@ -110,8 +118,8 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   label: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 20,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
   },
   cards: {
@@ -119,8 +127,8 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   categoryLabel: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,
   },
@@ -129,18 +137,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
     backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
     paddingHorizontal: 20,
     paddingVertical: 12,
-    borderRadius: 14,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    elevation: 2,
   },
   dailyLabel: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 16,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textPrimary,
   },
   navRow: {
@@ -150,39 +154,32 @@ const styles = StyleSheet.create({
   navButton: {
     alignItems: 'center',
     backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    elevation: 1,
   },
   navIcon: {
     fontSize: 20,
   },
   navText: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontSize: 13,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
     marginTop: 2,
   },
+  startRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  squiggleLeft: {
+    marginRight: 8,
+  },
+  squiggleRight: {
+    marginLeft: 8,
+  },
   startButton: {
-    backgroundColor: COLORS.purple,
     paddingHorizontal: 48,
     paddingVertical: 16,
-    borderRadius: 16,
-    alignItems: 'center',
-    shadowColor: COLORS.purple,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 12,
-    elevation: 6,
-  },
-  startButtonText: {
-    color: '#ffffff',
-    fontSize: 18,
-    fontWeight: '700',
   },
 });

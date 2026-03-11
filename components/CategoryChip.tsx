@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, ScrollView, Pressable } from 'react-native';
 import type { WordCategory } from '../src/types/word';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS } from '../constants/theme';
+import { seededRandom } from '../utils/sketchy';
 
 const CATEGORY_CONFIG: Record<WordCategory, { label: string; icon: string }> = {
   animal: { label: '동물', icon: '🐾' },
@@ -15,6 +17,21 @@ const CATEGORY_CONFIG: Record<WordCategory, { label: string; icon: string }> = {
 };
 
 const ALL_CATEGORIES: WordCategory[] = ['animal', 'food', 'school', 'nature', 'body', 'home', 'action', 'feeling'];
+
+// Pre-compute irregular radii for each chip
+const CHIP_RADII = (() => {
+  const radii: Record<string, { borderTopLeftRadius: number; borderTopRightRadius: number; borderBottomLeftRadius: number; borderBottomRightRadius: number }> = {};
+  ['all', ...ALL_CATEGORIES].forEach((cat, i) => {
+    const rand = seededRandom(i * 13 + 50);
+    radii[cat] = {
+      borderTopLeftRadius: 12 + Math.round(rand() * 8),
+      borderTopRightRadius: 14 + Math.round(rand() * 8),
+      borderBottomLeftRadius: 13 + Math.round(rand() * 8),
+      borderBottomRightRadius: 11 + Math.round(rand() * 8),
+    };
+  });
+  return radii;
+})();
 
 interface CategoryChipProps {
   selected: WordCategory | undefined;
@@ -33,7 +50,7 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
         accessibilityRole="button"
         accessibilityLabel="전체"
         accessibilityState={{ selected: !selected }}
-        style={[styles.chip, !selected && styles.chipSelected]}
+        style={[styles.chip, CHIP_RADII.all, !selected && styles.chipSelected]}
       >
         <Text style={[styles.chipText, !selected && styles.chipTextSelected]}>
           전체
@@ -49,7 +66,7 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
             accessibilityRole="button"
             accessibilityLabel={config.label}
             accessibilityState={{ selected: isSelected }}
-            style={[styles.chip, isSelected && styles.chipSelected]}
+            style={[styles.chip, CHIP_RADII[cat], isSelected && styles.chipSelected]}
           >
             <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
               {config.icon} {config.label}
@@ -71,9 +88,8 @@ const styles = StyleSheet.create({
   chip: {
     paddingHorizontal: 14,
     paddingVertical: 8,
-    borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: COLORS.tileBorder,
     backgroundColor: COLORS.surface,
   },
   chipSelected: {
@@ -81,11 +97,12 @@ const styles = StyleSheet.create({
     borderColor: COLORS.purple,
   },
   chipText: {
-    fontSize: 13,
-    fontWeight: '600',
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
   },
   chipTextSelected: {
     color: COLORS.purpleText,
+    fontFamily: SKETCHY_FONTS.bold,
   },
 });

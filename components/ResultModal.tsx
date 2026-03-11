@@ -4,8 +4,11 @@ import type { GameStatus, LetterStatus } from '../src/types/game';
 import type { WordEntry } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
+import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import ShareButton from './ShareButton';
 import WordCard from './WordCard';
+import SketchyButton from './sketchy/SketchyButton';
+import DoodleDecoration from './sketchy/DoodleDecoration';
 
 interface ResultModalProps {
   gameStatus: GameStatus;
@@ -46,7 +49,16 @@ export default function ResultModal({
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
-        <View style={styles.card} accessibilityLabel="게임 결과">
+        <View style={[styles.card, SKETCHY_RADIUS.large]} accessibilityLabel="게임 결과">
+          {isWin && (
+            <View style={styles.celebrationRow}>
+              <DoodleDecoration type="star" size={22} seed={301} color="#FFD54F" style={styles.celebrationStar} />
+              <DoodleDecoration type="star" size={16} seed={302} color="#FF8A65" style={styles.celebrationStarSmall} />
+              <DoodleDecoration type="star" size={18} seed={303} color="#AED581" />
+              <DoodleDecoration type="star" size={22} seed={304} color="#4FC3F7" style={styles.celebrationStar} />
+              <DoodleDecoration type="star" size={14} seed={305} color="#CE93D8" style={styles.celebrationStarSmall} />
+            </View>
+          )}
           <Text style={styles.emoji}>{isWin ? '🎉' : '😢'}</Text>
           <Text style={styles.title}>{isWin ? '정답!' : '아쉬워요!'}</Text>
 
@@ -61,7 +73,7 @@ export default function ResultModal({
           {newAchievements && newAchievements.length > 0 && (
             <View style={styles.achievementSection}>
               {newAchievements.map((a) => (
-                <View key={a.id} style={styles.achievementRow}>
+                <View key={a.id} style={[styles.achievementRow, SKETCHY_RADIUS.small]}>
                   <Text style={styles.achievementIcon}>{a.icon}</Text>
                   <Text style={styles.achievementText}>{a.title}</Text>
                 </View>
@@ -77,6 +89,7 @@ export default function ResultModal({
               accessibilityLabel={marked ? '학습 완료' : '이 단어 배웠어요'}
               style={({ pressed }) => [
                 styles.learnedButton,
+                SKETCHY_RADIUS.medium,
                 marked && styles.learnedButtonDone,
                 { opacity: pressed && !marked ? 0.8 : 1 },
               ]}
@@ -103,29 +116,18 @@ export default function ResultModal({
               </View>
             ) : (
               <>
-                <Pressable
+                <SketchyButton
+                  label="다시 하기"
                   onPress={onNewGame}
-                  accessibilityRole="button"
-                  accessibilityLabel="다시 하기"
-                  style={({ pressed }) => [
-                    styles.primaryButton,
-                    { opacity: pressed ? 0.8 : 1 },
-                  ]}
-                >
-                  <Text style={styles.primaryButtonText}>다시 하기</Text>
-                </Pressable>
-
-                <Pressable
+                  seed={201}
+                  variant="primary"
+                />
+                <SketchyButton
+                  label="난이도 변경"
                   onPress={onChangeDifficulty}
-                  accessibilityRole="button"
-                  accessibilityLabel="난이도 변경"
-                  style={({ pressed }) => [
-                    styles.secondaryButton,
-                    { opacity: pressed ? 0.8 : 1 },
-                  ]}
-                >
-                  <Text style={styles.secondaryButtonText}>난이도 변경</Text>
-                </Pressable>
+                  seed={202}
+                  variant="secondary"
+                />
               </>
             )}
           </View>
@@ -145,29 +147,38 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: COLORS.surface,
-    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: COLORS.tileBorder,
     padding: 24,
     width: '100%',
     maxWidth: 340,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.15,
-    shadowRadius: 24,
-    elevation: 10,
     maxHeight: '85%',
+  },
+  celebrationRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 6,
+    marginBottom: 4,
+  },
+  celebrationStar: {
+    marginTop: 4,
+  },
+  celebrationStarSmall: {
+    marginTop: 10,
   },
   emoji: {
     fontSize: 48,
     marginBottom: 8,
   },
   title: {
-    fontSize: 26,
-    fontWeight: '800',
+    fontSize: 28,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   attemptsText: {
-    fontSize: 14,
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,
   },
@@ -180,85 +191,56 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#fef9c3',
+    backgroundColor: '#FFF8E1',
+    borderWidth: 1,
+    borderColor: COLORS.tileBorder,
     padding: 10,
-    borderRadius: 10,
   },
   achievementIcon: {
     fontSize: 20,
   },
   achievementText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#92400e',
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.textPrimary,
   },
   learnedButton: {
-    backgroundColor: '#f0fdf4',
+    backgroundColor: '#E8F5E9',
     borderWidth: 2,
-    borderColor: '#bbf7d0',
+    borderColor: COLORS.correct,
     paddingHorizontal: 24,
     paddingVertical: 10,
-    borderRadius: 12,
     marginVertical: 4,
   },
   learnedButtonDone: {
-    backgroundColor: '#dcfce7',
-    borderColor: '#86efac',
+    backgroundColor: '#C8E6C9',
+    borderColor: COLORS.correctBorder,
   },
   learnedText: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#16a34a',
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.correctBorder,
   },
   learnedTextDone: {
-    color: '#15803d',
+    color: COLORS.correctBorder,
   },
   actions: {
     width: '100%',
     gap: 10,
     marginTop: 4,
   },
-  primaryButton: {
-    backgroundColor: COLORS.purple,
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-    shadowColor: COLORS.purple,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  primaryButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  secondaryButton: {
-    backgroundColor: COLORS.surface,
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#e9d5ff',
-  },
-  secondaryButtonText: {
-    color: COLORS.purpleText,
-    fontSize: 16,
-    fontWeight: '700',
-  },
   countdownBox: {
     alignItems: 'center',
     paddingVertical: 12,
   },
   countdownLabel: {
-    fontSize: 13,
+    fontSize: 14,
+    fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
-    fontWeight: '600',
   },
   countdownTime: {
-    fontSize: 28,
-    fontWeight: '800',
+    fontSize: 30,
+    fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.purpleText,
     marginTop: 4,
     fontVariant: ['tabular-nums'],
