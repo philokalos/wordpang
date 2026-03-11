@@ -16,8 +16,16 @@ export default {
     ios: {
       supportsTablet: false,
       bundleIdentifier: 'com.philokalos.wordpop',
+      infoPlist: {
+        ITSAppUsesNonExemptEncryption: false,
+      },
     },
     plugins: ['expo-router'],
+    extra: {
+      eas: {
+        projectId: 'deb53a91-bcbb-4cb4-a020-7aeae4085b81',
+      },
+    },
     experiments: {
       typedRoutes: true,
     },
