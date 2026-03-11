@@ -71,7 +71,7 @@ export function updateKeyStatuses(
  * Find a word that rhymes with the target (shares last 2+ letters).
  * Searches validWords set, excluding the target itself.
  */
-function findRhymingWord(word: string, validWords?: Set<string>): string | null {
+export function findRhymingWord(word: string, validWords?: Set<string>): string | null {
   if (!validWords) return null;
 
   const suffix2 = word.slice(-2);
@@ -99,7 +99,7 @@ function findRhymingWord(word: string, validWords?: Set<string>): string | null 
  * Generate a word family pattern like "_A_E" revealing some letters.
  * Reveals vowels and keeps consonants hidden.
  */
-function generateWordFamilyPattern(word: string): string {
+export function generateWordFamilyPattern(word: string): string {
   const vowels = 'AEIOU';
   return word
     .split('')
