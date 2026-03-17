@@ -15,6 +15,11 @@ const mockStats = {
   currentStreak: 3,
   maxStreak: 5,
   guessDistribution: {},
+  difficultyStats: {
+    easy: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+    normal: { gamesPlayed: 10, gamesWon: 8, totalGuesses: 60 },
+    hard: { gamesPlayed: 0, gamesWon: 0, totalGuesses: 0 },
+  },
 };
 
 jest.mock('../../services/achievements', () => ({
