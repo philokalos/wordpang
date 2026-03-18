@@ -20,7 +20,25 @@ export default {
         ITSAppUsesNonExemptEncryption: false,
       },
     },
-    plugins: ['expo-router'],
+    plugins: [
+      'expo-router',
+      [
+        'expo-build-properties',
+        {
+          ios: {
+            privacyManifests: {
+              NSPrivacyAccessedAPITypes: [
+                {
+                  NSPrivacyAccessedAPIType:
+                    'NSPrivacyAccessedAPICategoryUserDefaults',
+                  NSPrivacyAccessedAPITypeReasons: ['CA92.1'],
+                },
+              ],
+            },
+          },
+        },
+      ],
+    ],
     extra: {
       eas: {
         projectId: 'deb53a91-bcbb-4cb4-a020-7aeae4085b81',

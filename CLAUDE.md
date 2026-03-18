@@ -4,7 +4,7 @@
 
 ## Stack
 
-- Expo 52 + React Native 0.77 + TypeScript
+- Expo 52 + React Native 0.76 + TypeScript
 - React Native Reanimated (애니메이션)
 - expo-av (사운드), expo-haptics (햅틱)
 - AsyncStorage (통계/데일리/학습/복습 저장)
