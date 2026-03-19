@@ -1,13 +1,13 @@
-# App Store Metadata — WordPop
+# App Store Metadata — WordPang
 
 ## 기본 정보
 
 | 항목 | 값 |
 |------|-----|
-| 앱 이름 | WordPop |
+| 앱 이름 | WordPang |
 | 부제목 | 퍼즐로 배우는 초등 영단어 |
-| 번들 ID | com.philokalos.wordpop |
-| SKU | com.philokalos.wordpop |
+| 번들 ID | com.philokalos.wordpang |
+| SKU | com.philokalos.wordpang |
 | 카테고리 (기본) | Education |
 | 카테고리 (보조) | Word Games |
 | 연령 등급 | 4+ |
@@ -22,12 +22,12 @@
 ### 설명 (4000자 이내)
 > 영어 단어, 외우지 말고 맞혀보세요!
 >
-> WordPop은 글자를 추측하며 단어를 알아가는 퍼즐 게임이에요. 초등학생 눈높이에 맞춰 설계했고, 교육 연구가 증명한 학습법을 게임 안에 녹여냈어요.
+> WordPang은 글자를 추측하며 단어를 알아가는 퍼즐 게임이에요. 초등학생 눈높이에 맞춰 설계했고, 교육 연구가 증명한 학습법을 게임 안에 녹여냈어요.
 >
 > "우리 아이가 스스로 영어 앱을 켜요" — 이런 경험을 만들고 싶었어요.
 >
 > ━━━━━━━━━━━━━━━━━━━━
-> 왜 WordPop인가요?
+> 왜 WordPang인가요?
 > ━━━━━━━━━━━━━━━━━━━━
 >
 > ◆ 외우는 게 아니라 발견하는 영어
@@ -96,12 +96,12 @@
 ### Description
 > Stop memorizing. Start discovering!
 >
-> WordPop is a word-guessing puzzle game designed for elementary students. Every feature is grounded in educational research — from corrective feedback (494% memory boost) to spaced repetition (53% higher retention) to adaptive difficulty based on Flow Zone Theory.
+> WordPang is a word-guessing puzzle game designed for elementary students. Every feature is grounded in educational research — from corrective feedback (494% memory boost) to spaced repetition (53% higher retention) to adaptive difficulty based on Flow Zone Theory.
 >
 > "My kid opens this English app on their own." — That's the experience we designed for.
 >
 > ━━━━━━━━━━━━━━━━━━━━
-> WHY WORDPOP?
+> WHY WORDPANG?
 > ━━━━━━━━━━━━━━━━━━━━
 >
 > ◆ DISCOVER, DON'T MEMORIZE
@@ -196,7 +196,7 @@
 ## 심사 정보
 
 ### 심사 메모
-> WordPop is a fully offline vocabulary learning game for elementary students.
+> WordPang is a fully offline vocabulary learning game for elementary students.
 > - No server connections, no login, no personal data collection
 > - All data (learning records, statistics, achievements) is stored locally on the device using AsyncStorage
 > - No ads, no in-app purchases

@@ -5,13 +5,35 @@ import type { Achievement } from '../src/types/achievement';
 import type { Difficulty } from '../src/types/game';
 import type { WordCategory } from '../src/types/word';
 
+// Migrate from wordpop_ keys to wordpang_ keys
+const OLD_PREFIX = 'wordpop_';
+const NEW_PREFIX = 'wordpang_';
+
+export async function migrateStorageKeys(): Promise<void> {
+  const allKeys = await AsyncStorage.getAllKeys();
+  const oldKeys = allKeys.filter((k) => k.startsWith(OLD_PREFIX));
+  if (oldKeys.length === 0) return;
+
+  for (const oldKey of oldKeys) {
+    const newKey = oldKey.replace(OLD_PREFIX, NEW_PREFIX);
+    const existing = await AsyncStorage.getItem(newKey);
+    if (!existing) {
+      const value = await AsyncStorage.getItem(oldKey);
+      if (value) {
+        await AsyncStorage.setItem(newKey, value);
+      }
+    }
+    await AsyncStorage.removeItem(oldKey);
+  }
+}
+
 const KEYS = {
-  stats: 'wordpop_stats',
-  dailyState: 'wordpop_daily_state',
-  learnedWords: 'wordpop_learned_words',
-  reviewEntries: 'wordpop_review_entries',
-  achievements: 'wordpop_achievements',
-  playedCategories: 'wordpop_played_categories',
+  stats: 'wordpang_stats',
+  dailyState: 'wordpang_daily_state',
+  learnedWords: 'wordpang_learned_words',
+  reviewEntries: 'wordpang_review_entries',
+  achievements: 'wordpang_achievements',
+  playedCategories: 'wordpang_played_categories',
 } as const;
 
 export interface DifficultyStats {

@@ -1,4 +1,4 @@
-# Changelog — WordPop
+# Changelog — WordPang
 
 모든 주목할 만한 변경사항은 이 파일에 기록됩니다.
 상세 릴리즈 노트: [docs/release-notes.md](docs/release-notes.md)
@@ -20,7 +20,7 @@
 ## [3.0.0] — 2026-03-10
 
 ### feat
-- "Wordle" → "WordPop" 리브랜딩
+- "Wordle" → "WordPang" 리브랜딩
 - Expo SDK 52 + React Native 0.76 기반 리빌드
 - expo-router v4 파일 기반 라우팅
 - 8가지 단어 카테고리 시스템 (animal, food, school, nature, body, home, action, feeling)
@@ -44,4 +44,4 @@
 - ESLint v9 flat config (0 warnings)
 - TypeScript strict 모드 (0 errors)
 - EAS Build 설정 (development, preview, production)
-- `wordpop_` 스토리지 키 프리픽스 마이그레이션
+- `wordpang_` 스토리지 키 프리픽스 마이그레이션

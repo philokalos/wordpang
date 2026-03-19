@@ -58,7 +58,7 @@ export default function Header({ showStats, onStatsPress }: HeaderProps) {
         <Animated.View style={[styles.doodleLeft, leftAnimStyle]}>
           <DoodleDecoration type="star" size={20} seed={1} />
         </Animated.View>
-        <Text style={[styles.title, { fontSize: isTablet ? 38 : 32 }]}>WordPop</Text>
+        <Text style={[styles.title, { fontSize: isTablet ? 38 : 32 }]}>WordPang</Text>
         <Animated.View style={[styles.doodleRight, rightAnimStyle]}>
           <DoodleDecoration type="star" size={20} seed={2} />
         </Animated.View>
@@ -66,7 +66,7 @@ export default function Header({ showStats, onStatsPress }: HeaderProps) {
           <Text style={styles.statsButton} onPress={onStatsPress}>📊</Text>
         )}
       </View>
-      <Text style={[styles.subtitle, { fontSize: isTablet ? 18 : 15 }]}>영어 단어 팝!</Text>
+      <Text style={[styles.subtitle, { fontSize: isTablet ? 18 : 15 }]}>영어 단어 팡!</Text>
     </View>
   );
 }

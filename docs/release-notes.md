@@ -1,4 +1,4 @@
-# Release Notes — WordPop
+# Release Notes — WordPang
 
 ## v3.1.0 — Sketchy Design System (2026-03-11)
 
@@ -21,11 +21,11 @@
 
 ---
 
-## v3.0.0 — WordPop Rebrand & Feature Complete (2026-03-10)
+## v3.0.0 — WordPang Rebrand & Feature Complete (2026-03-10)
 
 ### 주요 변경
-- **리브랜딩**: "Wordle" → "WordPop"으로 명칭 변경
-- **스토리지 마이그레이션**: `wordle_` → `wordpop_` 키 프리픽스 자동 전환
+- **리브랜딩**: "Wordle" → "WordPang"으로 명칭 변경
+- **스토리지 마이그레이션**: `wordle_` → `wordpang_` 키 프리픽스 자동 전환
 - **Expo SDK 52**: React Native 0.76 기반 전면 리빌드
 - **expo-router v4**: 파일 기반 라우팅 도입
 

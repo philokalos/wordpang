@@ -1,5 +1,5 @@
 /**
- * Storage v3.0 (WordPop) Integration Tests
+ * Storage v3.0 (WordPang) Integration Tests
  *
  * DDD storage contract tests for v3 features:
  * - Difficulty-aware recordGame
@@ -110,7 +110,7 @@ describe('Learned Words', () => {
     const result = await loadLearnedWords();
 
     expect(result).toEqual([]);
-    expect(mockGetItem).toHaveBeenCalledWith('wordpop_learned_words');
+    expect(mockGetItem).toHaveBeenCalledWith('wordpang_learned_words');
   });
 
   it('loadLearnedWords should return parsed array from storage', async () => {
@@ -152,14 +152,14 @@ describe('Learned Words', () => {
     expect(result[0].firstSeen).toBe(1000); // unchanged
   });
 
-  it('markWordLearned should save to AsyncStorage with key wordpop_learned_words', async () => {
+  it('markWordLearned should save to AsyncStorage with key wordpang_learned_words', async () => {
     mockGetItem.mockResolvedValue(JSON.stringify([]));
     mockSetItem.mockResolvedValue(undefined);
 
     await markWordLearned('bird');
 
     expect(mockSetItem).toHaveBeenCalledWith(
-      'wordpop_learned_words',
+      'wordpang_learned_words',
       expect.any(String),
     );
     const saved = JSON.parse(mockSetItem.mock.calls[0][1]);
@@ -188,7 +188,7 @@ describe('Review Entries', () => {
     const result = await loadReviewEntries();
 
     expect(result).toEqual([]);
-    expect(mockGetItem).toHaveBeenCalledWith('wordpop_review_entries');
+    expect(mockGetItem).toHaveBeenCalledWith('wordpang_review_entries');
   });
 
   it('loadReviewEntries should return parsed entries from storage', async () => {
@@ -226,14 +226,14 @@ describe('Review Entries', () => {
     expect(saved[0].status).toBe('mastered');
   });
 
-  it('saveReviewEntry should save to key wordpop_review_entries', async () => {
+  it('saveReviewEntry should save to key wordpang_review_entries', async () => {
     mockGetItem.mockResolvedValue(JSON.stringify([]));
     mockSetItem.mockResolvedValue(undefined);
 
     await saveReviewEntry(makeEntry());
 
     expect(mockSetItem).toHaveBeenCalledWith(
-      'wordpop_review_entries',
+      'wordpang_review_entries',
       expect.any(String),
     );
   });
@@ -259,7 +259,7 @@ describe('Achievements Storage', () => {
     const result = await loadAchievements();
 
     expect(result).toEqual([]);
-    expect(mockGetItem).toHaveBeenCalledWith('wordpop_achievements');
+    expect(mockGetItem).toHaveBeenCalledWith('wordpang_achievements');
   });
 
   it('loadAchievements should return parsed achievements', async () => {
@@ -271,13 +271,13 @@ describe('Achievements Storage', () => {
     expect(result).toEqual(data);
   });
 
-  it('saveAchievements should save to key wordpop_achievements', async () => {
+  it('saveAchievements should save to key wordpang_achievements', async () => {
     mockSetItem.mockResolvedValue(undefined);
 
     await saveAchievements([sampleAchievement]);
 
     expect(mockSetItem).toHaveBeenCalledWith(
-      'wordpop_achievements',
+      'wordpang_achievements',
       JSON.stringify([sampleAchievement]),
     );
   });
@@ -295,7 +295,7 @@ describe('Played Categories', () => {
     const result = await loadPlayedCategories();
 
     expect(result).toEqual([]);
-    expect(mockGetItem).toHaveBeenCalledWith('wordpop_played_categories');
+    expect(mockGetItem).toHaveBeenCalledWith('wordpang_played_categories');
   });
 
   it('addPlayedCategory should add new category', async () => {
@@ -306,7 +306,7 @@ describe('Played Categories', () => {
 
     expect(result).toContain('animal');
     expect(mockSetItem).toHaveBeenCalledWith(
-      'wordpop_played_categories',
+      'wordpang_played_categories',
       JSON.stringify(['animal']),
     );
   });
@@ -322,14 +322,14 @@ describe('Played Categories', () => {
     expect(mockSetItem).not.toHaveBeenCalled();
   });
 
-  it('addPlayedCategory should save to key wordpop_played_categories', async () => {
+  it('addPlayedCategory should save to key wordpang_played_categories', async () => {
     mockGetItem.mockResolvedValue(JSON.stringify(['food']));
     mockSetItem.mockResolvedValue(undefined);
 
     await addPlayedCategory('nature' as WordCategory);
 
     expect(mockSetItem).toHaveBeenCalledWith(
-      'wordpop_played_categories',
+      'wordpang_played_categories',
       JSON.stringify(['food', 'nature']),
     );
   });

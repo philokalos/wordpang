@@ -3,7 +3,7 @@
  *
  * Covers:
  * - 4-page carousel rendering (all content pre-rendered)
- * - Page 1: Welcome (title, description, WordPop name)
+ * - Page 1: Welcome (title, description, WordPang name)
  * - Page 2: Game rules (tile examples, color legend)
  * - Page 3: Hints (5 hint types, point costs)
  * - Page 4: Ready (4 features listed)
@@ -61,9 +61,9 @@ describe('OnboardingScreen E2E', () => {
       expect(getByText(/영어 단어를 재미있게 배우는/)).toBeTruthy();
     });
 
-    it('should display WordPop name', () => {
+    it('should display WordPang name', () => {
       const { getByText } = render(<OnboardingScreen />);
-      expect(getByText('WordPop')).toBeTruthy();
+      expect(getByText('WordPang')).toBeTruthy();
     });
 
     it('should show "다음" button', () => {
@@ -138,7 +138,7 @@ describe('OnboardingScreen E2E', () => {
   describe('All Pages Rendered', () => {
     it('should pre-render all 4 pages in ScrollView', () => {
       const { getByText } = render(<OnboardingScreen />);
-      expect(getByText('WordPop')).toBeTruthy();
+      expect(getByText('WordPang')).toBeTruthy();
       expect(getByText('글자를 입력하면 색이 바뀌어요')).toBeTruthy();
       expect(getByText(/최대 4포인트까지 힌트를 쓸 수 있어요/)).toBeTruthy();
       expect(getByText(/매일 새로운 단어를 배워봐요/)).toBeTruthy();

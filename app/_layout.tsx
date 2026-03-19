@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { COLORS } from '../constants/colors';
 import { ErrorBoundary } from '../components/ErrorBoundary';
+import { migrateStorageKeys } from '../services/storage';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,7 +18,9 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded) {
-      SplashScreen.hideAsync();
+      migrateStorageKeys().finally(() => {
+        SplashScreen.hideAsync();
+      });
     }
   }, [fontsLoaded]);
 

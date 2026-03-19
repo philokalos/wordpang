@@ -125,7 +125,7 @@ describe('recordGame', () => {
   it('should call saveStats after recording', async () => {
     mockGetItem.mockResolvedValue(null);
     await recordGame(true, 4, 'normal');
-    expect(mockSetItem).toHaveBeenCalledWith('wordpop_stats', expect.any(String));
+    expect(mockSetItem).toHaveBeenCalledWith('wordpang_stats', expect.any(String));
   });
 });
 
@@ -145,6 +145,6 @@ describe('dailyState', () => {
     };
 
     await saveDailyState(state);
-    expect(mockSetItem).toHaveBeenCalledWith('wordpop_daily_state', JSON.stringify(state));
+    expect(mockSetItem).toHaveBeenCalledWith('wordpang_daily_state', JSON.stringify(state));
   });
 });

@@ -1,5 +1,5 @@
 /**
- * DDD Domain Model Tests v3.0 (WordPop)
+ * DDD Domain Model Tests v3.0 (WordPang)
  *
  * v3.0 도메인 모델의 불변식(invariant)과 값 객체(value object) 계약을 검증.
  * - Value Objects: WordCategory, HintType (expanded), ReviewStatus

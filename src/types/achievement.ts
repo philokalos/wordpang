@@ -18,7 +18,7 @@ export const ACHIEVEMENT_DEFS: Omit<Achievement, 'unlockedAt'>[] = [
   { id: 'all_categories', title: '탐험가', description: '모든 카테고리를 플레이했어요', icon: '🗺️' },
   { id: 'review_10', title: '복습왕', description: '10번 복습을 완료했어요', icon: '🔄' },
   { id: 'games_10', title: '열정 게이머', description: '10번 게임을 플레이했어요', icon: '🎮' },
-  { id: 'games_50', title: '단어 팝 팬', description: '50번 게임을 플레이했어요', icon: '💜' },
+  { id: 'games_50', title: '단어 팡 팬', description: '50번 게임을 플레이했어요', icon: '💜' },
   { id: 'no_hints', title: '힌트 없이!', description: '힌트 없이 단어를 맞혔어요', icon: '💪' },
   { id: 'hard_win', title: '어려운 도전', description: 'Hard 모드에서 승리했어요', icon: '🏅' },
   { id: 'daily_first', title: '오늘의 단어', description: '데일리 모드를 처음 클리어했어요', icon: '📅' },

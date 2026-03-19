@@ -1,13 +1,13 @@
-# Product Requirements Document — WordPop v3.0
+# Product Requirements Document — WordPang v3.0
 
 ## 1. 제품 개요
 
-**제품명:** WordPop
+**제품명:** WordPang
 **버전:** 3.0.0
 **플랫폼:** iOS (iPhone 전용)
 **대상 사용자:** 초등학생 (7~13세)
 **핵심 가치:** 게임 기반 영어 단어 학습으로 자기주도 어휘력 향상
-**번들 ID:** com.philokalos.wordpop
+**번들 ID:** com.philokalos.wordpang
 
 ## 2. 문제 정의
 
@@ -106,12 +106,12 @@
 ### 로컬 저장 (AsyncStorage)
 | 키 | 데이터 |
 |-----|--------|
-| wordpop_stats | 총 플레이, 승리, 연속기록, 추측 분포 |
-| wordpop_daily_state | 일일 모드 상태 |
-| wordpop_learned_words | 학습 완료 단어 목록 |
-| wordpop_review_entries | 복습 스케줄 (간격 반복) |
-| wordpop_achievements | 해금된 업적 |
-| wordpop_played_categories | 플레이한 카테고리 |
+| wordpang_stats | 총 플레이, 승리, 연속기록, 추측 분포 |
+| wordpang_daily_state | 일일 모드 상태 |
+| wordpang_learned_words | 학습 완료 단어 목록 |
+| wordpang_review_entries | 복습 스케줄 (간격 반복) |
+| wordpang_achievements | 해금된 업적 |
+| wordpang_played_categories | 플레이한 카테고리 |
 
 ## 7. 디자인 시스템 — Sketchy
 

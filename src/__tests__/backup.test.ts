@@ -2,7 +2,7 @@
  * Backup Service Tests (DDD Domain Service)
  *
  * Tests for backup/restore functionality:
- * - exportAllData: serializes wordpop_ keys to JSON
+ * - exportAllData: serializes wordpang_ keys to JSON
  * - importAllData: validates and restores backup JSON
  * - getBackupSummary: summarizes stored app data
  */
@@ -28,8 +28,8 @@ describe('exportAllData', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('should return JSON string with version, date, and data fields', async () => {
-    mockGetAllKeys.mockResolvedValue(['wordpop_stats']);
-    mockMultiGet.mockResolvedValue([['wordpop_stats', '{"totalPlayed":5}']]);
+    mockGetAllKeys.mockResolvedValue(['wordpang_stats']);
+    mockMultiGet.mockResolvedValue([['wordpang_stats', '{"totalPlayed":5}']]);
 
     const result = await exportAllData();
     const parsed = JSON.parse(result);
@@ -40,35 +40,35 @@ describe('exportAllData', () => {
     expect(typeof parsed.exportDate).toBe('string');
   });
 
-  it('should only include keys starting with wordpop_', async () => {
+  it('should only include keys starting with wordpang_', async () => {
     mockGetAllKeys.mockResolvedValue([
-      'wordpop_stats',
-      'wordpop_learned_words',
+      'wordpang_stats',
+      'wordpang_learned_words',
       'other_key',
       'random_data',
     ]);
     mockMultiGet.mockResolvedValue([
-      ['wordpop_stats', '{"totalPlayed":5}'],
-      ['wordpop_learned_words', '[]'],
+      ['wordpang_stats', '{"totalPlayed":5}'],
+      ['wordpang_learned_words', '[]'],
     ]);
 
     const result = await exportAllData();
     const parsed = JSON.parse(result);
 
-    expect(Object.keys(parsed.data)).toEqual(['wordpop_stats', 'wordpop_learned_words']);
-    // getAllKeys returns all, but multiGet should only be called with wordpop_ keys
-    expect(mockMultiGet).toHaveBeenCalledWith(['wordpop_stats', 'wordpop_learned_words']);
+    expect(Object.keys(parsed.data)).toEqual(['wordpang_stats', 'wordpang_learned_words']);
+    // getAllKeys returns all, but multiGet should only be called with wordpang_ keys
+    expect(mockMultiGet).toHaveBeenCalledWith(['wordpang_stats', 'wordpang_learned_words']);
   });
 
   it('should return valid JSON that can be parsed', async () => {
-    mockGetAllKeys.mockResolvedValue(['wordpop_stats']);
-    mockMultiGet.mockResolvedValue([['wordpop_stats', '{"totalPlayed":10}']]);
+    mockGetAllKeys.mockResolvedValue(['wordpang_stats']);
+    mockMultiGet.mockResolvedValue([['wordpang_stats', '{"totalPlayed":10}']]);
 
     const result = await exportAllData();
 
     expect(() => JSON.parse(result)).not.toThrow();
     const parsed = JSON.parse(result);
-    expect(parsed.data['wordpop_stats']).toBe('{"totalPlayed":10}');
+    expect(parsed.data['wordpang_stats']).toBe('{"totalPlayed":10}');
   });
 
   it('should handle empty storage gracefully', async () => {
@@ -96,8 +96,8 @@ describe('importAllData', () => {
       version: 1,
       exportDate: '2026-03-11T00:00:00.000Z',
       data: {
-        wordpop_stats: '{"totalPlayed":5}',
-        wordpop_learned_words: '["apple"]',
+        wordpang_stats: '{"totalPlayed":5}',
+        wordpang_learned_words: '["apple"]',
       },
     });
 
@@ -105,8 +105,8 @@ describe('importAllData', () => {
 
     expect(result).toBe(true);
     expect(mockMultiSet).toHaveBeenCalledWith([
-      ['wordpop_stats', '{"totalPlayed":5}'],
-      ['wordpop_learned_words', '["apple"]'],
+      ['wordpang_stats', '{"totalPlayed":5}'],
+      ['wordpang_learned_words', '["apple"]'],
     ]);
   });
 
@@ -129,12 +129,12 @@ describe('importAllData', () => {
     expect(mockMultiSet).not.toHaveBeenCalled();
   });
 
-  it('should reject data with non-wordpop_ keys', async () => {
+  it('should reject data with non-wordpang_ keys', async () => {
     const backup = JSON.stringify({
       version: 1,
       exportDate: '2026-03-11T00:00:00.000Z',
       data: {
-        wordpop_stats: '{"totalPlayed":5}',
+        wordpang_stats: '{"totalPlayed":5}',
         malicious_key: 'bad data',
       },
     });
@@ -152,7 +152,7 @@ describe('importAllData', () => {
       version: 1,
       exportDate: '2026-03-11T00:00:00.000Z',
       data: {
-        wordpop_stats: '{"totalPlayed":5}',
+        wordpang_stats: '{"totalPlayed":5}',
       },
     });
 
@@ -171,15 +171,15 @@ describe('getBackupSummary', () => {
   it('should return correct counts from storage', async () => {
     mockGetItem.mockImplementation(async (key: string) => {
       switch (key) {
-        case 'wordpop_stats':
+        case 'wordpang_stats':
           return JSON.stringify({ totalPlayed: 42 });
-        case 'wordpop_learned_words':
+        case 'wordpang_learned_words':
           return JSON.stringify([
             { word: 'apple' },
             { word: 'grape' },
             { word: 'tiger' },
           ]);
-        case 'wordpop_achievements':
+        case 'wordpang_achievements':
           return JSON.stringify([
             { id: 'first_win', unlocked: true },
             { id: 'streak_3', unlocked: true },

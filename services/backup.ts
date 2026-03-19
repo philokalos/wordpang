@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const WORDPOP_PREFIX = 'wordpop_';
+const WORDPANG_PREFIX = 'wordpang_';
 
 export interface BackupSummary {
   totalGames: number;
@@ -27,14 +27,14 @@ function isBackupData(value: unknown): value is BackupData {
 }
 
 /**
- * Export all wordpop_ prefixed data from AsyncStorage as a JSON string.
+ * Export all wordpang_ prefixed data from AsyncStorage as a JSON string.
  */
 export async function exportAllData(): Promise<string> {
   try {
     const allKeys = await AsyncStorage.getAllKeys();
-    const wordpopKeys = allKeys.filter((key) => key.startsWith(WORDPOP_PREFIX));
+    const wordpangKeys = allKeys.filter((key) => key.startsWith(WORDPANG_PREFIX));
 
-    const pairs = await AsyncStorage.multiGet(wordpopKeys);
+    const pairs = await AsyncStorage.multiGet(wordpangKeys);
     const data: Record<string, string> = {};
     for (const [key, value] of pairs) {
       if (value !== null) {
@@ -69,9 +69,9 @@ export async function importAllData(jsonString: string): Promise<boolean> {
 
     const entries = Object.entries(parsed.data);
 
-    // Validate all keys have the wordpop_ prefix
+    // Validate all keys have the wordpang_ prefix
     for (const [key] of entries) {
-      if (!key.startsWith(WORDPOP_PREFIX)) {
+      if (!key.startsWith(WORDPANG_PREFIX)) {
         throw new Error(`Invalid key found: ${key}`);
       }
     }
@@ -99,9 +99,9 @@ export async function importAllData(jsonString: string): Promise<boolean> {
  */
 export async function getBackupSummary(): Promise<BackupSummary> {
   try {
-    const statsRaw = await AsyncStorage.getItem('wordpop_stats');
-    const learnedRaw = await AsyncStorage.getItem('wordpop_learned_words');
-    const achievementsRaw = await AsyncStorage.getItem('wordpop_achievements');
+    const statsRaw = await AsyncStorage.getItem('wordpang_stats');
+    const learnedRaw = await AsyncStorage.getItem('wordpang_learned_words');
+    const achievementsRaw = await AsyncStorage.getItem('wordpang_achievements');
 
     let totalGames = 0;
     if (statsRaw) {

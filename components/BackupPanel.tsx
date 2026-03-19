@@ -25,7 +25,7 @@ export default function BackupPanel() {
       const json = await exportAllData();
       await Share.share({
         message: json,
-        title: 'WordPop 백업 데이터',
+        title: 'WordPang 백업 데이터',
       });
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : '알 수 없는 오류';

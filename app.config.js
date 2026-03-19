@@ -1,11 +1,11 @@
 export default {
   expo: {
-    name: 'WordPop',
-    slug: 'wordpop',
+    name: 'WordPang',
+    slug: 'wordpang',
     version: '3.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
-    scheme: 'wordpop',
+    scheme: 'wordpang',
     userInterfaceStyle: 'light',
     newArchEnabled: true,
     splash: {
@@ -15,7 +15,7 @@ export default {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: 'com.philokalos.wordpop',
+      bundleIdentifier: 'com.philokalos.wordpang',
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
       },

@@ -67,7 +67,7 @@ describe('useOnboarding', () => {
       await result.current.completeOnboarding();
     });
 
-    expect(mockSetItem).toHaveBeenCalledWith('wordpop_onboarding_done', 'true');
+    expect(mockSetItem).toHaveBeenCalledWith('wordpang_onboarding_done', 'true');
   });
 
   it('should set isOnboardingDone to true after completeOnboarding', async () => {

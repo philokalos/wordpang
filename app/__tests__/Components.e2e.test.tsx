@@ -216,8 +216,8 @@ import Header from '../../components/Header';
 describe('Header E2E', () => {
   it('should display title and subtitle', () => {
     const { getByText } = render(<Header />);
-    expect(getByText('WordPop')).toBeTruthy();
-    expect(getByText('영어 단어 팝!')).toBeTruthy();
+    expect(getByText('WordPang')).toBeTruthy();
+    expect(getByText('영어 단어 팡!')).toBeTruthy();
   });
 
   it('should show stats button when enabled', () => {

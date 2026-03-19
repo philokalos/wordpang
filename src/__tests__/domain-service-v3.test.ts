@@ -1,5 +1,5 @@
 /**
- * DDD Domain Service Tests v3.0 (WordPop)
+ * DDD Domain Service Tests v3.0 (WordPang)
  *
  * Behavior contracts and invariants for:
  * 1. Spaced Repetition Service

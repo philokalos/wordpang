@@ -1,4 +1,4 @@
-# Architecture — WordPop
+# Architecture — WordPang
 
 ## 개요
 
@@ -25,7 +25,7 @@ Expo 52 + React Native 0.76 기반 iOS 영어 단어 학습 앱. expo-router v4 
 │  sound │ daily-word │ share │ backup        │
 ├─────────────────────────────────────────────┤
 │            Data Layer                        │
-│  AsyncStorage (wordpop_ prefix)             │
+│  AsyncStorage (wordpang_ prefix)             │
 │  Word Data (360 words × 3 difficulties)     │
 └─────────────────────────────────────────────┘
 ```
@@ -142,12 +142,12 @@ AsyncStorage 기반 완전 로컬 저장. 서버 없음.
 
 | 키 | 데이터 타입 | 용도 |
 |----|-----------|------|
-| wordpop_stats | GameStats | 승률, 연속기록, 분포 |
-| wordpop_daily_state | DailyState | 일일 모드 상태 |
-| wordpop_learned_words | LearnedWord[] | 학습 완료 단어 |
-| wordpop_review_entries | ReviewEntry[] | 복습 스케줄 |
-| wordpop_achievements | Achievement[] | 해금 업적 |
-| wordpop_played_categories | string[] | 플레이한 카테고리 |
+| wordpang_stats | GameStats | 승률, 연속기록, 분포 |
+| wordpang_daily_state | DailyState | 일일 모드 상태 |
+| wordpang_learned_words | LearnedWord[] | 학습 완료 단어 |
+| wordpang_review_entries | ReviewEntry[] | 복습 스케줄 |
+| wordpang_achievements | Achievement[] | 해금 업적 |
+| wordpang_played_categories | string[] | 플레이한 카테고리 |
 
 ## 디자인 시스템 — Sketchy
 

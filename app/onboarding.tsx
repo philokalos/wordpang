@@ -221,7 +221,7 @@ const PAGES: OnboardingPage[] = [
     content: (
       <View style={styles.welcomeContent}>
         <DoodleDecoration type="star" size={48} color={CRAYON.yellow} seed={1} />
-        <Text style={styles.appName}>WordPop</Text>
+        <Text style={styles.appName}>WordPang</Text>
         <DoodleDecoration type="star" size={48} color={CRAYON.pink} seed={2} />
       </View>
     ),

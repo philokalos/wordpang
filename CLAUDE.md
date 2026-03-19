@@ -1,4 +1,4 @@
-# WordPop
+# WordPang
 
 초등학생용 영어 단어 학습 앱 (iOS) — 교육 연구 기반
 

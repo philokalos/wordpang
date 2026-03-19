@@ -1,5 +1,5 @@
 /**
- * Sketchy design system tokens for WordPop hand-drawn style.
+ * Sketchy design system tokens for WordPang hand-drawn style.
  */
 
 export const SKETCHY_FONTS = {

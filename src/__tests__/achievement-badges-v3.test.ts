@@ -1,7 +1,7 @@
 /**
  * DDD Domain Service Tests — New Achievement Badges (v3.0)
  *
- * Tests for the 6 new achievement badges added in WordPop v3:
+ * Tests for the 6 new achievement badges added in WordPang v3:
  * 1. speed_learner — 2 guesses or fewer, 5+ times
  * 2. no_hints_10 — 10+ wins without hints
  * 3. category_master_animal — all animal words learned

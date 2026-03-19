@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const ONBOARDING_KEY = 'wordpop_onboarding_done';
+const ONBOARDING_KEY = 'wordpang_onboarding_done';
 
 interface UseOnboardingResult {
   isLoading: boolean;
