@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, Text, Share, Alert, TextInput, Modal, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Share, Alert, TextInput, Modal, Pressable, KeyboardAvoidingView, Platform } from 'react-native';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import SketchyButton from './sketchy/SketchyButton';
@@ -102,7 +102,7 @@ export default function BackupPanel() {
         animationType="fade"
         onRequestClose={() => setShowImportModal(false)}
       >
-        <View style={styles.modalOverlay}>
+        <KeyboardAvoidingView style={styles.modalOverlay} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>데이터 가져오기</Text>
             <Text style={styles.modalDesc}>
@@ -139,7 +139,7 @@ export default function BackupPanel() {
               </Pressable>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );

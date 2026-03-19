@@ -19,7 +19,7 @@ export default function StatsScreen() {
 
   return (
     <PaperBackground>
-      <SafeAreaView style={styles.container} edges={['top']}>
+      <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
         <View style={styles.header}>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
             <Text style={styles.backText}>{'\u2190'} 뒤로</Text>

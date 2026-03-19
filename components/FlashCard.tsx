@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Dimensions } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   cardContainer: {
-    width: 280,
+    width: Math.min(280, Dimensions.get('window').width - 64),
     height: 180,
   },
   card: {

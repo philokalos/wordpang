@@ -98,7 +98,7 @@ export default function PracticeScreen() {
   if (totalWords === 0) {
     return (
       <PaperBackground>
-        <SafeAreaView style={styles.container} edges={['top']}>
+        <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
           <View style={styles.header}>
             <Pressable onPress={() => router.back()} style={styles.backButton}>
               <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
@@ -125,7 +125,7 @@ export default function PracticeScreen() {
     const correctCount = results.filter((r) => r.correct).length;
     return (
       <PaperBackground>
-        <SafeAreaView style={styles.container} edges={['top']}>
+        <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
           <SessionSummary
             results={results}
             correctCount={correctCount}

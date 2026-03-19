@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.tileBorder,
     backgroundColor: COLORS.surface,
     alignItems: 'center',
-    minWidth: 90,
+    flex: 1,
   },
   cardSelected: {
     backgroundColor: COLORS.purple,

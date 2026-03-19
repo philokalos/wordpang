@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Modal, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Modal, Pressable, ScrollView } from 'react-native';
 import type { GameStatus, LetterStatus } from '../src/types/game';
 import type { WordEntry } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
@@ -50,6 +50,10 @@ export default function ResultModal({
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
         <View style={[styles.card, SKETCHY_RADIUS.large]} accessibilityLabel="게임 결과">
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.cardContent}
+          >
           {isWin && (
             <View style={styles.celebrationRow}>
               <DoodleDecoration type="star" size={22} seed={301} color="#FFD54F" style={styles.celebrationStar} />
@@ -131,6 +135,7 @@ export default function ResultModal({
               </>
             )}
           </View>
+          </ScrollView>
         </View>
       </View>
     </Modal>
@@ -154,6 +159,9 @@ const styles = StyleSheet.create({
     maxWidth: 340,
     alignItems: 'center',
     maxHeight: '85%',
+  },
+  cardContent: {
+    alignItems: 'center',
   },
   celebrationRow: {
     flexDirection: 'row',

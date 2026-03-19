@@ -48,7 +48,7 @@ export default function HomeScreen() {
 
   return (
     <PaperBackground>
-      <SafeAreaView style={styles.container} edges={['top']}>
+      <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
         <Header />
 
         {stats.currentStreak > 0 && (

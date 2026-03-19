@@ -160,16 +160,18 @@ export default function GameScreen() {
             </View>
           ) : null}
 
-          <GameBoard
-            guesses={game.guesses}
-            evaluations={game.evaluations}
-            currentGuess={game.currentGuess}
-            maxAttempts={game.maxAttempts}
-            wordLength={game.wordLength}
-            isRevealing={game.isRevealing}
-            isShaking={game.isShaking}
-            gameStatus={game.gameStatus}
-          />
+          <View style={styles.boardArea}>
+            <GameBoard
+              guesses={game.guesses}
+              evaluations={game.evaluations}
+              currentGuess={game.currentGuess}
+              maxAttempts={game.maxAttempts}
+              wordLength={game.wordLength}
+              isRevealing={game.isRevealing}
+              isShaking={game.isShaking}
+              gameStatus={game.gameStatus}
+            />
+          </View>
 
           <HintPanel
             hints={game.hints}
@@ -220,8 +222,11 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: 'center',
-    gap: 12,
     paddingHorizontal: 8,
+  },
+  boardArea: {
+    flexShrink: 1,
+    paddingVertical: 4,
   },
   toast: {
     backgroundColor: COLORS.textPrimary,
@@ -238,6 +243,7 @@ const styles = StyleSheet.create({
   },
   keyboardArea: {
     marginTop: 'auto',
+    flexShrink: 0,
     paddingBottom: 4,
     width: '100%',
   },
