@@ -91,13 +91,18 @@ export default function HintPanel({
       </Text>
 
       {hints.length > 0 && (
-        <View style={styles.hintList}>
+        <ScrollView
+          style={styles.hintScroll}
+          contentContainerStyle={styles.hintList}
+          showsVerticalScrollIndicator={false}
+          nestedScrollEnabled
+        >
           {hints.map((hint, i) => (
             <View key={i} style={[styles.hintCard, SKETCHY_RADIUS.small]}>
               <Text style={styles.hintText}>{hint.content}</Text>
             </View>
           ))}
-        </View>
+        </ScrollView>
       )}
     </View>
   );
@@ -146,9 +151,12 @@ const styles = StyleSheet.create({
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
   },
+  hintScroll: {
+    maxHeight: 88,
+    width: '100%',
+  },
   hintList: {
     gap: 6,
-    width: '100%',
   },
   hintCard: {
     backgroundColor: COLORS.pinkLight,

@@ -61,48 +61,53 @@ export default function Keyboard({
   const specialKeyWidth = useMemo(() => getKeyWidth(true), []);
   const normalKeyWidth = useMemo(() => getKeyWidth(false), []);
 
+  const renderKey = (key: string) => {
+    const isSpecial = key === 'ENTER' || key === 'BACK';
+    const status = isSpecial ? undefined : keyStatuses[key];
+    const displayKey = key === 'BACK' ? '⌫' : key === 'ENTER' ? '↵' : key;
+    const bgColor = status ? KEY_BG[status] : COLORS.keyDefault;
+    const textColor = status ? COLORS.keyStatusText : COLORS.keyDefaultText;
+
+    return (
+      <Pressable
+        key={key}
+        onPress={() => handlePress(key)}
+        style={({ pressed }) => [
+          styles.key,
+          KEY_RADII[key],
+          {
+            width: isSpecial ? specialKeyWidth : normalKeyWidth,
+            backgroundColor: bgColor,
+            opacity: pressed ? 0.7 : 1,
+            transform: [{ scale: pressed ? 0.95 : 1 }],
+          },
+        ]}
+        accessibilityLabel={key === 'BACK' ? 'backspace' : key.toLowerCase()}
+        accessibilityRole="button"
+      >
+        <Text
+          style={[
+            styles.keyText,
+            { color: textColor },
+            isSpecial && styles.specialKeyText,
+          ]}
+        >
+          {displayKey}
+        </Text>
+      </Pressable>
+    );
+  };
+
   return (
     <View style={styles.container} accessibilityLabel="keyboard">
-      {ROWS.map((row, rowIndex) => (
-        <View key={rowIndex} style={styles.row}>
-          {row.map((key) => {
-            const isSpecial = key === 'ENTER' || key === 'BACK';
-            const status = isSpecial ? undefined : keyStatuses[key];
-            const displayKey = key === 'BACK' ? '⌫' : key === 'ENTER' ? '↵' : key;
-            const bgColor = status ? KEY_BG[status] : COLORS.keyDefault;
-            const textColor = status ? COLORS.keyStatusText : COLORS.keyDefaultText;
-
-            return (
-              <Pressable
-                key={key}
-                onPress={() => handlePress(key)}
-                style={({ pressed }) => [
-                  styles.key,
-                  KEY_RADII[key],
-                  {
-                    width: isSpecial ? specialKeyWidth : normalKeyWidth,
-                    backgroundColor: bgColor,
-                    opacity: pressed ? 0.7 : 1,
-                    transform: [{ scale: pressed ? 0.95 : 1 }],
-                  },
-                ]}
-                accessibilityLabel={key === 'BACK' ? 'backspace' : key.toLowerCase()}
-                accessibilityRole="button"
-              >
-                <Text
-                  style={[
-                    styles.keyText,
-                    { color: textColor },
-                    isSpecial && styles.specialKeyText,
-                  ]}
-                >
-                  {displayKey}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-      ))}
+      {ROWS.map((row, rowIndex) => {
+        const hasSpecial = row.some((k) => k === 'ENTER' || k === 'BACK');
+        return (
+          <View key={rowIndex} style={hasSpecial ? styles.rowSpecial : styles.row}>
+            {row.map((key) => renderKey(key))}
+          </View>
+        );
+      })}
     </View>
   );
 }
@@ -117,6 +122,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: KEY_GAP,
     justifyContent: 'center',
+  },
+  rowSpecial: {
+    flexDirection: 'row',
+    gap: KEY_GAP,
+    justifyContent: 'space-between',
+    width: '100%',
   },
   key: {
     height: KEY_HEIGHT,
