@@ -39,9 +39,10 @@ export default {
         },
       ],
     ],
+    owner: 'philokalos',
     extra: {
       eas: {
-        projectId: 'deb53a91-bcbb-4cb4-a020-7aeae4085b81',
+        projectId: '9bee029b-63b4-4a2e-aa93-5b6dd688205c',
       },
     },
     experiments: {
