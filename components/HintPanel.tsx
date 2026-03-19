@@ -5,6 +5,7 @@ import { MAX_HINT_POINTS } from '../src/types/game';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import { seededRandom } from '../utils/sketchy';
+import { useResponsive } from '../hooks/useResponsive';
 
 interface HintPanelProps {
   hints: Hint[];
@@ -48,10 +49,11 @@ export default function HintPanel({
   gameStatus,
   onRequestHint,
 }: HintPanelProps) {
+  const { isTablet } = useResponsive();
   const remainingPoints = MAX_HINT_POINTS - hintPointsUsed;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { maxWidth: isTablet ? 520 : 360 }]}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
     width: '100%',
-    maxWidth: 360,
+    maxWidth: 400,
     alignSelf: 'center',
   },
   buttonRow: {
@@ -152,7 +154,7 @@ const styles = StyleSheet.create({
     color: COLORS.textMuted,
   },
   hintScroll: {
-    maxHeight: 88,
+    maxHeight: 96,
     width: '100%',
   },
   hintList: {

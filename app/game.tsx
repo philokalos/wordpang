@@ -14,6 +14,7 @@ import { useDailyWord } from '../hooks/useDailyWord';
 import { useLearnedWords } from '../hooks/useLearnedWords';
 import { useAchievements } from '../hooks/useAchievements';
 import { useReview } from '../hooks/useReview';
+import { useResponsive } from '../hooks/useResponsive';
 import PaperBackground from '../components/sketchy/PaperBackground';
 import Header from '../components/Header';
 import GameBoard from '../components/GameBoard';
@@ -29,6 +30,7 @@ export default function GameScreen() {
   const isDaily = params.daily === '1';
   const category = params.category as WordCategory | undefined;
 
+  const { isTablet, maxContentWidth } = useResponsive();
   const game = useWordle({ difficulty, category });
   const { play } = useSound();
   const { record, getDifficultyRecommendation } = useStats();
@@ -153,7 +155,7 @@ export default function GameScreen() {
       <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
         <Header showStats onStatsPress={handleStatsPress} />
 
-        <View style={styles.content}>
+        <View style={[styles.content, { maxWidth: isTablet ? maxContentWidth : undefined, alignSelf: isTablet ? 'center' as const : undefined }]}>
           {game.toastMessage ? (
             <View style={[styles.toast, SKETCHY_RADIUS.small]}>
               <Text style={styles.toastText}>{game.toastMessage}</Text>

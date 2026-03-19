@@ -14,7 +14,7 @@ export default {
       backgroundColor: '#FFF0F5',
     },
     ios: {
-      supportsTablet: false,
+      supportsTablet: true,
       bundleIdentifier: 'com.philokalos.wordpop',
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,

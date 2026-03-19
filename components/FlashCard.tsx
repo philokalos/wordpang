@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -9,6 +9,7 @@ import Animated, {
 import type { WordEntry } from '../src/types/word';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import { useResponsive } from '../hooks/useResponsive';
 
 interface FlashCardProps {
   word: WordEntry;
@@ -18,7 +19,10 @@ interface FlashCardProps {
 }
 
 export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardProps) {
+  const { isTablet, screenWidth } = useResponsive();
   const [isFlipped, setIsFlipped] = useState(false);
+  const cardWidth = isTablet ? Math.min(400, screenWidth - 100) : Math.min(280, screenWidth - 64);
+  const cardHeight = isTablet ? 260 : 180;
   const rotation = useSharedValue(0);
 
   const frontStyle = useAnimatedStyle(() => ({
@@ -44,15 +48,15 @@ export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardP
         accessibilityRole="button"
         accessibilityLabel="플래시카드, 탭하여 뒤집기"
         accessibilityHint="카드를 뒤집어 뜻을 확인합니다"
-        style={styles.cardContainer}
+        style={{ width: cardWidth, height: cardHeight }}
       >
         <Animated.View style={[styles.card, styles.front, SKETCHY_RADIUS.large, frontStyle]}>
-          <Text style={styles.wordText}>{word.word}</Text>
+          <Text style={[styles.wordText, { fontSize: isTablet ? 44 : 34 }]}>{word.word}</Text>
           <Text style={styles.tapHint}>탭하여 뒤집기</Text>
         </Animated.View>
 
         <Animated.View style={[styles.card, styles.back, SKETCHY_RADIUS.large, backStyle]}>
-          <Text style={styles.meaning}>{word.meaning}</Text>
+          <Text style={[styles.meaning, { fontSize: isTablet ? 30 : 24 }]}>{word.meaning}</Text>
           <Text style={styles.pronunciation}>[{word.pronunciation}]</Text>
           <Text style={styles.example}>"{word.example}"</Text>
         </Animated.View>
@@ -87,10 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 16,
   },
-  cardContainer: {
-    width: Math.min(280, Dimensions.get('window').width - 64),
-    height: 180,
-  },
+  // cardContainer dimensions are now set inline via useResponsive
   card: {
     position: 'absolute',
     width: '100%',

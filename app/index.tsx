@@ -14,11 +14,13 @@ import DifficultyCard from '../components/DifficultyCard';
 import CategoryChip from '../components/CategoryChip';
 import { useStats } from '../hooks/useStats';
 import { useOnboarding } from '../hooks/useOnboarding';
+import { useResponsive } from '../hooks/useResponsive';
 
 const DIFFICULTIES: Difficulty[] = ['easy', 'normal', 'hard'];
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { isTablet, maxContentWidth } = useResponsive();
   const { stats } = useStats();
   const { isLoading, isOnboardingDone } = useOnboarding();
   const [selected, setSelected] = useState<Difficulty>('normal');
@@ -59,8 +61,8 @@ export default function HomeScreen() {
           </View>
         )}
 
-        <View style={styles.content}>
-          <Text style={styles.label}>난이도를 선택하세요!</Text>
+        <View style={[styles.content, isTablet && { maxWidth: maxContentWidth, alignSelf: 'center' }]}>
+          <Text style={[styles.label, { fontSize: isTablet ? 24 : 20 }]}>난이도를 선택하세요!</Text>
 
           <View style={styles.cards}>
             {DIFFICULTIES.map((diff) => (

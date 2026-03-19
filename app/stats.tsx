@@ -6,6 +6,7 @@ import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS } from '../constants/theme';
 import { useStats } from '../hooks/useStats';
 import { useAchievements } from '../hooks/useAchievements';
+import { useResponsive } from '../hooks/useResponsive';
 import PaperBackground from '../components/sketchy/PaperBackground';
 import StatsDisplay from '../components/StatsDisplay';
 import AchievementBadge from '../components/AchievementBadge';
@@ -14,6 +15,7 @@ import BackupPanel from '../components/BackupPanel';
 
 export default function StatsScreen() {
   const router = useRouter();
+  const { isTablet, maxContentWidth } = useResponsive();
   const { stats, winRate } = useStats();
   const { achievements, unlockedCount, totalCount } = useAchievements();
 
@@ -28,7 +30,7 @@ export default function StatsScreen() {
           <View style={styles.spacer} />
         </View>
 
-        <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
+        <ScrollView style={styles.scroll} contentContainerStyle={[styles.content, isTablet && { maxWidth: maxContentWidth, alignSelf: 'center', width: '100%' }]}>
           <StatsDisplay stats={stats} winRate={winRate} />
 
           <CategoryProgress />

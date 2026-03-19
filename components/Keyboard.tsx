@@ -1,11 +1,12 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import type { LetterStatus } from '../src/types/game';
 import { COLORS } from '../constants/colors';
-import { KEY_HEIGHT, KEY_GAP, getKeyWidth } from '../constants/layout';
+import { KEY_GAP, getKeyWidth } from '../constants/layout';
 import { SKETCHY_FONTS } from '../constants/theme';
 import { seededRandom } from '../utils/sketchy';
+import { useResponsive } from '../hooks/useResponsive';
 
 interface KeyboardProps {
   keyStatuses: Record<string, LetterStatus>;
@@ -47,6 +48,8 @@ export default function Keyboard({
   onEnter,
   onBackspace,
 }: KeyboardProps) {
+  const { screenWidth, isTablet, keyHeight } = useResponsive();
+
   const handlePress = useCallback((key: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (key === 'ENTER') {
@@ -58,8 +61,8 @@ export default function Keyboard({
     }
   }, [onLetter, onEnter, onBackspace]);
 
-  const specialKeyWidth = useMemo(() => getKeyWidth(true), []);
-  const normalKeyWidth = useMemo(() => getKeyWidth(false), []);
+  const specialKeyWidth = getKeyWidth(true, screenWidth);
+  const normalKeyWidth = getKeyWidth(false, screenWidth);
 
   const renderKey = (key: string) => {
     const isSpecial = key === 'ENTER' || key === 'BACK';
@@ -77,6 +80,7 @@ export default function Keyboard({
           KEY_RADII[key],
           {
             width: isSpecial ? specialKeyWidth : normalKeyWidth,
+            height: keyHeight,
             backgroundColor: bgColor,
             opacity: pressed ? 0.7 : 1,
             transform: [{ scale: pressed ? 0.95 : 1 }],
@@ -88,8 +92,8 @@ export default function Keyboard({
         <Text
           style={[
             styles.keyText,
-            { color: textColor },
-            isSpecial && styles.specialKeyText,
+            { color: textColor, fontSize: isTablet ? 19 : 16 },
+            isSpecial && { fontSize: isTablet ? 21 : 18 },
           ]}
         >
           {displayKey}
@@ -99,7 +103,7 @@ export default function Keyboard({
   };
 
   return (
-    <View style={styles.container} accessibilityLabel="keyboard">
+    <View style={[styles.container, { maxWidth: isTablet ? 600 : undefined }]} accessibilityLabel="keyboard">
       {ROWS.map((row, rowIndex) => {
         const hasSpecial = row.some((k) => k === 'ENTER' || k === 'BACK');
         return (
@@ -116,7 +120,9 @@ const styles = StyleSheet.create({
   container: {
     gap: KEY_GAP,
     alignItems: 'center',
+    alignSelf: 'center',
     paddingHorizontal: 4,
+    width: '100%',
   },
   row: {
     flexDirection: 'row',
@@ -130,17 +136,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   key: {
-    height: KEY_HEIGHT,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1.5,
     borderColor: COLORS.tileBorder,
   },
   keyText: {
-    fontSize: 16,
     fontFamily: SKETCHY_FONTS.bold,
-  },
-  specialKeyText: {
-    fontSize: 18,
   },
 });

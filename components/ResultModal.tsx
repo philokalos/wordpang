@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.tileBorder,
     padding: 24,
     width: '100%',
-    maxWidth: 340,
+    maxWidth: 480,
     alignItems: 'center',
     maxHeight: '85%',
   },
