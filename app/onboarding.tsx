@@ -216,7 +216,7 @@ function HintItem({ emoji, label }: { emoji: string; label: string }) {
 
 const PAGES: OnboardingPage[] = [
   {
-    title: '워드팝에 오신 걸\n환영해요! 🎉',
+    title: '워드팡에 오신 걸\n환영해요! 🎉',
     description: '영어 단어를 재미있게 배우는\n퍼즐 게임이에요',
     content: (
       <View style={styles.welcomeContent}>

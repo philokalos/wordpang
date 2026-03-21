@@ -57,7 +57,7 @@ describe('OnboardingScreen E2E', () => {
   describe('Page 1 - Welcome', () => {
     it('should render welcome title and description', () => {
       const { getByText } = render(<OnboardingScreen />);
-      expect(getByText(/워드팝에 오신 걸/)).toBeTruthy();
+      expect(getByText(/워드팡에 오신 걸/)).toBeTruthy();
       expect(getByText(/영어 단어를 재미있게 배우는/)).toBeTruthy();
     });
 
