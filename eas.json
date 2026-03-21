@@ -21,7 +21,8 @@
   "submit": {
     "production": {
       "ios": {
-        "appleId": "macrothinkmicrodesign0@gmail.com"
+        "appleId": "macrothinkmicrodesign0@gmail.com",
+        "ascAppId": "6760402922"
       }
     }
   }

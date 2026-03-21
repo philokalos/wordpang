@@ -1,7 +1,7 @@
 export default {
   expo: {
     name: 'WordPang',
-    slug: 'wordpang',
+    slug: 'wordpop',
     version: '3.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
@@ -15,7 +15,7 @@ export default {
     },
     ios: {
       supportsTablet: true,
-      bundleIdentifier: 'com.philokalos.wordpang',
+      bundleIdentifier: 'com.philokalos.wordpop',
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
       },
@@ -39,10 +39,9 @@ export default {
         },
       ],
     ],
-    owner: 'philokalos',
     extra: {
       eas: {
-        projectId: '9bee029b-63b4-4a2e-aa93-5b6dd688205c',
+        projectId: 'deb53a91-bcbb-4cb4-a020-7aeae4085b81',
       },
     },
     experiments: {
