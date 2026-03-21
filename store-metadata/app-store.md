@@ -6,8 +6,8 @@
 |------|-----|
 | 앱 이름 | WordPang |
 | 부제목 | 퍼즐로 배우는 초등 영단어 |
-| 번들 ID | com.philokalos.wordpang |
-| SKU | com.philokalos.wordpang |
+| 번들 ID | com.philokalos.wordpop |
+| SKU | com.philokalos.wordpop |
 | 카테고리 (기본) | Education |
 | 카테고리 (보조) | Word Games |
 | 연령 등급 | 4+ |
@@ -17,162 +17,226 @@
 ## 앱 설명 (한국어)
 
 ### 프로모션 텍스트 (170자 이내)
-> 이게 게임이야 영어 공부야? 퍼즐을 풀면 영어 단어가 저절로! 360개 단어, 8가지 카테고리, 과학적 복습까지 — 하루 10분이면 충분해요.
+> 단어장은 이제 그만! 퍼즐을 풀며 영어 단어를 발견하는 새로운 방법. 하루 10분, 게임 한 판이면 단어 하나가 내 것! 광고 없음 · 오프라인 · 완전 무료
 
 ### 설명 (4000자 이내)
 > 영어 단어, 외우지 말고 맞혀보세요!
 >
-> WordPang은 글자를 추측하며 단어를 알아가는 퍼즐 게임이에요. 초등학생 눈높이에 맞춰 설계했고, 교육 연구가 증명한 학습법을 게임 안에 녹여냈어요.
+> 듀오링고는 너무 쉽고, 학원 앱은 재미없다면?
+> WordPang은 퍼즐을 풀며 영어 단어를 "발견"하는 게임이에요.
 >
-> "우리 아이가 스스로 영어 앱을 켜요" — 이런 경험을 만들고 싶었어요.
+> 글자 하나를 넣으면 초록·주황·갈색으로 힌트가 돌아와요.
+> 추리하고, 추측하고, 마침내 정답을 맞히는 순간 — 팡! 💥
+> 그 단어는 절대 까먹지 않아요.
 >
-> ━━━━━━━━━━━━━━━━━━━━
-> 왜 WordPang인가요?
-> ━━━━━━━━━━━━━━━━━━━━
->
-> ◆ 외우는 게 아니라 발견하는 영어
-> 글자 하나하나를 추측하고, 색깔 피드백을 보며, 스스로 정답에 다가가요. 교정 피드백은 기억력을 494% 높인다는 연구 결과(Butler et al.)에 기반했어요.
->
-> ◆ 까먹기 전에 다시 만나요
-> 학습한 단어는 과학적 간격 반복 알고리즘이 최적의 타이밍에 다시 보여줘요. 53% 더 높은 어휘 습득률(Nakata, 2015)의 비결이에요.
->
-> ◆ 쉬운 것부터 어려운 것까지
-> 아이의 실력에 맞는 난이도를 자동으로 추천해요. 너무 쉽지도, 너무 어렵지도 않은 딱 맞는 도전 — Flow Zone Theory에 기반한 적응형 시스템이에요.
+> "우리 아이가 혼자서 영어 앱을 켜요."
+> — 그 경험을 만들기 위해 만들었어요.
 >
 > ━━━━━━━━━━━━━━━━━━━━
-> 이런 기능이 있어요
+> 🧪 교육 연구가 증명한 학습법
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 🎯 3단계 난이도
-> Easy(4글자) · Normal(5글자) · Hard(6글자)
-> 영어를 처음 접하는 아이부터 도전을 좋아하는 아이까지!
+> WordPang의 모든 기능은 논문에서 시작했어요.
 >
-> 📚 8가지 주제별 단어
-> 동물 · 음식 · 학교 · 자연 · 신체 · 집 · 동작 · 감정
-> 관심 있는 주제부터 시작하면 더 재미있어요.
+> 📌 교정 피드백 → 기억력 494% 향상
+> (Butler et al., Journal of Educational Psychology)
+> 틀려도 괜찮아요. 색깔 피드백이 정답으로 안내해요.
 >
-> 💡 8가지 똑똑한 힌트
-> 막힐 때마다 예시 문장, 한국어 뜻, 발음, 첫 글자 등 힌트를 받을 수 있어요. 포인트를 아껴서 쓰는 전략도 배울 수 있죠!
+> 📌 간격 반복 복습 → 어휘 습득률 53% 향상
+> (Nakata, 2015, Studies in Second Language Acquisition)
+> 까먹을 타이밍에 딱 다시 보여주는 똑똑한 알고리즘.
 >
-> 📖 학습 카드
-> 게임이 끝나면 정답 단어의 뜻, 발음, 예문, 품사를 한눈에 보여줘요. 단순히 맞히는 게 아니라 제대로 배워요.
+> 📌 적응형 난이도 → 몰입도 극대화
+> (Flow Zone Theory, Csikszentmihalyi)
+> 너무 쉽지도, 너무 어렵지도 않은 맞춤 도전.
 >
-> 🔄 과학적 복습
-> 에빙하우스 망각 곡선에 기반한 간격 반복 시스템이 알아서 복습 시점을 정해줘요.
+> ━━━━━━━━━━━━━━━━━━━━
+> 🎮 이렇게 놀아요
+> ━━━━━━━━━━━━━━━━━━━━
 >
-> 🏆 21개 업적 배지
-> 첫 승리, 7일 연속, 카테고리 마스터 등 도전 과제를 클리어하며 성취감을 느껴보세요!
+> 1️⃣ 난이도 선택
+> Easy(4글자) → Normal(5글자) → Hard(6글자)
+> 처음 배우는 아이부터 영어 자신감 있는 아이까지!
 >
-> 📅 매일 새로운 도전
-> 하루에 하나, 오늘의 단어에 도전하세요. 매일 풀면 연속 기록이 쌓여요!
+> 2️⃣ 주제 선택
+> 동물 🐾 음식 🍽️ 학교 🏫 자연 🌿
+> 신체 🦴 집 🏠 동작 🏃 감정 💛
+> 좋아하는 주제부터 시작하면 더 재미있어요!
+>
+> 3️⃣ 퍼즐 도전
+> 글자를 입력하면 색깔로 힌트를 줘요.
+> 🟩 맞는 위치 · 🟧 다른 위치 · 🟫 없는 글자
+> 추리력과 어휘력이 동시에 쑥쑥!
+>
+> 4️⃣ 학습 카드
+> 정답 후 뜻, 발음, 예문, 품사까지 한눈에!
+> 단순히 맞히는 게 아니라, 제대로 배워요.
+>
+> ━━━━━━━━━━━━━━━━━━━━
+> ✨ WordPang만의 특별한 기능
+> ━━━━━━━━━━━━━━━━━━━━
+>
+> 💡 8가지 스마트 힌트
+> 막힐 때 예시문, 뜻, 발음, 첫 글자 등 도움을 받아요.
+> 포인트를 아끼며 전략적으로 사용하는 것도 실력!
+>
+> 🔄 과학적 복습 시스템
+> 에빙하우스 망각 곡선 기반. 알아서 최적의 시점에 복습해요.
+> 단기 기억 → 장기 기억으로 확실하게!
+>
+> 🏆 21개 도전 배지
+> 첫 승리, 7일 연속, 카테고리 마스터, 노힌트 챔피언...
+> 배지 모으는 재미에 매일 하게 돼요!
+>
+> 📅 오늘의 단어
+> 매일 새로운 단어 1개 도전. 연속 기록을 세워보세요!
 >
 > 🏋️ 연습 모드
-> 5~10분 집중 세션으로 빠르게 실력을 키울 수 있어요.
+> 5~10분 집중 세션. 등하교길에 딱!
 >
 > ✏️ 손그림 디자인
-> 크레용으로 그린 듯한 따뜻한 UI가 학습을 더 즐겁게 만들어요.
+> 크레용으로 그린 듯한 따뜻한 디자인.
+> 아이들이 "이거 예뻐!"라고 말하는 UI에요.
 >
 > ━━━━━━━━━━━━━━━━━━━━
-> 부모님이 안심할 수 있는 이유
+> 🛡️ 부모님이 안심하는 이유
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> ✓ 완전 오프라인 — 인터넷 연결 없이도 OK
-> ✓ 개인정보 수집 제로 — 모든 데이터는 기기에만
-> ✓ 광고 없음 — 학습에만 집중
-> ✓ 앱 내 결제 없음 — 숨겨진 비용 없어요
+> ✅ 완전 무료 — 숨겨진 결제 없음
+> ✅ 광고 제로 — 학습에만 100% 집중
+> ✅ 오프라인 OK — 와이파이 없는 차 안에서도
+> ✅ 개인정보 수집 없음 — 데이터는 기기에만
+> ✅ 4+ 연령등급 — 아동 안전 설계
+>
+> 💬 링고키즈, 듀오링고를 써봤지만 우리 아이에게 안 맞았다면?
+> 💬 단어장 앱은 지루해서 3일 만에 삭제했다면?
+> 💬 게임은 좋아하는데 영어는 싫어하는 아이라면?
+>
+> WordPang을 한번 맡겨보세요.
+> 360개 엄선 단어, 하루 10분이면 충분해요!
 >
 > ━━━━━━━━━━━━━━━━━━━━
+> 📊 WordPang vs 다른 앱
+> ━━━━━━━━━━━━━━━━━━━━
 >
-> 360개의 엄선된 영어 단어로, 하루 10분씩 놀다 보면 어느새 영어 단어가 늘어있을 거예요!
+> · 단어장 앱 → 외우기만 반복 😴
+> · 듀오링고 → 영어 전반, 단어 특화 아님
+> · 링고키즈 → 유료 구독 필요 💸
+> · WordPang → 단어 퍼즐 + 과학적 복습 + 완전 무료! 🎉
 
 ### 키워드 (100자 이내)
-> 영어단어,초등영어,단어게임,영어퍼즐,워드팝,단어학습,어휘력,복습,플래시카드,영단어퀴즈
+> 영어단어,초등영어,단어게임,영어퍼즐,워드팡,단어학습,어휘력,복습,플래시카드,영단어퀴즈
 
 ## 앱 설명 (English)
 
 ### Promotional Text
-> Is it a game or a study app? Solve puzzles and watch your vocabulary grow! 360 words, 8 categories, and science-backed review — just 10 minutes a day.
+> Ditch the flashcards! Discover English words through puzzles. One game, one word — just 10 minutes a day. No ads · Offline · 100% Free
 
 ### Description
 > Stop memorizing. Start discovering!
 >
-> WordPang is a word-guessing puzzle game designed for elementary students. Every feature is grounded in educational research — from corrective feedback (494% memory boost) to spaced repetition (53% higher retention) to adaptive difficulty based on Flow Zone Theory.
+> Duolingo too easy? Workbook apps too boring?
+> WordPang is a word puzzle game where kids "discover" English words — not memorize them.
 >
-> "My kid opens this English app on their own." — That's the experience we designed for.
+> Type a letter, get color-coded feedback.
+> Green = right spot. Orange = wrong spot. Brown = not in the word.
+> Deduce, guess, solve — PANG! 💥
+> That word sticks forever.
 >
-> ━━━━━━━━━━━━━━━━━━━━
-> WHY WORDPANG?
-> ━━━━━━━━━━━━━━━━━━━━
->
-> ◆ DISCOVER, DON'T MEMORIZE
-> Guess letters one by one, get color-coded feedback, and work your way to the answer. Learning through discovery sticks — research proves it.
->
-> ◆ REVIEW AT THE RIGHT TIME
-> Our spaced repetition algorithm brings words back just before you forget them. Short-term memory becomes long-term knowledge.
->
-> ◆ ALWAYS THE RIGHT CHALLENGE
-> Too easy? We'll suggest harder words. Too tough? We'll ease up. Adaptive difficulty keeps your child in the perfect learning zone.
+> "My kid opens this English app on their own."
+> — That's the experience we built for.
 >
 > ━━━━━━━━━━━━━━━━━━━━
-> FEATURES
+> 🧪 BACKED BY RESEARCH
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 🎯 3 Difficulty Levels
-> Easy (4 letters) · Normal (5 letters) · Hard (6 letters)
+> Every feature started from a published study.
 >
-> 📚 8 Word Categories
-> Animals · Food · School · Nature · Body · Home · Action · Feeling
+> 📌 Corrective Feedback → 494% Memory Boost
+> (Butler et al., Journal of Educational Psychology)
+> Getting it wrong is part of learning. Color feedback guides the way.
 >
-> 💡 8 Smart Hints
-> Example sentences, meanings, pronunciation, first letter, and more — use them wisely!
+> 📌 Spaced Repetition → 53% Higher Retention
+> (Nakata, 2015, Studies in Second Language Acquisition)
+> Words come back just before you forget them.
 >
-> 📖 Learning Cards
-> After each game, see the word's meaning, pronunciation, example sentence, and part of speech.
->
-> 🔄 Spaced Repetition Review
-> Science-backed intervals to move words from short-term to long-term memory.
->
-> 🏆 21 Achievement Badges
-> First win, 7-day streak, category master — stay motivated with fun challenges.
->
-> 📅 Daily Word Challenge
-> A new word every day. Keep your streak alive!
->
-> 🏋️ Practice Mode
-> Focused 5-10 minute sessions for quick skill building.
->
-> ✏️ Hand-Drawn Design
-> Warm, crayon-style UI that makes learning feel like play.
+> 📌 Adaptive Difficulty → Maximum Engagement
+> (Flow Zone Theory, Csikszentmihalyi)
+> Always the right challenge — never too easy, never too hard.
 >
 > ━━━━━━━━━━━━━━━━━━━━
-> PARENTS LOVE IT BECAUSE
+> 🎮 HOW IT WORKS
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> ✓ Fully offline — no internet needed
-> ✓ Zero data collection — everything stays on device
-> ✓ No ads — pure learning
-> ✓ No in-app purchases — no hidden costs
+> 1️⃣ Pick your level
+> Easy (4 letters) → Normal (5) → Hard (6)
+>
+> 2️⃣ Choose a topic
+> Animals 🐾 Food 🍽️ School 🏫 Nature 🌿
+> Body 🦴 Home 🏠 Action 🏃 Feeling 💛
+>
+> 3️⃣ Solve the puzzle
+> 🟩 Right letter, right spot
+> 🟧 Right letter, wrong spot
+> 🟫 Not in the word
+>
+> 4️⃣ Learn the word
+> Meaning, pronunciation, example sentence, part of speech — all in one card.
+>
+> ━━━━━━━━━━━━━━━━━━━━
+> ✨ WHAT MAKES WORDPANG SPECIAL
+> ━━━━━━━━━━━━━━━━━━━━
+>
+> 💡 8 Smart Hints — example sentences, meanings, pronunciation & more
+> 🔄 Spaced Repetition — science-backed review at the perfect timing
+> 🏆 21 Achievement Badges — stay motivated with fun challenges
+> 📅 Daily Word — a new word every day, keep your streak alive
+> 🏋️ Practice Mode — focused 5-10 min sessions
+> ✏️ Hand-Drawn Design — warm, crayon-style UI kids love
+>
+> ━━━━━━━━━━━━━━━━━━━━
+> 🛡️ PARENTS LOVE IT BECAUSE
+> ━━━━━━━━━━━━━━━━━━━━
+>
+> ✅ 100% Free — no hidden payments, ever
+> ✅ Zero Ads — pure learning, zero distractions
+> ✅ Works Offline — in the car, on a plane, anywhere
+> ✅ No Data Collection — everything stays on device
+> ✅ 4+ Age Rating — designed safe for children
 >
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 360 curated English words. 10 minutes a day. Watch vocabulary grow — one puzzle at a time!
+> 💬 Tried Duolingo but it wasn't focused enough on vocabulary?
+> 💬 Downloaded a flashcard app but your kid deleted it after 3 days?
+> 💬 Your child loves games but hates English?
+>
+> Give WordPang a try.
+> 360 curated words. 10 minutes a day. Watch vocabulary grow!
 
 ### Keywords (English)
-> vocabulary,word game,kids english,word puzzle,spelling,flashcard,quiz,education,elementary,review
+> vocabulary,word game,kids english,word puzzle,spelling,flashcard,education,elementary,review,offline
 
 ## 스크린샷 설명
 
 ### iPhone 스크린샷 (6.7인치 / 6.5인치 / 5.5인치)
 
-| # | 화면 | 캡션 (한국어) | 캡션 (English) |
-|---|------|--------------|----------------|
-| 1 | 홈 화면 | 관심 있는 주제부터 시작하세요 | Start with the topic you love |
-| 2 | 게임 플레이 | 글자를 추측하고, 색깔로 배워요 | Guess, get feedback, learn! |
-| 3 | 힌트 패널 | 막힐 땐 8가지 힌트가 도와줘요 | 8 smart hints when you're stuck |
-| 4 | 학습 카드 | 맞히고 나면 제대로 배워요 | Discover meaning after every game |
-| 5 | 복습 모드 | 까먹기 전에 다시 만나요 | Review before you forget |
-| 6 | 업적 배지 | 모으는 재미, 21개 도전! | 21 challenges to conquer |
-| 7 | 통계 화면 | 우리 아이 영어 실력, 한눈에 | Track your child's progress |
+| # | 화면 | 헤드라인 (한국어) | 헤드라인 (English) | 서브카피 |
+|---|------|-----------------|-------------------|---------|
+| 1 | 홈 화면 | 외우지 말고, 맞혀보세요! | Don't memorize. Discover! | 360개 단어 · 8가지 주제 |
+| 2 | 게임 플레이 | 색깔이 정답을 알려줘요 | Colors guide you to the answer | 🟩 맞음 · 🟧 위치 다름 · 🟫 없음 |
+| 3 | 힌트 패널 | 막힐 땐? 힌트가 있어요! | Stuck? 8 smart hints! | 포인트를 아끼며 전략적으로 |
+| 4 | 학습 카드 | 맞히고 나면 진짜 배워요 | Solve, then truly learn | 뜻 · 발음 · 예문 · 품사 |
+| 5 | 복습 모드 | 까먹기 전에, 다시 만나요 | Review before you forget | 과학적 간격 반복 알고리즘 |
+| 6 | 업적 배지 | 21개 배지, 도전하세요! | 21 badges to unlock! | 연속 기록 · 카테고리 마스터 |
+| 7 | 통계 화면 | 우리 아이 영어 성장 기록 | Watch your child grow | 승률 · 추측 분포 · 카테고리 진도 |
+
+### iPad 스크린샷 (12.9인치 / 11인치)
+
+| # | 화면 | 헤드라인 (한국어) | 헤드라인 (English) |
+|---|------|-----------------|-------------------|
+| 1 | 홈 화면 | 큰 화면으로 더 재미있게! | Bigger screen, bigger fun! |
+| 2 | 게임 플레이 | iPad에 최적화된 퍼즐 | Puzzles optimized for iPad |
+| 3 | 통계 화면 | 학습 진도를 한눈에 | Track progress at a glance |
 
 ## 개인정보 처리방침
 
@@ -202,6 +266,7 @@
 > - No ads, no in-app purchases
 > - No camera, microphone, or location permissions
 > - Content is age-appropriate for 4+ rating
+> - iPad layout supported with responsive design
 
 ### 데모 계정
 > Not required (no login)
@@ -217,3 +282,13 @@
 | 빌드 번호 | (EAS 자동 증가) |
 | 최소 iOS | Expo SDK 52 지원 범위 |
 | 암호화 | ITSAppUsesNonExemptEncryption: false |
+
+## 경쟁 분석 요약
+
+| 앱 | 방식 | 가격 | 오프라인 | WordPang 차별점 |
+|----|------|------|---------|---------------|
+| 듀오링고 | 게이미피케이션 전반 | 무료+광고/구독 | ❌ | 단어 퍼즐 특화, 광고 없음 |
+| 말해보카 | 퀴즈+스피킹 | 유료 구독 | ❌ | 완전 무료, 오프라인 |
+| 링고키즈 | 인터랙티브 게임 | 유료 구독 | 일부 | 구독 불필요, 퍼즐 방식 |
+| 리틀팍스 | 영상+스토리 | 유료 구독 | ❌ | 능동적 퍼즐 vs 수동 시청 |
+| 뽀로로 영어 | 캐릭터 기반 | 무료+인앱 | 일부 | 초등 전학년, 연구 기반 |
