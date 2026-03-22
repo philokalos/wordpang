@@ -80,8 +80,8 @@ jest.mock('../../hooks/useSound', () => ({
   useSound: () => ({ play: mockPlay }),
 }));
 
-jest.mock('../../hooks/useWordle', () => ({
-  useWordle: () => mockGame,
+jest.mock('../../hooks/useGame', () => ({
+  useGame: () => mockGame,
 }));
 
 jest.mock('../../src/data', () => ({

@@ -18,7 +18,7 @@ Expo 52 + React Native 0.76 기반 iOS 영어 단어 학습 앱. expo-router v4 
 │           PaperBackground, DoodleDecoration │
 ├─────────────────────────────────────────────┤
 │              Hooks (10개)                    │
-│  useWordle │ useStats │ useReview │ ...     │
+│  useGame │ useStats │ useReview │ ...     │
 ├─────────────────────────────────────────────┤
 │             Services (7개)                   │
 │  storage │ spaced-repetition │ achievements │
@@ -38,10 +38,10 @@ expo-router 파일 기반 라우팅. 각 화면은 hooks와 components를 조합
 | 화면 | 파일 | 사용 훅 |
 |------|------|---------|
 | 홈 | `index.tsx` | useStats, useDailyWord, useOnboarding |
-| 게임 | `game.tsx` | useWordle, useSound, useStats, useLearnedWords, useAchievements |
+| 게임 | `game.tsx` | useGame, useSound, useStats, useLearnedWords, useAchievements |
 | 통계 | `stats.tsx` | useStats |
 | 복습 | `review.tsx` | useReview, useLearnedWords |
-| 연습 | `practice.tsx` | usePracticeSession, useWordle |
+| 연습 | `practice.tsx` | usePracticeSession, useGame |
 | 온보딩 | `onboarding.tsx` | useOnboarding |
 | 레이아웃 | `_layout.tsx` | useFonts (Gaegu), SplashScreen |
 
@@ -82,12 +82,12 @@ expo-router 파일 기반 라우팅. 각 화면은 hooks와 components를 조합
 
 | 훅 | 책임 | 의존성 |
 |----|------|--------|
-| useWordle | 게임 핵심 로직 (추측, 평가, 타이머) | storage, word data |
+| useGame | 게임 핵심 로직 (추측, 평가, 타이머) | storage, word data |
 | useStats | 게임 통계 CRUD | storage |
 | useReview | 간격 반복 복습 스케줄링 | storage, spaced-repetition |
 | useLearnedWords | 학습 완료 단어 관리 | storage |
 | useAchievements | 업적 해금 체크 | storage, achievements |
-| usePracticeSession | 연습 세션 타이머/관리 | useWordle |
+| usePracticeSession | 연습 세션 타이머/관리 | useGame |
 | useSound | 사운드 재생 + 햅틱 | expo-av, expo-haptics |
 | useDailyWord | 일일 단어 모드 | storage, daily-word |
 | useSketchyStyle | 안정적 랜덤 스타일 생성 | seededRandom |
@@ -126,7 +126,7 @@ expo-router 파일 기반 라우팅. 각 화면은 hooks와 components를 조합
 ## 데이터 흐름
 
 ```
-사용자 입력 → useWordle (상태 관리)
+사용자 입력 → useGame (상태 관리)
   → 추측 평가 (lib/evaluate)
   → 타일 색상 + 키보드 상태 업데이트
   → 게임 종료 시:

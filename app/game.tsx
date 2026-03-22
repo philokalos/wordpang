@@ -7,7 +7,7 @@ import type { WordCategory } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
-import { useWordle } from '../hooks/useWordle';
+import { useGame } from '../hooks/useGame';
 import { useSound } from '../hooks/useSound';
 import { useStats } from '../hooks/useStats';
 import { useDailyWord } from '../hooks/useDailyWord';
@@ -31,7 +31,7 @@ export default function GameScreen() {
   const category = params.category as WordCategory | undefined;
 
   const { isTablet, maxContentWidth } = useResponsive();
-  const game = useWordle({ difficulty, category });
+  const game = useGame({ difficulty, category });
   const { play } = useSound();
   const { record, getDifficultyRecommendation } = useStats();
   const daily = useDailyWord(difficulty);

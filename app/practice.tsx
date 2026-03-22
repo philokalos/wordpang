@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import { useReview } from '../hooks/useReview';
-import { useWordle } from '../hooks/useWordle';
+import { useGame } from '../hooks/useGame';
 import { useSound } from '../hooks/useSound';
 import { getWordList } from '../src/data';
 import type { WordEntry } from '../src/types/word';
@@ -47,7 +47,7 @@ export default function PracticeScreen() {
   const wordLength = currentWordEntry?.word.length ?? 5;
   const difficulty = wordLength === 4 ? 'easy' as const : wordLength === 6 ? 'hard' as const : 'normal' as const;
 
-  const game = useWordle({ difficulty });
+  const game = useGame({ difficulty });
   const gameEndRef = useRef(false);
 
   useEffect(() => {

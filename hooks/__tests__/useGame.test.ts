@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-native';
-import { useWordle } from '../useWordle';
+import { useGame } from '../useGame';
 
 // Mock animations constant
 jest.mock('../../constants/animations', () => ({
@@ -19,9 +19,9 @@ jest.mock('../../constants/animations', () => ({
   },
 }));
 
-describe('useWordle', () => {
+describe('useGame', () => {
   it('should have correct initial state', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     expect(result.current.gameStatus).toBe('playing');
     expect(result.current.guesses).toEqual([]);
@@ -35,7 +35,7 @@ describe('useWordle', () => {
   });
 
   it('should add a letter', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     act(() => {
       result.current.addLetter('A');
@@ -45,7 +45,7 @@ describe('useWordle', () => {
   });
 
   it('should not exceed wordLength', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'easy' })); // 4 letters
+    const { result } = renderHook(() => useGame({ difficulty: 'easy' })); // 4 letters
 
     act(() => {
       result.current.addLetter('A');
@@ -59,7 +59,7 @@ describe('useWordle', () => {
   });
 
   it('should remove last letter', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     act(() => {
       result.current.addLetter('A');
@@ -73,7 +73,7 @@ describe('useWordle', () => {
   });
 
   it('should set isShaking and toastMessage for invalid word', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     act(() => {
       // Type a 5-letter word that is not in the word list
@@ -88,7 +88,7 @@ describe('useWordle', () => {
   });
 
   it('should submit a valid guess and add to evaluations', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     // Use startWithWord to control the target
     const targetWord = result.current.targetWord;
@@ -107,7 +107,7 @@ describe('useWordle', () => {
 
   it('should detect win when guess matches target', () => {
     jest.useFakeTimers();
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     const target = result.current.targetWord.word;
 
@@ -126,7 +126,7 @@ describe('useWordle', () => {
   });
 
   it('should add hint and increment hintsUsed', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     act(() => {
       result.current.requestHint('example');
@@ -138,7 +138,7 @@ describe('useWordle', () => {
   });
 
   it('should not exceed MAX_HINTS (3)', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     act(() => {
       result.current.requestHint('example');
@@ -157,7 +157,7 @@ describe('useWordle', () => {
   });
 
   it('should reset on changeDifficulty', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     act(() => {
       result.current.addLetter('A');
@@ -177,7 +177,7 @@ describe('useWordle', () => {
   });
 
   it('should reset on newGame', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     act(() => {
       result.current.addLetter('X');
@@ -192,7 +192,7 @@ describe('useWordle', () => {
   });
 
   it('should start with specified word via startWithWord', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     const customWord = {
       word: 'TESTS',
@@ -212,7 +212,7 @@ describe('useWordle', () => {
   });
 
   it('should use Record type for keyStatuses', () => {
-    const { result } = renderHook(() => useWordle({ difficulty: 'normal' }));
+    const { result } = renderHook(() => useGame({ difficulty: 'normal' }));
 
     // keyStatuses should be a plain object, not a Map
     expect(result.current.keyStatuses).toEqual({});
@@ -221,7 +221,7 @@ describe('useWordle', () => {
 
   it('should detect loss when maxAttempts exhausted', () => {
     jest.useFakeTimers();
-    const { result } = renderHook(() => useWordle({ difficulty: 'easy' })); // 4 letters, 6 attempts
+    const { result } = renderHook(() => useGame({ difficulty: 'easy' })); // 4 letters, 6 attempts
 
     // Set a known target
     const knownTarget = {

@@ -81,7 +81,7 @@ const mockGetDifficultyRecommendation = jest.fn().mockReturnValue(null);
 const mockMarkLearned = jest.fn().mockResolvedValue(undefined);
 const mockReviewAddWord = jest.fn().mockResolvedValue(undefined);
 
-jest.mock('../../hooks/useWordle', () => ({ useWordle: () => mockGame }));
+jest.mock('../../hooks/useGame', () => ({ useGame: () => mockGame }));
 jest.mock('../../hooks/useSound', () => ({ useSound: () => ({ play: mockPlay }) }));
 jest.mock('../../hooks/useStats', () => ({
   useStats: () => ({ record: mockRecord, getDifficultyRecommendation: mockGetDifficultyRecommendation, stats: {}, winRate: 0 }),

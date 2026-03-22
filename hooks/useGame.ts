@@ -6,12 +6,12 @@ import { getWordList, getRandomWord } from '../src/data';
 import { evaluateGuess, isValidWord, updateKeyStatuses, generateHint } from '../src/lib/game-logic';
 import { TOTAL_REVEAL_TIME } from '../constants/animations';
 
-interface UseWordleOptions {
+interface UseGameOptions {
   difficulty?: Difficulty;
   category?: WordCategory;
 }
 
-interface UseWordleReturn {
+interface UseGameReturn {
   difficulty: Difficulty;
   category: WordCategory | undefined;
   targetWord: WordEntry;
@@ -37,7 +37,7 @@ interface UseWordleReturn {
   startWithWord: (word: WordEntry) => void;
 }
 
-export function useWordle(options: UseWordleOptions = {}): UseWordleReturn {
+export function useGame(options: UseGameOptions = {}): UseGameReturn {
   const initialDifficulty = options.difficulty ?? 'normal';
   const initialCategory = options.category;
 

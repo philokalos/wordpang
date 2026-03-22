@@ -6,7 +6,7 @@ describe('buildEmojiGrid', () => {
     const evaluations: LetterStatus[][] = [
       ['correct', 'present', 'absent', 'absent', 'absent'],
     ];
-    expect(buildEmojiGrid(evaluations)).toBe('🟩🟨⬜⬜⬜');
+    expect(buildEmojiGrid(evaluations)).toBe('🟩🟧⬜⬜⬜');
   });
 
   it('should join multiple rows with newlines', () => {
@@ -14,6 +14,6 @@ describe('buildEmojiGrid', () => {
       ['absent', 'absent', 'present', 'absent', 'absent'],
       ['correct', 'correct', 'correct', 'correct', 'correct'],
     ];
-    expect(buildEmojiGrid(evaluations)).toBe('⬜⬜🟨⬜⬜\n🟩🟩🟩🟩🟩');
+    expect(buildEmojiGrid(evaluations)).toBe('⬜⬜🟧⬜⬜\n🟩🟩🟩🟩🟩');
   });
 });

@@ -25,7 +25,7 @@ npm run build:ios  # EAS Build (production)
 
 - `app/` — expo-router screens (index, game, stats, review, practice)
 - `components/` — React Native UI components
-- `hooks/` — useWordle, useSound, useStats, useDailyWord, useLearnedWords, useReview, useAchievements, usePracticeSession
+- `hooks/` — useGame, useSound, useStats, useDailyWord, useLearnedWords, useReview, useAchievements, usePracticeSession
 - `services/` — storage, sound, share, daily-word, spaced-repetition, achievements
 - `constants/` — colors, layout, animations
 - `src/` — Platform-independent (types, data, lib, tests)

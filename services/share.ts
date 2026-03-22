@@ -3,7 +3,7 @@ import type { LetterStatus } from '../src/types/game';
 
 const STATUS_EMOJI: Record<LetterStatus, string> = {
   correct: '🟩',
-  present: '🟨',
+  present: '🟧',
   absent: '⬜',
 };
 

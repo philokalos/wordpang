@@ -43,7 +43,7 @@
 ### 4.1 게임 플레이
 | 기능 | 설명 | 우선순위 |
 |------|------|---------|
-| 단어 맞추기 | Wordle 방식의 글자 추론 게임 | P0 |
+| 단어 맞추기 | 색깔 힌트 기반 글자 추론 게임 | P0 |
 | 3단계 난이도 | Easy(4자), Normal(5자), Hard(6자/7회) | P0 |
 | 8가지 카테고리 | animal, food, school, nature, body, home, action, feeling | P0 |
 | 색상 피드백 | correct(초록), present(주황), absent(갈색) | P0 |
