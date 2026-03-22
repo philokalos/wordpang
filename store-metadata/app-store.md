@@ -76,7 +76,7 @@
 > ✨ WordPang만의 특별한 기능
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 💡 8가지 스마트 힌트
+> 💡 7가지 스마트 힌트
 > 막힐 때 예시문, 뜻, 발음, 첫 글자 등 도움을 받아요.
 > 포인트를 아끼며 전략적으로 사용하는 것도 실력!
 >
@@ -187,7 +187,7 @@
 > ✨ WHAT MAKES WORDPANG SPECIAL
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 💡 8 Smart Hints — example sentences, meanings, pronunciation & more
+> 💡 7 Smart Hints — example sentences, meanings, pronunciation & more
 > 🔄 Spaced Repetition — science-backed review at the perfect timing
 > 🏆 21 Achievement Badges — stay motivated with fun challenges
 > 📅 Daily Word — a new word every day, keep your streak alive
@@ -252,7 +252,7 @@
 | Data Types Collected | None |
 
 ### 개인정보 처리방침 URL
-> (배포 시 설정 필요)
+> https://philokalos.github.io/wordle/privacy-policy.html
 
 ### Privacy Manifest
 - NSPrivacyAccessedAPICategoryUserDefaults (CA92.1) — AsyncStorage 사용
