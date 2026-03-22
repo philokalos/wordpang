@@ -51,7 +51,7 @@ export default function DifficultyCard({ difficulty, isSelected, onPress }: Diff
   }));
 
   return (
-    <Animated.View style={wobbleAnimStyle}>
+    <Animated.View style={[{ flex: 1 }, wobbleAnimStyle]}>
       <Pressable
         onPress={onPress}
         accessibilityRole="button"
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.tileBorder,
     backgroundColor: COLORS.surface,
     alignItems: 'center',
-    flex: 1,
+    minWidth: 80,
   },
   cardSelected: {
     backgroundColor: COLORS.purple,

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   chip: {
     paddingHorizontal: 14,
-    paddingVertical: 8,
+    paddingVertical: 6,
     borderWidth: 2,
     borderColor: COLORS.tileBorder,
     backgroundColor: COLORS.surface,
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.purple,
   },
   chipText: {
-    fontSize: 14,
+    fontSize: 13,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
   },

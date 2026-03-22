@@ -159,8 +159,7 @@ export function generateHint(
       const pos = unrevealed[Math.floor(Math.random() * unrevealed.length)]!;
       return `${pos + 1}번째 글자: ${word[pos]}`;
     }
-    case 'pronunciation':
-      return `발음: ${wordEntry.pronunciation}`;
+
     case 'rhyming': {
       const rhyme = findRhymingWord(wordEntry.word, validWords);
       if (rhyme) {

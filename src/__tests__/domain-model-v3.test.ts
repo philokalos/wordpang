@@ -120,32 +120,30 @@ describe('Domain Model v3: Category filtering invariants', () => {
 });
 
 describe('Domain Model v3: HintType exhaustiveness', () => {
-  it('should support exactly 8 hint types', () => {
+  it('should support exactly 7 hint types', () => {
     const hintTypes: HintType[] = [
       'example',
       'firstLetter',
       'vowelCount',
       'meaning',
       'letterPosition',
-      'pronunciation',
       'rhyming',
       'wordFamily',
     ];
-    expect(hintTypes).toHaveLength(8);
+    expect(hintTypes).toHaveLength(7);
   });
 
   it('HINT_COSTS should have exactly 8 entries', () => {
-    expect(Object.keys(HINT_COSTS)).toHaveLength(8);
+    expect(Object.keys(HINT_COSTS)).toHaveLength(7);
   });
 
-  it('HINT_COSTS keys should match the 8 hint types', () => {
+  it('HINT_COSTS keys should match the 7 hint types', () => {
     const expectedTypes: HintType[] = [
       'example',
       'firstLetter',
       'vowelCount',
       'meaning',
       'letterPosition',
-      'pronunciation',
       'rhyming',
       'wordFamily',
     ];

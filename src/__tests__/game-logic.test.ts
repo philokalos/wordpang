@@ -134,7 +134,7 @@ describe('generateHint', () => {
 });
 
 // ============================================================
-// DDD Tests for NEW hint types: pronunciation, rhyming, wordFamily
+// DDD Tests for NEW hint types: rhyming, wordFamily
 // ============================================================
 
 const testWord: WordEntry = {
@@ -150,10 +150,6 @@ const testWord: WordEntry = {
 // 1. Domain Model Tests — HINT_COSTS
 // --------------------------------------------------
 describe('HINT_COSTS — 새로운 힌트 타입 비용', () => {
-  it('pronunciation 비용은 1이어야 한다', () => {
-    expect(HINT_COSTS.pronunciation).toBe(1);
-  });
-
   it('rhyming 비용은 1이어야 한다', () => {
     expect(HINT_COSTS.rhyming).toBe(1);
   });
@@ -166,25 +162,6 @@ describe('HINT_COSTS — 새로운 힌트 타입 비용', () => {
 // --------------------------------------------------
 // 2. Domain Logic Tests — generateHint for new types
 // --------------------------------------------------
-describe('generateHint — pronunciation 힌트', () => {
-  it('WordEntry의 한국어 발음을 반환해야 한다', () => {
-    const result = generateHint(testWord, 'pronunciation');
-    expect(result).toBe('발음: 케이크');
-  });
-
-  it('다른 단어의 발음도 올바르게 반환해야 한다', () => {
-    const word: WordEntry = {
-      word: 'TIGER',
-      meaning: '호랑이',
-      pronunciation: '타이거',
-      example: 'The tiger is strong.',
-      category: 'animal',
-      partOfSpeech: 'noun',
-    };
-    expect(generateHint(word, 'pronunciation')).toBe('발음: 타이거');
-  });
-});
-
 describe('generateHint — rhyming 힌트', () => {
   it('같은 끝글자를 가진 라이밍 단어를 찾아야 한다', () => {
     const validWords = new Set(['CAKE', 'MAKE', 'LAKE', 'BIKE', 'JUMP']);
