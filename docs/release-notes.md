@@ -24,8 +24,8 @@
 ## v3.0.0 — WordPang Rebrand & Feature Complete (2026-03-10)
 
 ### 주요 변경
-- **리브랜딩**: "Wordle" → "WordPang"으로 명칭 변경
-- **스토리지 마이그레이션**: `wordle_` → `wordpang_` 키 프리픽스 자동 전환
+- **WordPang 신규 출시**: 초등학생용 영어 단어 학습 게임
+- **스토리지**: `wordpang_` 키 프리픽스 적용
 - **Expo SDK 52**: React Native 0.76 기반 전면 리빌드
 - **expo-router v4**: 파일 기반 라우팅 도입
 
@@ -74,4 +74,4 @@
 
 ## 이전 버전
 
-v3.0.0 이전의 초기 Wordle 프로토타입은 별도 저장소에서 관리되었습니다.
+v3.0.0은 WordPang의 최초 공개 버전입니다.

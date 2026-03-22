@@ -20,7 +20,7 @@
 ## [3.0.0] — 2026-03-10
 
 ### feat
-- "Wordle" → "WordPang" 리브랜딩
+- WordPang 최초 출시
 - Expo SDK 52 + React Native 0.76 기반 리빌드
 - expo-router v4 파일 기반 라우팅
 - 8가지 단어 카테고리 시스템 (animal, food, school, nature, body, home, action, feeling)

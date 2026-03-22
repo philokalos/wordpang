@@ -252,7 +252,7 @@
 | Data Types Collected | None |
 
 ### 개인정보 처리방침 URL
-> https://philokalos.github.io/wordle/privacy-policy.html
+> https://philokalos.github.io/wordpang/privacy-policy.html
 
 ### Privacy Manifest
 - NSPrivacyAccessedAPICategoryUserDefaults (CA92.1) — AsyncStorage 사용
