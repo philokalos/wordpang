@@ -6,8 +6,8 @@
 |------|-----|
 | 앱 이름 | WordPang |
 | 부제목 | 퍼즐로 배우는 초등 영단어 |
-| 번들 ID | com.philokalos.wordpop |
-| SKU | com.philokalos.wordpop |
+| 번들 ID | com.philokalos.wordpang |
+| SKU | com.philokalos.wordpang |
 | 카테고리 (기본) | Education |
 | 카테고리 (보조) | Word Games |
 | 연령 등급 | 4+ |
@@ -76,7 +76,7 @@
 > ✨ WordPang만의 특별한 기능
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 💡 7가지 스마트 힌트
+> 💡 8가지 스마트 힌트
 > 막힐 때 예시문, 뜻, 발음, 첫 글자 등 도움을 받아요.
 > 포인트를 아끼며 전략적으로 사용하는 것도 실력!
 >
@@ -113,7 +113,7 @@
 > 💬 게임은 좋아하는데 영어는 싫어하는 아이라면?
 >
 > WordPang을 한번 맡겨보세요.
-> 360개 엄선 단어, 하루 10분이면 충분해요!
+> 514개 엄선 단어, 하루 10분이면 충분해요!
 >
 > ━━━━━━━━━━━━━━━━━━━━
 > 📊 WordPang vs 다른 앱
@@ -187,7 +187,7 @@
 > ✨ WHAT MAKES WORDPANG SPECIAL
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 💡 7 Smart Hints — example sentences, meanings, pronunciation & more
+> 💡 8 Smart Hints — example sentences, meanings, pronunciation, rhyming & more
 > 🔄 Spaced Repetition — science-backed review at the perfect timing
 > 🏆 21 Achievement Badges — stay motivated with fun challenges
 > 📅 Daily Word — a new word every day, keep your streak alive
@@ -211,7 +211,7 @@
 > 💬 Your child loves games but hates English?
 >
 > Give WordPang a try.
-> 360 curated words. 10 minutes a day. Watch vocabulary grow!
+> 514 curated words. 10 minutes a day. Watch vocabulary grow!
 
 ### Keywords (English)
 > vocabulary,word game,kids english,word puzzle,spelling,flashcard,education,elementary,review,offline
@@ -278,7 +278,7 @@
 
 | 항목 | 값 |
 |------|-----|
-| 현재 버전 | 3.0.0 |
+| 현재 버전 | 3.1.2 |
 | 빌드 번호 | (EAS 자동 증가) |
 | 최소 iOS | Expo SDK 52 지원 범위 |
 | 암호화 | ITSAppUsesNonExemptEncryption: false |

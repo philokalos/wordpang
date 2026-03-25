@@ -38,9 +38,9 @@ npm run build:ios  # EAS Build (production)
 - Learning cards with corrective feedback (494% memory improvement)
 - Spaced repetition review (53% vocabulary acquisition)
 - Adaptive difficulty suggestion (flow zone theory)
-- 15 achievement badges (competence motivation)
+- 21 achievement badges (competence motivation)
 - Practice mode (5-10 min sessions)
-- 5 hint types (example, firstLetter, vowelCount, meaning, letterPosition)
+- 8 hint types (example, firstLetter, vowelCount, meaning, pronunciation, rhyming, letterPosition, wordFamily)
 - Daily word mode
 
 ## Deployment

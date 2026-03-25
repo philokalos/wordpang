@@ -76,6 +76,13 @@
             font-size: 13px;
             color: #8D6E63;
         }
+        .version-note {
+            font-size: 13px;
+            color: #8D6E63;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E8D5C4;
+        }
     </style>
 </head>
 <body>
@@ -87,71 +94,119 @@
         <!-- Korean -->
         <div id="section-ko" class="section-ko">
             <h1>🎮 WordPang 개인정보 처리방침</h1>
-            <p class="subtitle">시행일: 2026년 3월 22일 | 버전: 1.0</p>
+            <p class="subtitle">시행일: 2026년 3월 22일 | 버전: 1.1</p>
 
             <div class="highlight">
-                <strong>핵심 요약:</strong> WordPang은 개인정보를 수집하지 않습니다. 모든 데이터는 사용자의 기기에만 저장되며, 외부로 전송되지 않습니다.
+                <strong>핵심 요약:</strong> WordPang은 어떠한 개인정보도 수집하거나 처리하지 않습니다. 게임 데이터는 오직 사용자의 기기에만 저장되며, 외부 서버로 전송되지 않습니다.
             </div>
 
-            <h2>1. 수집하는 개인정보</h2>
-            <p><strong>WordPang은 어떠한 개인정보도 수집하지 않습니다.</strong></p>
-            <ul>
-                <li>이름, 이메일, 전화번호 등 개인 식별 정보를 수집하지 않습니다</li>
-                <li>위치 정보를 수집하지 않습니다</li>
-                <li>카메라, 마이크 등 기기 센서에 접근하지 않습니다</li>
-                <li>서버에 데이터를 전송하지 않습니다</li>
-                <li>분석(Analytics) 도구를 사용하지 않습니다</li>
-                <li>광고 SDK를 포함하지 않습니다</li>
-            </ul>
+            <h2>1. 개인정보 처리방침 목적</h2>
+            <p>본 방침은 WordPang 앱(이하 "앱")을 운영하는 개인 개발자(이하 "운영자")가 이용자의 개인정보를 어떻게 취급하는지 알려드리기 위해 작성되었습니다. 본 앱은 <strong>개인정보를 수집하지 않으며</strong>, 「개인정보 보호법」, 미국 아동 온라인 개인정보 보호법(COPPA), 유럽 일반 개인정보 보호법(GDPR)의 정신을 준수합니다.</p>
 
-            <h2>2. 기기 내 저장 데이터</h2>
-            <p>WordPang은 앱 기능을 위해 다음 데이터를 <strong>사용자의 기기에만</strong> 저장합니다:</p>
+            <h2>2. 수집하는 개인정보</h2>
+            <p><strong>운영자는 어떠한 개인정보도 수집하지 않습니다.</strong></p>
+            <ul>
+                <li>이름, 이메일, 전화번호 등 개인 식별 정보 수집 없음</li>
+                <li>위치 정보 수집 없음</li>
+                <li>카메라, 마이크 등 기기 센서 접근 없음</li>
+                <li>서버로의 데이터 전송 없음</li>
+                <li>분석(Analytics) 도구 미사용</li>
+                <li>광고 SDK 미포함</li>
+                <li>회원가입 또는 로그인 불필요</li>
+            </ul>
+            <p>개인정보를 수집하지 않으므로 별도의 개인정보 처리 법적 근거가 적용되지 않습니다.</p>
+
+            <h2>3. 기기 내 저장 데이터</h2>
+            <p>앱은 기능 제공을 위해 다음 데이터를 <strong>사용자의 기기에만</strong> 저장합니다. 이 데이터는 기기 외부로 전송되지 않으며 개인 식별이 불가능합니다.</p>
             <ul>
                 <li>게임 통계 (플레이 횟수, 승률, 연속 기록)</li>
                 <li>학습한 단어 목록</li>
-                <li>복습 스케줄</li>
+                <li>복습 스케줄 (간격 반복)</li>
                 <li>획득한 업적 배지</li>
-                <li>일일 단어 모드 상태</li>
+                <li>일일 단어 모드 진행 상태</li>
+                <li>앱 설정 및 선택한 난이도</li>
             </ul>
-            <p>이 데이터는 기기의 로컬 저장소(AsyncStorage)에만 저장되며, 인터넷을 통해 전송되지 않습니다. 앱을 삭제하면 모든 데이터가 함께 삭제됩니다.</p>
+            <p>위 데이터는 기기의 로컬 저장소(AsyncStorage)에 저장되며, <strong>앱을 삭제하면 모든 데이터가 함께 영구 삭제</strong>됩니다.</p>
 
-            <h2>3. 인터넷 연결</h2>
-            <p>WordPang은 <strong>완전 오프라인</strong> 앱입니다. 인터넷 연결 없이 모든 기능을 사용할 수 있으며, 서버와 통신하지 않습니다.</p>
+            <h2>4. 인터넷 연결 및 서버 통신</h2>
+            <p>WordPang은 <strong>완전 오프라인</strong> 앱입니다. 모든 기능은 인터넷 연결 없이 작동하며, 앱은 어떠한 외부 서버와도 통신하지 않습니다. 네트워크 권한을 요청하지 않습니다.</p>
 
-            <h2>4. 광고 및 인앱 결제</h2>
-            <p>WordPang에는 광고가 없으며, 인앱 결제도 없습니다.</p>
+            <h2>5. 제3자 서비스</h2>
+            <p>WordPang은 다음을 포함하지 않습니다:</p>
+            <ul>
+                <li>제3자 분석 도구 (Firebase Analytics, Mixpanel 등)</li>
+                <li>광고 네트워크 (AdMob, 기타 광고 SDK)</li>
+                <li>소셜 미디어 연동 SDK</li>
+                <li>결제 서비스 (인앱 결제 없음)</li>
+                <li>오류 추적 서비스</li>
+            </ul>
+            <p>사용자 데이터가 제3자에게 판매, 공유, 또는 제공되지 않습니다.</p>
 
-            <h2>5. 아동 개인정보 보호</h2>
-            <p>WordPang은 초등학생(만 7~13세)을 대상으로 설계되었습니다. 아동의 개인정보를 수집하거나 처리하지 않으며, COPPA(미국 아동 온라인 개인정보 보호법) 및 관련 법규를 준수합니다.</p>
+            <h2>6. 광고 및 인앱 결제</h2>
+            <p>WordPang은 광고를 표시하지 않으며, 인앱 결제를 제공하지 않습니다. 앱은 완전 무료입니다.</p>
 
-            <h2>6. 제3자 서비스</h2>
-            <p>WordPang은 제3자 분석, 광고, 소셜 미디어 SDK를 사용하지 않습니다. 사용자 데이터가 제3자에게 공유되지 않습니다.</p>
+            <h2>7. 아동 개인정보 보호</h2>
+            <p>WordPang은 초등학생(만 7~13세)을 주 대상으로 설계된 앱으로, App Store 연령 등급 4+를 적용받습니다. 미국 FTC의 판단 기준(주제, 시각 디자인, 사용자 연령 등)에 따라 본 앱은 COPPA상 <strong>"아동을 대상으로 하는 서비스(directed to children)"</strong>에 해당합니다.</p>
 
-            <h2>7. Apple Privacy Manifest</h2>
+            <h3>미국 COPPA 준수</h3>
+            <p>COPPA는 만 13세 미만 아동의 개인정보를 수집하기 전 부모의 검증 가능한 동의를 요구합니다. WordPang은 <strong>어떠한 개인정보도 수집하지 않으므로</strong> 동의 절차 의무가 발생하지 않으며, 이로써 COPPA를 완전히 준수합니다.</p>
+            <ul>
+                <li>만 13세 미만 아동의 개인정보를 수집하거나 처리하지 않습니다</li>
+                <li>아동을 대상으로 한 광고를 표시하지 않습니다</li>
+                <li>아동이 외부와 통신하는 기능(채팅, 소셜 기능 등)이 없습니다</li>
+                <li>아동의 위치 정보에 접근하지 않습니다</li>
+            </ul>
+
+            <h3>한국 개인정보보호법 준수</h3>
+            <p>「개인정보 보호법」 제22조 제6항은 만 14세 미만 아동의 개인정보를 처리할 때 법정대리인의 동의를 요구합니다. WordPang은 <strong>개인정보를 처리하지 않으므로 동 조항이 적용되지 않습니다.</strong> 기기 내 저장 데이터(게임 통계, 학습 기록 등)는 개인을 식별할 수 없는 비개인정보에 해당합니다.</p>
+
+            <h2>8. 정보주체의 권리</h2>
+            <p>개인정보를 수집하지 않으므로 별도의 개인정보 열람·수정·삭제 요청 절차가 필요하지 않습니다. 기기에 저장된 데이터를 삭제하려면 앱을 삭제하시면 됩니다.</p>
+            <ul>
+                <li><strong>데이터 삭제</strong>: 앱 삭제 시 모든 데이터 즉시 삭제</li>
+                <li><strong>데이터 열람</strong>: 앱 내 통계 화면에서 직접 확인 가능</li>
+                <li><strong>데이터 이전</strong>: 앱 내 백업/복원 기능을 통해 직접 관리 가능</li>
+            </ul>
+
+            <h2>9. Apple Privacy Manifest</h2>
             <p>WordPang은 Apple의 Privacy Manifest 요구사항을 준수합니다:</p>
             <ul>
                 <li><strong>NSPrivacyAccessedAPICategoryUserDefaults</strong> (CA92.1): 게임 데이터의 로컬 저장을 위해 AsyncStorage(UserDefaults)를 사용합니다.</li>
             </ul>
 
-            <h2>8. 변경 사항</h2>
-            <p>본 개인정보 처리방침이 변경될 경우, 앱 업데이트를 통해 알려드립니다.</p>
+            <h2>10. 보안</h2>
+            <p>앱이 개인정보를 수집하거나 외부로 전송하지 않으므로 데이터 유출의 위험이 없습니다. 기기 내 저장 데이터는 iOS 시스템의 기본 보안 메커니즘으로 보호됩니다.</p>
 
-            <h2>9. 문의</h2>
-            <p>개인정보 처리방침에 대한 문의사항이 있으시면 아래로 연락해 주세요:</p>
+            <h2>11. 방침 변경</h2>
+            <p>본 방침이 변경될 경우 앱 업데이트 및 본 페이지를 통해 고지합니다. 변경 내용은 명시된 시행일부터 적용됩니다.</p>
+
+            <div class="version-note">
+                <strong>이전 버전</strong><br>
+                버전 1.0 (2026-03-22): 최초 작성<br>
+                버전 1.1 (2026-03-22): 정보주체 권리, PIPA 준수 조항, 보안 섹션 추가<br>
+                버전 1.2 (2026-03-22): COPPA "directed to children" 명시, PIPA 제22조 제6항 미적용 사유 명시
+            </div>
+
+            <h2>12. 문의</h2>
+            <p>개인정보 처리방침에 대한 문의사항은 아래로 연락해 주세요:</p>
             <p><strong>이메일:</strong> macrothinkmicrodesign0@gmail.com</p>
+            <p>문의 접수 후 7영업일 이내 답변 드립니다.</p>
         </div>
 
         <!-- English -->
         <div id="section-en" class="section-en">
             <h1>🎮 WordPang Privacy Policy</h1>
-            <p class="subtitle">Effective Date: March 22, 2026 | Version: 1.0</p>
+            <p class="subtitle">Effective Date: March 22, 2026 | Version: 1.1</p>
 
             <div class="highlight">
-                <strong>Summary:</strong> WordPang does not collect any personal information. All data is stored only on your device and is never transmitted externally.
+                <strong>Summary:</strong> WordPang does not collect or process any personal information. Game data is stored only on your device and is never transmitted to external servers.
             </div>
 
-            <h2>1. Information We Collect</h2>
-            <p><strong>WordPang does not collect any personal information.</strong></p>
+            <h2>1. Purpose</h2>
+            <p>This policy explains how the individual developer operating WordPang (the "App") handles user information. The App <strong>does not collect personal data</strong> and is designed in the spirit of Korea's Personal Information Protection Act (PIPA), the U.S. Children's Online Privacy Protection Act (COPPA), and the EU General Data Protection Regulation (GDPR).</p>
+
+            <h2>2. Information We Collect</h2>
+            <p><strong>We do not collect any personal information.</strong></p>
             <ul>
                 <li>No personal identifiers (name, email, phone number)</li>
                 <li>No location data</li>
@@ -159,43 +214,85 @@
                 <li>No data transmission to servers</li>
                 <li>No analytics tools</li>
                 <li>No advertising SDKs</li>
+                <li>No account registration or login required</li>
             </ul>
+            <p>Since no personal data is collected, no legal basis for processing is applicable.</p>
 
-            <h2>2. Data Stored on Device</h2>
-            <p>WordPang stores the following data <strong>only on your device</strong> for app functionality:</p>
+            <h2>3. Data Stored on Device</h2>
+            <p>The App stores the following data <strong>only on your device</strong> to provide its features. This data cannot identify you and is never transmitted outside your device.</p>
             <ul>
                 <li>Game statistics (play count, win rate, streak records)</li>
                 <li>Learned words list</li>
-                <li>Review schedule</li>
+                <li>Review schedule (spaced repetition)</li>
                 <li>Achievement badges earned</li>
-                <li>Daily word mode state</li>
+                <li>Daily word mode progress</li>
+                <li>App settings and selected difficulty</li>
             </ul>
-            <p>This data is stored in the device's local storage (AsyncStorage) and is never transmitted over the internet. Deleting the app removes all data.</p>
+            <p>This data is stored in the device's local storage (AsyncStorage). <strong>Deleting the App permanently removes all data.</strong></p>
 
-            <h2>3. Internet Connection</h2>
-            <p>WordPang is a <strong>fully offline</strong> app. All features work without an internet connection, and the app does not communicate with any servers.</p>
+            <h2>4. Internet Connectivity and Server Communication</h2>
+            <p>WordPang is a <strong>fully offline</strong> app. All features work without an internet connection, and the App does not communicate with any external server. No network permissions are requested.</p>
 
-            <h2>4. Advertising and In-App Purchases</h2>
-            <p>WordPang contains no advertisements and no in-app purchases.</p>
+            <h2>5. Third-Party Services</h2>
+            <p>WordPang does not include:</p>
+            <ul>
+                <li>Third-party analytics tools (Firebase Analytics, Mixpanel, etc.)</li>
+                <li>Advertising networks (AdMob or any ad SDK)</li>
+                <li>Social media integration SDKs</li>
+                <li>Payment services (no in-app purchases)</li>
+                <li>Crash reporting services</li>
+            </ul>
+            <p>User data is never sold, shared, or provided to any third parties.</p>
 
-            <h2>5. Children's Privacy</h2>
-            <p>WordPang is designed for elementary students (ages 7-13). We do not collect or process any personal information from children. The app complies with COPPA (Children's Online Privacy Protection Act) and applicable regulations.</p>
+            <h2>6. Advertising and In-App Purchases</h2>
+            <p>WordPang displays no advertisements and offers no in-app purchases. The App is completely free.</p>
 
-            <h2>6. Third-Party Services</h2>
-            <p>WordPang does not use any third-party analytics, advertising, or social media SDKs. No user data is shared with third parties.</p>
+            <h2>7. Children's Privacy</h2>
+            <p>WordPang is designed primarily for elementary school students (ages 7–13) and carries a 4+ age rating on the App Store. Based on the FTC's multi-factor test (subject matter, visual design, intended audience, etc.), this App qualifies as a service <strong>"directed to children"</strong> under COPPA.</p>
 
-            <h2>7. Apple Privacy Manifest</h2>
+            <h3>COPPA Compliance</h3>
+            <p>COPPA requires verifiable parental consent before collecting personal information from children under 13. Because WordPang <strong>collects no personal information whatsoever</strong>, the consent obligation never arises — and the App is therefore fully COPPA-compliant.</p>
+            <ul>
+                <li>No personal information is collected from children under 13</li>
+                <li>No targeted advertising is shown to children</li>
+                <li>No communication features (chat, social functions) are included</li>
+                <li>No location data is accessed</li>
+            </ul>
+
+            <h3>Korean PIPA Compliance</h3>
+            <p>Article 22(6) of Korea's Personal Information Protection Act (PIPA) requires consent from a legal guardian before processing personal data of children under 14. Because WordPang <strong>does not process any personal data, this provision does not apply.</strong> Data stored on the device (game statistics, learning records, etc.) is non-personal and cannot identify any individual.</p>
+
+            <h2>8. Your Rights</h2>
+            <p>Because we do not collect personal data, no formal data access, correction, or deletion request process is necessary. To delete data stored on your device, simply uninstall the App.</p>
+            <ul>
+                <li><strong>Deletion</strong>: Uninstalling the App immediately removes all data</li>
+                <li><strong>Access</strong>: All data is visible directly in the App's statistics screen</li>
+                <li><strong>Portability</strong>: Data can be managed via the App's built-in backup/restore feature</li>
+            </ul>
+
+            <h2>9. Apple Privacy Manifest</h2>
             <p>WordPang complies with Apple's Privacy Manifest requirements:</p>
             <ul>
-                <li><strong>NSPrivacyAccessedAPICategoryUserDefaults</strong> (CA92.1): AsyncStorage (UserDefaults) is used for local storage of game data.</li>
+                <li><strong>NSPrivacyAccessedAPICategoryUserDefaults</strong> (CA92.1): AsyncStorage (UserDefaults) is used for local storage of game data only.</li>
             </ul>
 
-            <h2>8. Changes</h2>
-            <p>If this privacy policy is updated, we will notify users through an app update.</p>
+            <h2>10. Security</h2>
+            <p>Because the App collects no personal information and transmits no data externally, there is no risk of a data breach. Data stored on the device is protected by iOS's built-in security mechanisms.</p>
 
-            <h2>9. Contact</h2>
+            <h2>11. Changes to This Policy</h2>
+            <p>If this policy is updated, we will notify users via an app update and this page. Changes take effect on the stated effective date.</p>
+
+            <div class="version-note">
+                <strong>Version History</strong><br>
+                Version 1.0 (2026-03-22): Initial release<br>
+                Version 1.1 (2026-03-22): Added user rights, PIPA compliance, and security sections<br>
+                Version 1.2 (2026-03-22): Clarified COPPA "directed to children" status; confirmed PIPA Art. 22(6) non-applicability
+            </div>
+
+            <h2>12. Contact</h2>
             <p>For questions about this privacy policy, please contact us:</p>
             <p><strong>Email:</strong> macrothinkmicrodesign0@gmail.com</p>
+            <p>We will respond within 7 business days.</p>
         </div>
 
         <footer>

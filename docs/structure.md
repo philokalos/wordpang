@@ -2,7 +2,7 @@
 
 > Auto-generated 2026-03-19. Do not edit manually.
 
-**Type**: Unknown
+**Type**: Expo (React Native, iOS)
 
 ## Directory Tree
 

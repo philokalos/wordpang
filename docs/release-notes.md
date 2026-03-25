@@ -1,5 +1,31 @@
 # Release Notes — WordPang
 
+## v3.1.2 — Documentation & IP Cleanup (2026-03-22)
+
+### 상표·IP 정리
+- **공유 이모지 변경**: 결과 공유 시 주황 🟧 사용 (이전: 노랑 🟨 — NYT Wordle과 동일해 IP 리스크 존재)
+- **훅 리네임**: `useWordle` → `useGame` (상표명 코드에서 제거)
+- **문서 정리**: 전체 문서에서 Wordle 상표 참조 제거
+
+### 문서 개선
+- PRD v3.2 전면 개정: 8섹션 구조, P0/P1/P2 사용자 스토리 20개, Success Metrics 기준값 추가
+- 68개 테스트 시나리오 문서 신규 작성 (전 기능 커버)
+- 개인정보 처리방침 v1.2: PIPA·COPPA·GDPR 준수 근거 상세화, 한/영 이중언어
+
+---
+
+## v3.1.1 — Word Data Expansion (2026-03-15)
+
+### 새로운 기능
+- **단어 데이터셋 확장**: 360개 → 514개 (+153개)
+- 난이도별 균등 배분 유지 (Easy/Normal/Hard 각 ~171개)
+- 8개 카테고리 비율 유지
+
+### 인프라
+- Jest 테스트 511개, 38개 스위트 (확장에 따른 테스트 추가)
+
+---
+
 ## v3.1.0 — Sketchy Design System (2026-03-11)
 
 ### 새로운 기능
@@ -63,7 +89,7 @@
 - 첫 실행 시 가이드 화면 표시
 
 ### 인프라
-- Jest + React Testing Library 테스트 환경 (399 테스트, 30 스위트)
+- Jest + React Testing Library 테스트 환경 (399 테스트, 30 스위트 — v3.1.1에서 511/38로 확장)
 - 훅 커버리지 89.91%, 전체 커버리지 76.6%
 - ESLint v9 (flat config) — 0 warnings
 - TypeScript strict 모드 — 0 errors

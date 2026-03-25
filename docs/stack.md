@@ -1,8 +1,8 @@
-# Stack — wordpop
+# Stack — WordPang
 
 > Auto-generated 2026-03-19 from package.json. Do not edit manually.
 
-**Version**: 3.0.0
+**Version**: 3.1.0
 
 ## Core Dependencies
 

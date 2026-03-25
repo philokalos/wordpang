@@ -26,7 +26,7 @@ Expo 52 + React Native 0.76 기반 iOS 영어 단어 학습 앱. expo-router v4 
 ├─────────────────────────────────────────────┤
 │            Data Layer                        │
 │  AsyncStorage (wordpang_ prefix)             │
-│  Word Data (360 words × 3 difficulties)     │
+│  Word Data (514 words × 3 difficulties)     │
 └─────────────────────────────────────────────┘
 ```
 
@@ -115,9 +115,9 @@ expo-router 파일 기반 라우팅. 각 화면은 hooks와 components를 조합
 - `review.ts` — ReviewEntry, ReviewStatus
 
 **Data**
-- `easy-words.ts` — 4글자 단어 120개
-- `normal-words.ts` — 5글자 단어 120개
-- `hard-words.ts` — 6글자 단어 120개
+- `easy-words.ts` — 4글자 단어 (~171개)
+- `normal-words.ts` — 5글자 단어 (~171개)
+- `hard-words.ts` — 6글자 단어 (~172개)
 - `valid-words-*.ts` — 유효 추측 단어 목록 (사전 기반)
 
 **Lib**
@@ -179,7 +179,7 @@ hooks/useSketchyStyle.ts
 
 ```
 코드 변경 → ESLint + TypeScript 검증
-  → Jest 테스트 (399 tests)
+  → Jest 테스트 (511 tests, 38 suites)
   → EAS Build (preview / production)
   → TestFlight (내부 테스트)
   → App Store 제출

@@ -10,11 +10,11 @@ WordPang은 색깔 힌트 기반 단어 추측 게임을 통해 초등학생이 
 
 - **8가지 단어 카테고리**: animal, food, school, nature, body, home, action, feeling
 - **3단계 난이도**: Easy(4글자), Normal(5글자), Hard(6글자)
-- **360개 엄선 단어**: 난이도별 120개, 카테고리별 균등 배분
+- **514개 엄선 단어**: 난이도별 균등 배분, 카테고리별 균등 배분
 - **학습 카드**: 게임 후 뜻, 발음, 예문, 품사 표시
 - **간격 반복 복습**: 과학적 스케줄로 장기 기억 전환
 - **8가지 힌트**: 포인트 기반 (예시문, 뜻, 발음, 첫 글자, 모음 수, 글자 위치 등)
-- **21개 업적 배지**: 학습 동기 부여
+- **21개 업적 배지**: 학습 동기 부여 (역량 동기 이론 기반)
 - **연습 모드**: 5~10분 집중 세션
 - **일일 단어**: 매일 새로운 도전
 - **적응형 난이도**: 승률 기반 자동 추천
@@ -43,14 +43,14 @@ WordPang은 색깔 힌트 기반 단어 추측 게임을 통해 초등학생이 
 npm install          # 의존성 설치
 npm start            # Expo 개발 서버
 npm run ios          # iOS 시뮬레이터
-npm test             # 테스트 실행 (399 tests)
+npm test             # 테스트 실행 (511 tests)
 npm run lint         # ESLint (--max-warnings 0)
 ```
 
 ## 프로젝트 구조
 
 ```
-wordle/
+wordpang/
   app/               # expo-router 스크린 (6개 화면 + 레이아웃)
   components/         # React Native UI 컴포넌트 (28개)
     sketchy/          # 손그림 디자인 컴포넌트 (4개)
@@ -60,7 +60,7 @@ wordle/
   utils/              # Sketchy 디자인 유틸리티
   src/
     types/            # TypeScript 타입 정의 (5개)
-    data/             # 단어 데이터셋 (360 단어 + 유효 단어)
+    data/             # 단어 데이터셋 (514 단어 + 유효 단어)
     lib/              # 게임 로직 유틸리티
   assets/
     fonts/            # Gaegu 손글씨 폰트
@@ -73,7 +73,7 @@ wordle/
 
 | 지표 | 수치 |
 |------|------|
-| 테스트 | 399 tests / 30 suites |
+| 테스트 | 511 tests / 38 suites |
 | 훅 커버리지 | 89.91% |
 | 전체 커버리지 | 76.6% |
 | ESLint | 0 warnings |
