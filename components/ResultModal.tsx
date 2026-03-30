@@ -25,7 +25,6 @@ interface ResultModalProps {
   onHome?: () => void;
 }
 
-// Confetti particle definitions
 const CONFETTI_PARTICLES = [
   { dx: -110, dy: -200, delay: 0,   emoji: '⭐' },
   { dx: 0,    dy: -220, delay: 40,  emoji: '🌟' },
@@ -327,7 +326,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#FFF8E1',
+    backgroundColor: COLORS.achievementBg,
     borderWidth: 1,
     borderColor: COLORS.tileBorder,
     padding: 10,
@@ -341,7 +340,7 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
   },
   learnedButton: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: COLORS.correctBg,
     borderWidth: 2,
     borderColor: COLORS.correct,
     paddingHorizontal: 24,
@@ -349,7 +348,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   learnedButtonDone: {
-    backgroundColor: '#C8E6C9',
+    backgroundColor: COLORS.correctBgActive,
     borderColor: COLORS.correctBorder,
   },
   learnedText: {

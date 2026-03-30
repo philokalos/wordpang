@@ -145,7 +145,6 @@ export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardP
           </ReAnimated.View>
         </Pressable>
 
-        {/* 스와이프 방향 오버레이 */}
         <Animated.View
           pointerEvents="none"
           style={[
@@ -155,7 +154,6 @@ export default function FlashCard({ word, onKnew, onForgot, onFlip }: FlashCardP
           ]}
         />
 
-        {/* 스와이프 힌트 레이블 */}
         <Animated.View
           pointerEvents="none"
           style={[styles.swipeLabel, styles.swipeLabelLeft, { opacity: leftLabelOpacity }]}
@@ -238,7 +236,7 @@ const styles = StyleSheet.create({
   },
   swipeLabelRight: {
     right: 8,
-    backgroundColor: '#E8F5E9',
+    backgroundColor: COLORS.correctBg,
   },
   swipeLabelText: {
     fontSize: FONT_SIZES.xs,
@@ -284,7 +282,7 @@ const styles = StyleSheet.create({
   forgotButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
-    backgroundColor: '#FFEBEE',
+    backgroundColor: COLORS.pinkBgStrong,
     borderWidth: 2,
     borderColor: COLORS.pink,
   },
@@ -296,7 +294,7 @@ const styles = StyleSheet.create({
   knewButton: {
     paddingHorizontal: 24,
     paddingVertical: 12,
-    backgroundColor: '#E8F5E9',
+    backgroundColor: COLORS.correctBg,
     borderWidth: 2,
     borderColor: COLORS.correct,
   },

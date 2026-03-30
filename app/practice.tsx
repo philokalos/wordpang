@@ -7,8 +7,7 @@ import { SKETCHY_FONTS, SKETCHY_RADIUS, FONT_SIZES } from '../constants/theme';
 import { useReview } from '../hooks/useReview';
 import { useGame } from '../hooks/useGame';
 import { useSound } from '../hooks/useSound';
-import { getWordList } from '../src/data';
-import type { WordEntry } from '../src/types/word';
+import { findWordEntry } from '../utils/word';
 import PaperBackground from '../components/sketchy/PaperBackground';
 import DoodleDecoration from '../components/sketchy/DoodleDecoration';
 import GameBoard from '../components/GameBoard';
@@ -29,18 +28,10 @@ export default function PracticeScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [results, setResults] = useState<PracticeResult[]>([]);
   const [isComplete, setIsComplete] = useState(false);
+  const nextWordTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const sessionWords = dueWords.slice(0, 5);
   const totalWords = sessionWords.length;
-
-  const findWordEntry = (word: string): WordEntry | undefined => {
-    for (const diff of ['easy', 'normal', 'hard'] as const) {
-      const { answers } = getWordList(diff);
-      const found = answers.find((a) => a.word === word);
-      if (found) return found;
-    }
-    return undefined;
-  };
 
   const currentDueWord = sessionWords[currentIndex];
   const currentWordEntry = currentDueWord ? findWordEntry(currentDueWord.word) : undefined;
@@ -73,13 +64,19 @@ export default function PracticeScreen() {
       { word: currentWordEntry?.word ?? '', correct: won, guessCount: game.guesses.length },
     ]);
 
-    setTimeout(() => {
+    nextWordTimer.current = setTimeout(() => {
       if (currentIndex + 1 >= totalWords) {
         setIsComplete(true);
       } else {
         setCurrentIndex((prev) => prev + 1);
       }
     }, 1500);
+
+    return () => {
+      if (nextWordTimer.current !== null) {
+        clearTimeout(nextWordTimer.current);
+      }
+    };
   }, [game.gameStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {

@@ -40,6 +40,7 @@ export default function GameScreen() {
   const review = useReview();
 
   const gameEndRecorded = useRef(false);
+  const difficultyPromptTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
   const [showDifficultyPrompt, setShowDifficultyPrompt] = useState(false);
 
@@ -103,9 +104,15 @@ export default function GameScreen() {
       // Check difficulty recommendation after game
       const rec = getDifficultyRecommendation(difficulty);
       if (rec) {
-        setTimeout(() => setShowDifficultyPrompt(true), 500);
+        difficultyPromptTimer.current = setTimeout(() => setShowDifficultyPrompt(true), 500);
       }
     })();
+
+    return () => {
+      if (difficultyPromptTimer.current !== null) {
+        clearTimeout(difficultyPromptTimer.current);
+      }
+    };
   }, [game.gameStatus]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleNewGame = () => {

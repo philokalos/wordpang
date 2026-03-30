@@ -6,8 +6,7 @@ import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, FONT_SIZES } from '../constants/theme';
 import { useReview } from '../hooks/useReview';
 import { useSound } from '../hooks/useSound';
-import { getWordList } from '../src/data';
-import type { WordEntry } from '../src/types/word';
+import { findWordEntry } from '../utils/word';
 import PaperBackground from '../components/sketchy/PaperBackground';
 import DoodleDecoration from '../components/sketchy/DoodleDecoration';
 import FlashCard from '../components/FlashCard';
@@ -21,15 +20,6 @@ export default function ReviewScreen() {
   const { play } = useSound();
   const [tab, setTab] = useState<Tab>('collection');
   const [quizIndex, setQuizIndex] = useState(0);
-
-  const findWordEntry = (word: string): WordEntry | undefined => {
-    for (const diff of ['easy', 'normal', 'hard'] as const) {
-      const { answers } = getWordList(diff);
-      const found = answers.find((a) => a.word === word);
-      if (found) return found;
-    }
-    return undefined;
-  };
 
   const currentDueWord = dueWords[quizIndex];
   const currentWordEntry = currentDueWord ? findWordEntry(currentDueWord.word) : undefined;

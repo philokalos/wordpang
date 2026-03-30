@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.xs,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.purpleText,
-    backgroundColor: '#EDE7F6',
+    backgroundColor: COLORS.categoryChipBg,
     paddingHorizontal: 8,
     paddingVertical: 2,
     overflow: 'hidden',

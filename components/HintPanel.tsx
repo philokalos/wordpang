@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View, Text, Pressable, ScrollView } from 'react-native';
 import type { Hint, HintType, GameStatus } from '../src/types/game';
 import { MAX_HINT_POINTS } from '../src/types/game';
@@ -51,6 +51,7 @@ export default function HintPanel({
 }: HintPanelProps) {
   const { isTablet } = useResponsive();
   const remainingPoints = MAX_HINT_POINTS - hintPointsUsed;
+  const usedHintTypes = useMemo(() => new Set(hints.map((h) => h.type)), [hints]);
 
   return (
     <View style={[styles.container, { maxWidth: isTablet ? 520 : 360 }]}>
@@ -60,7 +61,7 @@ export default function HintPanel({
         contentContainerStyle={styles.buttonRow}
       >
         {HINT_BUTTONS.map(({ type, label, icon, cost }, i) => {
-          const used = hints.some((h) => h.type === type);
+          const used = usedHintTypes.has(type);
           const cantAfford = cost > remainingPoints;
           const disabled = gameStatus !== 'playing' || used || cantAfford;
 

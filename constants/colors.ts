@@ -28,8 +28,15 @@ export const COLORS = {
 
   pink: CRAYON.pink,
   pinkLight: '#FCE4EC',
+  pinkBgStrong: '#FFEBEE',
   pinkBorder: CRAYON.pink,
   pinkText: CRAYON.pinkDark,
+
+  correctBg: '#E8F5E9',
+  correctBgActive: '#C8E6C9',
+
+  achievementBg: '#FFF8E1',
+  categoryChipBg: '#EDE7F6',
 
   textPrimary: CRAYON.inkBrown,
   textSecondary: CRAYON.inkLight,

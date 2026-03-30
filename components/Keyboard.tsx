@@ -27,7 +27,6 @@ const KEY_BG: Record<LetterStatus, string> = {
   absent: COLORS.absent,
 };
 
-// Pre-compute irregular border radii for all keys
 const KEY_RADII = (() => {
   const radii: Record<string, { borderTopLeftRadius: number; borderTopRightRadius: number; borderBottomLeftRadius: number; borderBottomRightRadius: number }> = {};
   ROWS.flat().forEach((key, i) => {
@@ -64,15 +63,15 @@ export default function Keyboard({
   const specialKeyWidth = getKeyWidth(true, screenWidth);
   const normalKeyWidth = getKeyWidth(false, screenWidth);
 
-  const renderKey = (key: string) => {
+  const renderKey = useCallback((key: string) => {
     const isSpecial = key === 'ENTER' || key === 'BACK';
     const isEnter = key === 'ENTER';
     const isBack = key === 'BACK';
     const status = isSpecial ? undefined : keyStatuses[key];
     const displayKey = key === 'BACK' ? '⌫' : key === 'ENTER' ? '↵' : key;
     let bgColor = status ? KEY_BG[status] : COLORS.keyDefault;
-    if (isEnter) bgColor = '#C8E6C9';
-    if (isBack) bgColor = '#FCE4EC';
+    if (isEnter) bgColor = COLORS.correctBgActive;
+    if (isBack) bgColor = COLORS.pinkLight;
     const textColor = status ? COLORS.keyStatusText : COLORS.keyDefaultText;
 
     return (
@@ -106,7 +105,7 @@ export default function Keyboard({
         </Text>
       </Pressable>
     );
-  };
+  }, [keyStatuses, handlePress, isTablet, keyHeight, specialKeyWidth, normalKeyWidth]);
 
   return (
     <View style={[styles.container, { maxWidth: isTablet ? 600 : undefined }]} accessibilityLabel="keyboard">
