@@ -127,8 +127,8 @@ describe('PracticeScreen E2E', () => {
 
   describe('Practice Session', () => {
     it('should show progress indicator', () => {
-      const { getByText } = render(<PracticeScreen />);
-      expect(getByText('연습 1/2')).toBeTruthy();
+      const { getByLabelText } = render(<PracticeScreen />);
+      expect(getByLabelText('1/2 진행 중')).toBeTruthy();
     });
 
     it('should render game board', () => {

@@ -103,8 +103,8 @@ describe('ReviewScreen E2E', () => {
   describe('Tab Switching', () => {
     it('should show both tabs with counts', () => {
       const { getByText } = render(<ReviewScreen />);
-      expect(getByText('컬렉션 (3)')).toBeTruthy();
-      expect(getByText('퀴즈 (2)')).toBeTruthy();
+      expect(getByText('📚 컬렉션 (3)')).toBeTruthy();
+      expect(getByText('🎯 퀴즈 (2)')).toBeTruthy();
     });
 
     it('should default to collection and show words', () => {
@@ -116,10 +116,10 @@ describe('ReviewScreen E2E', () => {
 
     it('should switch to quiz and back', () => {
       const { getByText } = render(<ReviewScreen />);
-      fireEvent.press(getByText('퀴즈 (2)'));
+      fireEvent.press(getByText('🎯 퀴즈 (2)'));
       expect(getByText('BREAD')).toBeTruthy();
       expect(getByText('1 / 2')).toBeTruthy();
-      fireEvent.press(getByText('컬렉션 (3)'));
+      fireEvent.press(getByText('📚 컬렉션 (3)'));
       expect(getByText('APPLE')).toBeTruthy();
     });
   });
@@ -136,21 +136,21 @@ describe('ReviewScreen E2E', () => {
   describe('Quiz Tab', () => {
     it('should show flashcard with tap hint', () => {
       const { getByText } = render(<ReviewScreen />);
-      fireEvent.press(getByText('퀴즈 (2)'));
+      fireEvent.press(getByText('🎯 퀴즈 (2)'));
       expect(getByText('BREAD')).toBeTruthy();
-      expect(getByText('탭하여 뒤집기')).toBeTruthy();
+      expect(getByText('탭하여 뒤집기 · 스와이프로 평가')).toBeTruthy();
     });
 
     it('should play flip sound on card tap', () => {
       const { getByText, getByLabelText } = render(<ReviewScreen />);
-      fireEvent.press(getByText('퀴즈 (2)'));
+      fireEvent.press(getByText('🎯 퀴즈 (2)'));
       fireEvent.press(getByLabelText('플래시카드, 탭하여 뒤집기'));
       expect(mockPlay).toHaveBeenCalledWith('flip');
     });
 
     it('should show action buttons after flip', () => {
       const { getByText, getByLabelText } = render(<ReviewScreen />);
-      fireEvent.press(getByText('퀴즈 (2)'));
+      fireEvent.press(getByText('🎯 퀴즈 (2)'));
       fireEvent.press(getByLabelText('플래시카드, 탭하여 뒤집기'));
       expect(getByLabelText('알고 있어요')).toBeTruthy();
       expect(getByLabelText('다시 볼게요')).toBeTruthy();
@@ -158,7 +158,7 @@ describe('ReviewScreen E2E', () => {
 
     it('should mark reviewed and advance on "알고 있어요"', async () => {
       const { getByText, getByLabelText } = render(<ReviewScreen />);
-      fireEvent.press(getByText('퀴즈 (2)'));
+      fireEvent.press(getByText('🎯 퀴즈 (2)'));
       fireEvent.press(getByLabelText('플래시카드, 탭하여 뒤집기'));
       await act(async () => { fireEvent.press(getByLabelText('알고 있어요')); });
       expect(mockPlay).toHaveBeenCalledWith('pop');
@@ -169,7 +169,7 @@ describe('ReviewScreen E2E', () => {
 
     it('should advance on "다시 볼게요"', () => {
       const { getByText, getByLabelText } = render(<ReviewScreen />);
-      fireEvent.press(getByText('퀴즈 (2)'));
+      fireEvent.press(getByText('🎯 퀴즈 (2)'));
       fireEvent.press(getByLabelText('플래시카드, 탭하여 뒤집기'));
       fireEvent.press(getByLabelText('다시 볼게요'));
       expect(mockPlay).toHaveBeenCalledWith('shake');

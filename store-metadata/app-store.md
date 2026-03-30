@@ -5,9 +5,10 @@
 | 항목 | 값 |
 |------|-----|
 | 앱 이름 | WordPang |
-| 부제목 | 퍼즐로 배우는 초등 영단어 |
-| 번들 ID | com.philokalos.wordpang |
-| SKU | com.philokalos.wordpang |
+| 부제목 (한국어) | 퍼즐로 배우는 초등 영단어 |
+| 부제목 (English) | Learn Words Through Puzzles |
+| 번들 ID | com.philokalos.wordpop |
+| SKU | com.philokalos.wordpop |
 | 카테고리 (기본) | Education |
 | 카테고리 (보조) | Word Games |
 | 연령 등급 | 4+ |
@@ -214,7 +215,7 @@
 > 514 curated words. 10 minutes a day. Watch vocabulary grow!
 
 ### Keywords (English)
-> vocabulary,word game,kids english,word puzzle,spelling,flashcard,education,elementary,review,offline
+> vocabulary,word game,english learning,word puzzle,spelling,flashcard,education,elementary,review
 
 ## 스크린샷 설명
 
@@ -228,7 +229,7 @@
 | 4 | 학습 카드 | 맞히고 나면 진짜 배워요 | Solve, then truly learn | 뜻 · 발음 · 예문 · 품사 |
 | 5 | 복습 모드 | 까먹기 전에, 다시 만나요 | Review before you forget | 과학적 간격 반복 알고리즘 |
 | 6 | 업적 배지 | 21개 배지, 도전하세요! | 21 badges to unlock! | 연속 기록 · 카테고리 마스터 |
-| 7 | 통계 화면 | 우리 아이 영어 성장 기록 | Watch your child grow | 승률 · 추측 분포 · 카테고리 진도 |
+| 7 | 통계 화면 | 나의 영어 성장 기록 | Watch your progress grow | 승률 · 추측 분포 · 카테고리 진도 |
 
 ### iPad 스크린샷 (12.9인치 / 11인치)
 
@@ -278,10 +279,38 @@
 
 | 항목 | 값 |
 |------|-----|
-| 현재 버전 | 3.1.2 |
+| 현재 버전 | 3.1.0 |
 | 빌드 번호 | (EAS 자동 증가) |
 | 최소 iOS | Expo SDK 52 지원 범위 |
 | 암호화 | ITSAppUsesNonExemptEncryption: false |
+
+## v3.1.0 업데이트 (What's New)
+
+### 한국어
+> 더 크고 읽기 편한 글씨, 더 재미있는 게임 경험을 만났어요!
+>
+> ✨ 이번 업데이트
+> • 글씨 크기 확대 — 모든 화면에서 더 크고 선명하게
+> • 카테고리 아이콘 그리드 — 8가지 주제를 한눈에 선택
+> • ENTER·BACK 키 색상 — 초록/분홍으로 한눈에 구별
+> • 힌트 포인트 게이지 — 남은 포인트를 동그라미로 표시
+> • 플래시카드 스와이프 — 좌우로 쓸어서 빠르게 평가
+> • 복습 탭 디자인 개선 — 컬렉션/퀴즈 탭 언더라인 강조
+> • 단어 발음 버튼 — 결과 화면에서 바로 듣기
+> • 승리 축하 애니메이션 — 별똥별 폭죽 이펙트 추가
+
+### English
+> Bigger text, smarter UI — learning just got more fun!
+>
+> ✨ What's New
+> • Larger fonts — easier to read across all screens
+> • Category icon grid — pick topics at a glance
+> • Color-coded ENTER & BACK keys — green / pink for clarity
+> • Hint point gauge — see remaining points as dots
+> • Flashcard swipe gestures — swipe left/right to rate words
+> • Improved review tabs — underline indicator for active tab
+> • Pronunciation button — hear the word right from the result card
+> • Win celebration animation — star burst confetti on victory
 
 ## 경쟁 분석 요약
 

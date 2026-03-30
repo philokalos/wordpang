@@ -55,7 +55,7 @@ describe('HintPanel', () => {
   });
 
   it('should show hint counter', () => {
-    const { getByText } = render(<HintPanel {...defaultProps} />);
-    expect(getByText('힌트 포인트 0/4')).toBeTruthy();
+    const { getByLabelText } = render(<HintPanel {...defaultProps} />);
+    expect(getByLabelText('힌트 포인트 0/4 사용')).toBeTruthy();
   });
 });

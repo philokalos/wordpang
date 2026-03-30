@@ -128,8 +128,8 @@ describe('GameScreen E2E', () => {
     });
 
     it('should render hint panel with counter', () => {
-      const { getByText } = render(<GameScreen />);
-      expect(getByText(/힌트 포인트/)).toBeTruthy();
+      const { getByLabelText } = render(<GameScreen />);
+      expect(getByLabelText(/힌트 포인트/)).toBeTruthy();
     });
   });
 
@@ -176,9 +176,9 @@ describe('GameScreen E2E', () => {
     it('should display hint content when active', () => {
       mockGame.hints = [{ type: 'meaning', content: '사과' }];
       mockGame.hintPointsUsed = 1;
-      const { getByText } = render(<GameScreen />);
+      const { getByText, getByLabelText } = render(<GameScreen />);
       expect(getByText('사과')).toBeTruthy();
-      expect(getByText('힌트 포인트 1/4')).toBeTruthy();
+      expect(getByLabelText('힌트 포인트 1/4 사용')).toBeTruthy();
     });
   });
 

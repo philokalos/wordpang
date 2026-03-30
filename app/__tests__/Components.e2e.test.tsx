@@ -84,7 +84,7 @@ describe('FlashCard E2E', () => {
   it('should display word and tap hint on front', () => {
     const { getByText } = render(<FlashCard word={word} onKnew={onKnew} onForgot={onForgot} />);
     expect(getByText('BREAD')).toBeTruthy();
-    expect(getByText('탭하여 뒤집기')).toBeTruthy();
+    expect(getByText('탭하여 뒤집기 · 스와이프로 평가')).toBeTruthy();
   });
 
   it('should call onFlip and show action buttons after tap', () => {
