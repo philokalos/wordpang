@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
-import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import { SKETCHY_FONTS, SKETCHY_RADIUS, FONT_SIZES } from '../constants/theme';
 import { useReview } from '../hooks/useReview';
 import { useGame } from '../hooks/useGame';
 import { useSound } from '../hooks/useSound';
@@ -144,10 +144,21 @@ export default function PracticeScreen() {
           <Pressable onPress={() => router.back()} style={styles.backButton}>
             <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
           </Pressable>
-          <Text style={styles.title}>
-            연습 {currentIndex + 1}/{totalWords}
-          </Text>
+          <Text style={styles.title}>연습</Text>
           <View style={styles.spacer} />
+        </View>
+
+        <View style={styles.progressDots} accessibilityLabel={`${currentIndex + 1}/${totalWords} 진행 중`}>
+          {Array.from({ length: totalWords }).map((_, i) => (
+            <View
+              key={i}
+              style={[
+                styles.dot,
+                i < currentIndex && styles.dotDone,
+                i === currentIndex && styles.dotCurrent,
+              ]}
+            />
+          ))}
         </View>
 
         <View style={styles.content}>
@@ -197,12 +208,12 @@ const styles = StyleSheet.create({
     width: 60,
   },
   backText: {
-    fontSize: 16,
+    fontSize: FONT_SIZES.md,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.purpleText,
   },
   title: {
-    fontSize: 22,
+    fontSize: FONT_SIZES.xl,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
@@ -226,12 +237,34 @@ const styles = StyleSheet.create({
   toastText: {
     color: COLORS.surface,
     fontFamily: SKETCHY_FONTS.bold,
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
   },
   keyboardArea: {
     marginTop: 'auto',
     paddingBottom: 4,
     width: '100%',
+  },
+  progressDots: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 8,
+  },
+  dot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    backgroundColor: COLORS.surface,
+    borderWidth: 2,
+    borderColor: COLORS.tileBorder,
+  },
+  dotDone: {
+    backgroundColor: COLORS.correct,
+    borderColor: COLORS.correctBorder,
+  },
+  dotCurrent: {
+    backgroundColor: COLORS.purple,
+    borderColor: COLORS.purpleDark,
   },
   emptyState: {
     flex: 1,
@@ -244,12 +277,12 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyText: {
-    fontSize: 17,
+    fontSize: FONT_SIZES.lg,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
   },
   emptySubtext: {
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,

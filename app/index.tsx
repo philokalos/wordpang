@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Difficulty } from '../src/types/game';
 import type { WordCategory } from '../src/types/word';
 import { COLORS } from '../constants/colors';
-import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import { SKETCHY_FONTS, SKETCHY_RADIUS, FONT_SIZES } from '../constants/theme';
 import PaperBackground from '../components/sketchy/PaperBackground';
 import DoodleDecoration from '../components/sketchy/DoodleDecoration';
 import SketchyButton from '../components/sketchy/SketchyButton';
@@ -62,7 +62,7 @@ export default function HomeScreen() {
         )}
 
         <View style={[styles.content, isTablet && { maxWidth: maxContentWidth, alignSelf: 'center' }]}>
-          <Text style={[styles.label, { fontSize: isTablet ? 24 : 20 }]}>난이도를 선택하세요!</Text>
+          <Text style={[styles.label, { fontSize: isTablet ? 28 : FONT_SIZES.xl }]}>난이도를 선택하세요!</Text>
 
           <View style={styles.cards}>
             {DIFFICULTIES.map((diff) => (
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.presentBorder,
   },
   streakText: {
-    fontSize: 16,
+    fontSize: FONT_SIZES.md,
     fontFamily: SKETCHY_FONTS.bold,
     color: '#ffffff',
   },
@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   label: {
-    fontSize: 20,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
   },
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   categoryLabel: {
-    fontSize: 15,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   dailyLabel: {
-    fontSize: 16,
+    fontSize: FONT_SIZES.md,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textPrimary,
   },
@@ -198,10 +197,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   navIcon: {
-    fontSize: 20,
+    fontSize: 26,
   },
   navText: {
-    fontSize: 13,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
     marginTop: 2,

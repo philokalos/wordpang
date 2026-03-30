@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../constants/colors';
-import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import { SKETCHY_FONTS, FONT_SIZES } from '../constants/theme';
 import { useReview } from '../hooks/useReview';
 import { useSound } from '../hooks/useSound';
 import { getWordList } from '../src/data';
@@ -71,22 +71,24 @@ export default function ReviewScreen() {
           <View style={styles.spacer} />
         </View>
 
-        <View style={[styles.tabs, SKETCHY_RADIUS.medium]}>
+        <View style={styles.tabs}>
           <Pressable
             onPress={() => setTab('collection')}
-            style={[styles.tab, SKETCHY_RADIUS.small, tab === 'collection' && styles.tabActive]}
+            style={[styles.tab, tab === 'collection' && styles.tabActive]}
           >
             <Text style={[styles.tabText, tab === 'collection' && styles.tabTextActive]}>
-              컬렉션 ({entries.length})
+              📚 컬렉션 ({entries.length})
             </Text>
+            {tab === 'collection' && <View style={styles.tabUnderline} />}
           </Pressable>
           <Pressable
             onPress={() => setTab('quiz')}
-            style={[styles.tab, SKETCHY_RADIUS.small, tab === 'quiz' && styles.tabActive]}
+            style={[styles.tab, tab === 'quiz' && styles.tabActive]}
           >
             <Text style={[styles.tabText, tab === 'quiz' && styles.tabTextActive]}>
-              퀴즈 ({dueCount})
+              🎯 퀴즈 ({dueCount})
             </Text>
+            {tab === 'quiz' && <View style={styles.tabUnderline} />}
           </Pressable>
         </View>
 
@@ -141,12 +143,12 @@ const styles = StyleSheet.create({
     width: 60,
   },
   backText: {
-    fontSize: 16,
+    fontSize: FONT_SIZES.md,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.purpleText,
   },
   title: {
-    fontSize: 22,
+    fontSize: FONT_SIZES.xl,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
@@ -156,21 +158,30 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     marginHorizontal: 16,
-    backgroundColor: COLORS.surface,
-    borderWidth: 1.5,
-    borderColor: COLORS.tileBorder,
-    padding: 4,
+    borderBottomWidth: 2,
+    borderBottomColor: COLORS.tileBorder,
   },
   tab: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 12,
     alignItems: 'center',
+    position: 'relative',
   },
   tabActive: {
-    backgroundColor: COLORS.purpleBg,
+    // underline handles active state
+  },
+  tabUnderline: {
+    position: 'absolute',
+    bottom: -2,
+    left: 0,
+    right: 0,
+    height: 3,
+    backgroundColor: COLORS.purple,
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2,
   },
   tabText: {
-    fontSize: 15,
+    fontSize: FONT_SIZES.md,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
   },
@@ -185,7 +196,7 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   quizProgress: {
-    fontSize: 15,
+    fontSize: FONT_SIZES.md,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginBottom: 16,
@@ -198,12 +209,12 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyText: {
-    fontSize: 17,
+    fontSize: FONT_SIZES.lg,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
   },
   emptySubtext: {
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -16,9 +16,11 @@ import DoodleDecoration from './sketchy/DoodleDecoration';
 interface HeaderProps {
   showStats?: boolean;
   onStatsPress?: () => void;
+  showBack?: boolean;
+  onBackPress?: () => void;
 }
 
-export default function Header({ showStats, onStatsPress }: HeaderProps) {
+export default function Header({ showStats, onStatsPress, showBack, onBackPress }: HeaderProps) {
   const { isTablet } = useResponsive();
   const wobbleLeft = useSharedValue(0);
   const wobbleRight = useSharedValue(0);
@@ -54,7 +56,11 @@ export default function Header({ showStats, onStatsPress }: HeaderProps) {
   return (
     <View style={styles.container}>
       <View style={styles.titleRow}>
-        {showStats && <View style={styles.spacer} />}
+        {showBack && onBackPress ? (
+          <Pressable onPress={onBackPress} style={styles.backButton} accessibilityRole="button" accessibilityLabel="뒤로가기">
+            <Text style={[styles.backText, { fontSize: isTablet ? 20 : 17 }]}>← 뒤로</Text>
+          </Pressable>
+        ) : (showStats ? <View style={styles.spacer} /> : null)}
         <Animated.View style={[styles.doodleLeft, leftAnimStyle]}>
           <DoodleDecoration type="star" size={20} seed={1} />
         </Animated.View>
@@ -62,9 +68,9 @@ export default function Header({ showStats, onStatsPress }: HeaderProps) {
         <Animated.View style={[styles.doodleRight, rightAnimStyle]}>
           <DoodleDecoration type="star" size={20} seed={2} />
         </Animated.View>
-        {showStats && onStatsPress && (
+        {showStats && onStatsPress ? (
           <Text style={styles.statsButton} onPress={onStatsPress}>📊</Text>
-        )}
+        ) : (showBack ? <View style={styles.spacer} /> : null)}
       </View>
       <Text style={[styles.subtitle, { fontSize: isTablet ? 18 : 15 }]}>영어 단어 팡!</Text>
     </View>
@@ -105,5 +111,13 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     width: 40,
     textAlign: 'center',
+  },
+  backButton: {
+    width: 60,
+    justifyContent: 'center',
+  },
+  backText: {
+    fontFamily: SKETCHY_FONTS.regular,
+    color: COLORS.purpleText,
   },
 });

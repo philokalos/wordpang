@@ -66,9 +66,13 @@ export default function Keyboard({
 
   const renderKey = (key: string) => {
     const isSpecial = key === 'ENTER' || key === 'BACK';
+    const isEnter = key === 'ENTER';
+    const isBack = key === 'BACK';
     const status = isSpecial ? undefined : keyStatuses[key];
     const displayKey = key === 'BACK' ? '⌫' : key === 'ENTER' ? '↵' : key;
-    const bgColor = status ? KEY_BG[status] : COLORS.keyDefault;
+    let bgColor = status ? KEY_BG[status] : COLORS.keyDefault;
+    if (isEnter) bgColor = '#C8E6C9';
+    if (isBack) bgColor = '#FCE4EC';
     const textColor = status ? COLORS.keyStatusText : COLORS.keyDefaultText;
 
     return (
@@ -78,6 +82,8 @@ export default function Keyboard({
         style={({ pressed }) => [
           styles.key,
           KEY_RADII[key],
+          isEnter && styles.enterKey,
+          isBack && styles.backKey,
           {
             width: isSpecial ? specialKeyWidth : normalKeyWidth,
             height: keyHeight,
@@ -92,8 +98,8 @@ export default function Keyboard({
         <Text
           style={[
             styles.keyText,
-            { color: textColor, fontSize: isTablet ? 19 : 16 },
-            isSpecial && { fontSize: isTablet ? 21 : 18 },
+            { color: textColor, fontSize: isTablet ? 23 : 19 },
+            isSpecial && { fontSize: isTablet ? 25 : 21 },
           ]}
         >
           {displayKey}
@@ -143,5 +149,11 @@ const styles = StyleSheet.create({
   },
   keyText: {
     fontFamily: SKETCHY_FONTS.bold,
+  },
+  enterKey: {
+    borderColor: COLORS.correctBorder,
+  },
+  backKey: {
+    borderColor: COLORS.pinkBorder,
   },
 });

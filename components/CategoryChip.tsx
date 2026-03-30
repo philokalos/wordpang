@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import type { WordCategory } from '../src/types/word';
 import { COLORS } from '../constants/colors';
-import { SKETCHY_FONTS } from '../constants/theme';
+import { SKETCHY_FONTS, FONT_SIZES } from '../constants/theme';
 import { seededRandom } from '../utils/sketchy';
 
 const CATEGORY_CONFIG: Record<WordCategory, { label: string; icon: string }> = {
@@ -40,66 +40,106 @@ interface CategoryChipProps {
 
 export default function CategoryChip({ selected, onSelect }: CategoryChipProps) {
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.container}
-    >
+    <View style={styles.wrapper}>
+      {/* 전체 선택 칩 — 가로 전체 차지 */}
       <Pressable
         onPress={() => onSelect(undefined)}
         accessibilityRole="button"
         accessibilityLabel="전체"
         accessibilityState={{ selected: !selected }}
-        style={[styles.chip, CHIP_RADII.all, !selected && styles.chipSelected]}
+        style={({ pressed }) => [
+          styles.allChip,
+          CHIP_RADII.all,
+          !selected && styles.chipSelected,
+          { opacity: pressed ? 0.8 : 1 },
+        ]}
       >
+        <Text style={styles.allIcon}>🌟</Text>
         <Text style={[styles.chipText, !selected && styles.chipTextSelected]}>
           전체
         </Text>
       </Pressable>
-      {ALL_CATEGORIES.map((cat) => {
-        const config = CATEGORY_CONFIG[cat];
-        const isSelected = selected === cat;
-        return (
-          <Pressable
-            key={cat}
-            onPress={() => onSelect(cat)}
-            accessibilityRole="button"
-            accessibilityLabel={config.label}
-            accessibilityState={{ selected: isSelected }}
-            style={[styles.chip, CHIP_RADII[cat], isSelected && styles.chipSelected]}
-          >
-            <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
-              {config.icon} {config.label}
-            </Text>
-          </Pressable>
-        );
-      })}
-    </ScrollView>
+
+      {/* 4x2 그리드 */}
+      <View style={styles.grid}>
+        {ALL_CATEGORIES.map((cat) => {
+          const config = CATEGORY_CONFIG[cat];
+          const isSelected = selected === cat;
+          return (
+            <Pressable
+              key={cat}
+              onPress={() => onSelect(cat)}
+              accessibilityRole="button"
+              accessibilityLabel={config.label}
+              accessibilityState={{ selected: isSelected }}
+              style={({ pressed }) => [
+                styles.chip,
+                CHIP_RADII[cat],
+                isSelected && styles.chipSelected,
+                { opacity: pressed ? 0.8 : 1 },
+              ]}
+            >
+              <Text style={styles.chipIcon}>{config.icon}</Text>
+              <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
+                {config.label}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
+  wrapper: {
+    width: '100%',
     gap: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 4,
+    paddingHorizontal: 4,
   },
-  chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 6,
+  allChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 10,
     borderWidth: 2,
     borderColor: COLORS.tileBorder,
     backgroundColor: COLORS.surface,
+  },
+  allIcon: {
+    fontSize: 22,
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  chip: {
+    // 4개 per row: (100% - 3 gaps of 8px) / 4 = ~23.5%
+    // Using flexBasis instead of hardcoded percentage
+    flexBasis: '22%',
+    flexGrow: 1,
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    borderWidth: 2,
+    borderColor: COLORS.tileBorder,
+    backgroundColor: COLORS.surface,
+    gap: 4,
   },
   chipSelected: {
     backgroundColor: COLORS.purpleBg,
     borderColor: COLORS.purple,
   },
+  chipIcon: {
+    fontSize: 22,
+  },
   chipText: {
-    fontSize: 13,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
+    textAlign: 'center',
   },
   chipTextSelected: {
     color: COLORS.purpleText,

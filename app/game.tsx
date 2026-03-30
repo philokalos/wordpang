@@ -6,7 +6,7 @@ import type { Difficulty, HintType } from '../src/types/game';
 import type { WordCategory } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
 import { COLORS } from '../constants/colors';
-import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import { SKETCHY_FONTS, SKETCHY_RADIUS, FONT_SIZES } from '../constants/theme';
 import { useGame } from '../hooks/useGame';
 import { useSound } from '../hooks/useSound';
 import { useStats } from '../hooks/useStats';
@@ -118,6 +118,10 @@ export default function GameScreen() {
     router.back();
   };
 
+  const handleGoHome = () => {
+    router.replace('/');
+  };
+
   const handleStatsPress = () => {
     router.push('/stats');
   };
@@ -143,24 +147,26 @@ export default function GameScreen() {
     const rec = getDifficultyRecommendation(difficulty);
     if (rec === 'up') {
       const next = difficulty === 'easy' ? 'normal' : 'hard';
-      router.replace({ pathname: '/game', params: { difficulty: next, daily: '0' } });
+      router.replace({ pathname: '/game', params: { difficulty: next, daily: '0', ...(category ? { category } : {}) } });
     } else if (rec === 'down') {
       const next = difficulty === 'hard' ? 'normal' : 'easy';
-      router.replace({ pathname: '/game', params: { difficulty: next, daily: '0' } });
+      router.replace({ pathname: '/game', params: { difficulty: next, daily: '0', ...(category ? { category } : {}) } });
     }
   };
 
   return (
     <PaperBackground>
       <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
-        <Header showStats onStatsPress={handleStatsPress} />
+        <Header showStats onStatsPress={handleStatsPress} showBack onBackPress={() => router.back()} />
 
         <View style={[styles.content, { maxWidth: isTablet ? maxContentWidth : undefined, alignSelf: isTablet ? 'center' as const : undefined }]}>
-          {game.toastMessage ? (
-            <View style={[styles.toast, SKETCHY_RADIUS.small]}>
-              <Text style={styles.toastText}>{game.toastMessage}</Text>
-            </View>
-          ) : null}
+          <View style={styles.toastArea}>
+            {game.toastMessage ? (
+              <View style={[styles.toast, SKETCHY_RADIUS.small]}>
+                <Text style={styles.toastText}>{game.toastMessage}</Text>
+              </View>
+            ) : null}
+          </View>
 
           <View style={styles.boardArea}>
             <GameBoard
@@ -204,6 +210,7 @@ export default function GameScreen() {
           onNewGame={handleNewGame}
           onChangeDifficulty={handleChangeDifficulty}
           onMarkLearned={handleMarkLearned}
+          onHome={handleGoHome}
         />
 
         <DifficultyPrompt
@@ -226,6 +233,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 8,
   },
+  toastArea: {
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   boardArea: {
     flexShrink: 1,
     paddingVertical: 4,
@@ -234,14 +246,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.textPrimary,
     paddingHorizontal: 16,
     paddingVertical: 8,
-    position: 'absolute',
-    top: 0,
-    zIndex: 10,
   },
   toastText: {
     color: COLORS.surface,
     fontFamily: SKETCHY_FONTS.bold,
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
   },
   keyboardArea: {
     marginTop: 'auto',

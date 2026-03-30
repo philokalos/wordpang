@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
+import * as Speech from 'expo-speech';
 import type { WordEntry } from '../src/types/word';
 import { COLORS } from '../constants/colors';
-import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import { SKETCHY_FONTS, SKETCHY_RADIUS, FONT_SIZES } from '../constants/theme';
 
 const CATEGORY_LABELS: Record<string, string> = {
   animal: '🐾 동물',
@@ -21,9 +22,23 @@ export default function WordCard({ word }: { word: WordEntry }) {
     '[$1]',
   );
 
+  const handleSpeak = () => {
+    Speech.speak(word.word, { language: 'en-US', rate: 0.8 });
+  };
+
   return (
     <View style={[styles.card, SKETCHY_RADIUS.large]} accessibilityLabel={`${word.word}, ${word.meaning}, ${word.partOfSpeech}`}>
-      <Text style={styles.word}>{word.word}</Text>
+      <View style={styles.wordRow}>
+        <Text style={styles.word}>{word.word}</Text>
+        <Pressable
+          onPress={handleSpeak}
+          style={({ pressed }) => [styles.speakButton, SKETCHY_RADIUS.small, { opacity: pressed ? 0.7 : 1 }]}
+          accessibilityRole="button"
+          accessibilityLabel="발음 듣기"
+        >
+          <Text style={styles.speakIcon}>🔊</Text>
+        </Pressable>
+      </View>
       <View style={styles.metaRow}>
         <Text style={[styles.partOfSpeech, SKETCHY_RADIUS.small]}>{word.partOfSpeech}</Text>
         <Text style={[styles.category, SKETCHY_RADIUS.small]}>{CATEGORY_LABELS[word.category] ?? word.category}</Text>
@@ -47,11 +62,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 8,
   },
+  wordRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
   word: {
     fontSize: 26,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.purpleText,
     letterSpacing: 3,
+  },
+  speakButton: {
+    backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  speakIcon: {
+    fontSize: 20,
   },
   metaRow: {
     flexDirection: 'row',
@@ -59,7 +89,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   partOfSpeech: {
-    fontSize: 13,
+    fontSize: FONT_SIZES.xs,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.pinkText,
     backgroundColor: COLORS.pinkLight,
@@ -68,7 +98,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   category: {
-    fontSize: 13,
+    fontSize: FONT_SIZES.xs,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.purpleText,
     backgroundColor: '#EDE7F6',
@@ -83,7 +113,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   pronunciation: {
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 2,
@@ -97,7 +127,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   example: {
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
     fontStyle: 'italic',

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, Modal, Pressable, ScrollView } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { StyleSheet, View, Text, Modal, Pressable, ScrollView, Animated } from 'react-native';
 import type { GameStatus, LetterStatus } from '../src/types/game';
 import type { WordEntry } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
@@ -22,6 +22,88 @@ interface ResultModalProps {
   onNewGame: () => void;
   onChangeDifficulty: () => void;
   onMarkLearned?: () => void;
+  onHome?: () => void;
+}
+
+// Confetti particle definitions
+const CONFETTI_PARTICLES = [
+  { dx: -110, dy: -200, delay: 0,   emoji: '⭐' },
+  { dx: 0,    dy: -220, delay: 40,  emoji: '🌟' },
+  { dx: 110,  dy: -200, delay: 80,  emoji: '✨' },
+  { dx: -160, dy: -140, delay: 20,  emoji: '⭐' },
+  { dx: 160,  dy: -140, delay: 60,  emoji: '✨' },
+  { dx: -60,  dy: -230, delay: 100, emoji: '🌟' },
+  { dx: 60,   dy: -230, delay: 120, emoji: '⭐' },
+  { dx: -140, dy: -80,  delay: 30,  emoji: '✨' },
+  { dx: 140,  dy: -80,  delay: 70,  emoji: '🌟' },
+  { dx: 0,    dy: -160, delay: 150, emoji: '⭐' },
+];
+
+function ConfettiBurst({ triggered }: { triggered: boolean }) {
+  const anims = useRef(
+    CONFETTI_PARTICLES.map(() => ({
+      x: new Animated.Value(0),
+      y: new Animated.Value(0),
+      opacity: new Animated.Value(0),
+      scale: new Animated.Value(0.4),
+    }))
+  ).current;
+
+  useEffect(() => {
+    if (!triggered) return;
+
+    anims.forEach((anim, i) => {
+      const p = CONFETTI_PARTICLES[i]!;
+      anim.x.setValue(0);
+      anim.y.setValue(0);
+      anim.opacity.setValue(0);
+      anim.scale.setValue(0.4);
+
+      Animated.sequence([
+        Animated.delay(p.delay),
+        Animated.parallel([
+          Animated.timing(anim.x, {
+            toValue: p.dx,
+            duration: 700,
+            useNativeDriver: true,
+          }),
+          Animated.timing(anim.y, {
+            toValue: p.dy,
+            duration: 700,
+            useNativeDriver: true,
+          }),
+          Animated.sequence([
+            Animated.timing(anim.opacity, { toValue: 1, duration: 80, useNativeDriver: true }),
+            Animated.timing(anim.opacity, { toValue: 0, duration: 500, delay: 200, useNativeDriver: true }),
+          ]),
+          Animated.timing(anim.scale, { toValue: 1.3, duration: 400, useNativeDriver: true }),
+        ]),
+      ]).start();
+    });
+  }, [triggered, anims]);
+
+  return (
+    <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
+      {anims.map((anim, i) => (
+        <Animated.Text
+          key={i}
+          style={[
+            styles.confettiParticle,
+            {
+              transform: [
+                { translateX: anim.x },
+                { translateY: anim.y },
+                { scale: anim.scale },
+              ],
+              opacity: anim.opacity,
+            },
+          ]}
+        >
+          {CONFETTI_PARTICLES[i]!.emoji}
+        </Animated.Text>
+      ))}
+    </View>
+  );
 }
 
 export default function ResultModal({
@@ -36,10 +118,26 @@ export default function ResultModal({
   onNewGame,
   onChangeDifficulty,
   onMarkLearned,
+  onHome,
 }: ResultModalProps) {
   const [marked, setMarked] = useState(false);
   const isWin = gameStatus === 'won';
   const visible = gameStatus !== 'playing';
+
+  // Card entrance scale animation
+  const cardScale = useRef(new Animated.Value(0.75)).current;
+
+  useEffect(() => {
+    if (visible) {
+      cardScale.setValue(0.75);
+      Animated.spring(cardScale, {
+        toValue: 1,
+        damping: 14,
+        stiffness: 180,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [visible, cardScale]);
 
   const handleMarkLearned = () => {
     onMarkLearned?.();
@@ -49,94 +147,113 @@ export default function ResultModal({
   return (
     <Modal visible={visible} transparent animationType="fade">
       <View style={styles.overlay}>
-        <View style={[styles.card, SKETCHY_RADIUS.large]} accessibilityLabel="게임 결과">
+        {/* Confetti burst anchored to the overlay center */}
+        {isWin && (
+          <View style={styles.confettiAnchor} pointerEvents="none">
+            <ConfettiBurst triggered={visible && isWin} />
+          </View>
+        )}
+
+        <Animated.View
+          style={[styles.card, SKETCHY_RADIUS.large, { transform: [{ scale: cardScale }] }]}
+          accessibilityLabel="게임 결과"
+        >
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.cardContent}
           >
-          {isWin && (
-            <View style={styles.celebrationRow}>
-              <DoodleDecoration type="star" size={22} seed={301} color="#FFD54F" style={styles.celebrationStar} />
-              <DoodleDecoration type="star" size={16} seed={302} color="#FF8A65" style={styles.celebrationStarSmall} />
-              <DoodleDecoration type="star" size={18} seed={303} color="#AED581" />
-              <DoodleDecoration type="star" size={22} seed={304} color="#4FC3F7" style={styles.celebrationStar} />
-              <DoodleDecoration type="star" size={14} seed={305} color="#CE93D8" style={styles.celebrationStarSmall} />
-            </View>
-          )}
-          <Text style={styles.emoji}>{isWin ? '🎉' : '😢'}</Text>
-          <Text style={styles.title}>{isWin ? '정답!' : '아쉬워요!'}</Text>
-
-          {isWin && (
-            <Text style={styles.attemptsText}>
-              {attempts}/{maxAttempts} 번 만에 맞혔어요!
-            </Text>
-          )}
-
-          <WordCard word={targetWord} />
-
-          {newAchievements && newAchievements.length > 0 && (
-            <View style={styles.achievementSection}>
-              {newAchievements.map((a) => (
-                <View key={a.id} style={[styles.achievementRow, SKETCHY_RADIUS.small]}>
-                  <Text style={styles.achievementIcon}>{a.icon}</Text>
-                  <Text style={styles.achievementText}>{a.title}</Text>
-                </View>
-              ))}
-            </View>
-          )}
-
-          {onMarkLearned && (
-            <Pressable
-              onPress={handleMarkLearned}
-              disabled={marked}
-              accessibilityRole="button"
-              accessibilityLabel={marked ? '학습 완료' : '이 단어 배웠어요'}
-              style={({ pressed }) => [
-                styles.learnedButton,
-                SKETCHY_RADIUS.medium,
-                marked && styles.learnedButtonDone,
-                { opacity: pressed && !marked ? 0.8 : 1 },
-              ]}
-            >
-              <Text style={[styles.learnedText, marked && styles.learnedTextDone]}>
-                {marked ? '학습 완료!' : '이 단어 배웠어요!'}
-              </Text>
-            </Pressable>
-          )}
-
-          <View style={styles.actions}>
-            <ShareButton
-              won={isWin}
-              attempts={attempts}
-              maxAttempts={maxAttempts}
-              evaluations={evaluations}
-              isDaily={isDaily}
-            />
-
-            {isDaily && countdown ? (
-              <View style={styles.countdownBox}>
-                <Text style={styles.countdownLabel}>다음 단어까지</Text>
-                <Text style={styles.countdownTime}>{countdown}</Text>
+            {isWin && (
+              <View style={styles.celebrationRow}>
+                <DoodleDecoration type="star" size={22} seed={301} color="#FFD54F" style={styles.celebrationStar} />
+                <DoodleDecoration type="star" size={16} seed={302} color="#FF8A65" style={styles.celebrationStarSmall} />
+                <DoodleDecoration type="star" size={18} seed={303} color="#AED581" />
+                <DoodleDecoration type="star" size={22} seed={304} color="#4FC3F7" style={styles.celebrationStar} />
+                <DoodleDecoration type="star" size={14} seed={305} color="#CE93D8" style={styles.celebrationStarSmall} />
               </View>
-            ) : (
-              <>
-                <SketchyButton
-                  label="다시 하기"
-                  onPress={onNewGame}
-                  seed={201}
-                  variant="primary"
-                />
-                <SketchyButton
-                  label="난이도 변경"
-                  onPress={onChangeDifficulty}
-                  seed={202}
-                  variant="secondary"
-                />
-              </>
             )}
-          </View>
+            <Text style={styles.emoji}>{isWin ? '🎉' : '😢'}</Text>
+            <Text style={styles.title}>{isWin ? '정답!' : '아쉬워요!'}</Text>
+
+            {isWin && (
+              <Text style={styles.attemptsText}>
+                {attempts}/{maxAttempts} 번 만에 맞혔어요!
+              </Text>
+            )}
+
+            <WordCard word={targetWord} />
+
+            {newAchievements && newAchievements.length > 0 && (
+              <View style={styles.achievementSection}>
+                {newAchievements.map((a) => (
+                  <View key={a.id} style={[styles.achievementRow, SKETCHY_RADIUS.small]}>
+                    <Text style={styles.achievementIcon}>{a.icon}</Text>
+                    <Text style={styles.achievementText}>{a.title}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+
+            {onMarkLearned && (
+              <Pressable
+                onPress={handleMarkLearned}
+                disabled={marked}
+                accessibilityRole="button"
+                accessibilityLabel={marked ? '학습 완료' : '이 단어 배웠어요'}
+                style={({ pressed }) => [
+                  styles.learnedButton,
+                  SKETCHY_RADIUS.medium,
+                  marked && styles.learnedButtonDone,
+                  { opacity: pressed && !marked ? 0.8 : 1 },
+                ]}
+              >
+                <Text style={[styles.learnedText, marked && styles.learnedTextDone]}>
+                  {marked ? '학습 완료!' : '이 단어 배웠어요!'}
+                </Text>
+              </Pressable>
+            )}
+
+            <View style={styles.actions}>
+              <ShareButton
+                won={isWin}
+                attempts={attempts}
+                maxAttempts={maxAttempts}
+                evaluations={evaluations}
+                isDaily={isDaily}
+              />
+
+              {isDaily && countdown ? (
+                <View style={styles.countdownBox}>
+                  <Text style={styles.countdownLabel}>다음 단어까지</Text>
+                  <Text style={styles.countdownTime}>{countdown}</Text>
+                  {onHome && (
+                    <SketchyButton
+                      label="홈으로"
+                      onPress={onHome}
+                      seed={203}
+                      variant="secondary"
+                      style={styles.homeButton}
+                    />
+                  )}
+                </View>
+              ) : (
+                <>
+                  <SketchyButton
+                    label="다시 하기"
+                    onPress={onNewGame}
+                    seed={201}
+                    variant="primary"
+                  />
+                  <SketchyButton
+                    label="난이도 변경"
+                    onPress={onChangeDifficulty}
+                    seed={202}
+                    variant="secondary"
+                  />
+                </>
+              )}
+            </View>
           </ScrollView>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
@@ -149,6 +266,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
+  },
+  confettiAnchor: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: 0,
+    height: 0,
+  },
+  confettiParticle: {
+    position: 'absolute',
+    fontSize: 20,
   },
   card: {
     backgroundColor: COLORS.surface,
@@ -252,5 +380,8 @@ const styles = StyleSheet.create({
     color: COLORS.purpleText,
     marginTop: 4,
     fontVariant: ['tabular-nums'],
+  },
+  homeButton: {
+    marginTop: 12,
   },
 });

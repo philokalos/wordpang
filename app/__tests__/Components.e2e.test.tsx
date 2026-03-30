@@ -195,9 +195,9 @@ describe('ReviewList E2E', () => {
 
   it('should display words with status badges', () => {
     const entries = [
-      { word: 'APPLE', lastReviewed: '2024-01-01', reviewCount: 3, nextReview: '2024-01-02', status: 'mastered' as const },
-      { word: 'BREAD', lastReviewed: '2024-01-01', reviewCount: 1, nextReview: '2024-01-01', status: 'learning' as const },
-      { word: 'CHAIR', lastReviewed: '2024-01-01', reviewCount: 0, nextReview: '2024-01-01', status: 'new' as const },
+      { word: 'APPLE', lastReviewed: 1704067200000, reviewCount: 3, nextReview: 1704153600000, status: 'mastered' as const },
+      { word: 'BREAD', lastReviewed: 1704067200000, reviewCount: 1, nextReview: 1704067200000, status: 'learning' as const },
+      { word: 'CHAIR', lastReviewed: 1704067200000, reviewCount: 0, nextReview: 1704067200000, status: 'new' as const },
     ];
     const { getByText } = render(<ReviewList entries={entries} />);
     expect(getByText('APPLE')).toBeTruthy();

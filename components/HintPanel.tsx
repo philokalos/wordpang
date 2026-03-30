@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Pressable, ScrollView } from 'react-native';
 import type { Hint, HintType, GameStatus } from '../src/types/game';
 import { MAX_HINT_POINTS } from '../src/types/game';
 import { COLORS } from '../constants/colors';
-import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
+import { SKETCHY_FONTS, SKETCHY_RADIUS, FONT_SIZES } from '../constants/theme';
 import { seededRandom } from '../utils/sketchy';
 import { useResponsive } from '../hooks/useResponsive';
 
@@ -88,9 +88,15 @@ export default function HintPanel({
         })}
       </ScrollView>
 
-      <Text style={styles.counter}>
-        힌트 포인트 {hintPointsUsed}/{MAX_HINT_POINTS}
-      </Text>
+      <View style={styles.gaugeRow} accessibilityLabel={`힌트 포인트 ${hintPointsUsed}/${MAX_HINT_POINTS} 사용`}>
+        <Text style={styles.gaugeLabel}>힌트</Text>
+        {Array.from({ length: MAX_HINT_POINTS }).map((_, i) => (
+          <View
+            key={i}
+            style={[styles.gaugeDot, i < hintPointsUsed ? styles.gaugeDotUsed : styles.gaugeDotFree]}
+          />
+        ))}
+      </View>
 
       {hints.length > 0 && (
         <ScrollView
@@ -140,18 +146,38 @@ const styles = StyleSheet.create({
     borderColor: COLORS.tileBorder,
   },
   buttonText: {
-    fontSize: 13,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.regular,
   },
   costText: {
-    fontSize: 11,
+    fontSize: FONT_SIZES.xs,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.pinkText,
   },
-  counter: {
-    fontSize: 12,
+  gaugeRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  gaugeLabel: {
+    fontSize: FONT_SIZES.xs,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
+    marginRight: 2,
+  },
+  gaugeDot: {
+    width: 14,
+    height: 14,
+    borderRadius: 7,
+    borderWidth: 1.5,
+  },
+  gaugeDotUsed: {
+    backgroundColor: COLORS.purple,
+    borderColor: COLORS.purpleDark,
+  },
+  gaugeDotFree: {
+    backgroundColor: COLORS.surface,
+    borderColor: COLORS.tileBorder,
   },
   hintScroll: {
     maxHeight: 96,
@@ -168,7 +194,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   hintText: {
-    fontSize: 14,
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.pinkText,
     textAlign: 'center',

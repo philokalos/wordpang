@@ -58,6 +58,16 @@ export const CRAYON = {
   inkMuted: '#A1887F',
 } as const;
 
+/** Font size scale — slightly enlarged for elementary school users */
+export const FONT_SIZES = {
+  xs: 14,   // counters, badges
+  sm: 17,   // secondary labels, chips
+  md: 20,   // body text, buttons
+  lg: 22,   // subtitles, screen titles
+  xl: 26,   // section titles
+  xxl: 34,  // large titles
+} as const;
+
 /** Wobble animation constants */
 export const WOBBLE = {
   rotation: 1.5, // degrees
