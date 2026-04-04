@@ -8,7 +8,7 @@ import { SKETCHY_FONTS, SKETCHY_RADIUS } from '../constants/theme';
 import ShareButton from './ShareButton';
 import WordCard from './WordCard';
 import SketchyButton from './sketchy/SketchyButton';
-import DoodleDecoration from './sketchy/DoodleDecoration';
+import HeroText from './sketchy/HeroText';
 
 interface ResultModalProps {
   gameStatus: GameStatus;
@@ -161,21 +161,14 @@ export default function ResultModal({
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.cardContent}
           >
-            {isWin && (
-              <View style={styles.celebrationRow}>
-                <DoodleDecoration type="star" size={22} seed={301} color="#FFD54F" style={styles.celebrationStar} />
-                <DoodleDecoration type="star" size={16} seed={302} color="#FF8A65" style={styles.celebrationStarSmall} />
-                <DoodleDecoration type="star" size={18} seed={303} color="#AED581" />
-                <DoodleDecoration type="star" size={22} seed={304} color="#4FC3F7" style={styles.celebrationStar} />
-                <DoodleDecoration type="star" size={14} seed={305} color="#CE93D8" style={styles.celebrationStarSmall} />
-              </View>
-            )}
             <Text style={styles.emoji}>{isWin ? '🎉' : '😢'}</Text>
-            <Text style={styles.title}>{isWin ? '정답!' : '아쉬워요!'}</Text>
+            <View style={styles.heroTextWrapper}>
+              <HeroText text={isWin ? '우와! 정답이에요!' : '다음에 더 잘할 수 있어요!'} baseSize={isWin ? 38 : 34} seedOffset={isWin ? 100 : 200} />
+            </View>
 
             {isWin && (
               <Text style={styles.attemptsText}>
-                {attempts}/{maxAttempts} 번 만에 맞혔어요!
+                우리 친구, 정말 대단해요! {attempts}번 만에 맞혔네요! ✨
               </Text>
             )}
 
@@ -197,7 +190,7 @@ export default function ResultModal({
                 onPress={handleMarkLearned}
                 disabled={marked}
                 accessibilityRole="button"
-                accessibilityLabel={marked ? '학습 완료' : '이 단어 배웠어요'}
+                accessibilityLabel={marked ? '학습 완료' : '선생님, 저 이거 배웠어요'}
                 style={({ pressed }) => [
                   styles.learnedButton,
                   SKETCHY_RADIUS.medium,
@@ -206,7 +199,7 @@ export default function ResultModal({
                 ]}
               >
                 <Text style={[styles.learnedText, marked && styles.learnedTextDone]}>
-                  {marked ? '학습 완료!' : '이 단어 배웠어요!'}
+                  {marked ? '머릿속에 쏙쏙! 아주 잘했어요! 🧠' : '선생님, 저 이 단어 이제 알아요!'}
                 </Text>
               </Pressable>
             )}
@@ -222,11 +215,11 @@ export default function ResultModal({
 
               {isDaily && countdown ? (
                 <View style={styles.countdownBox}>
-                  <Text style={styles.countdownLabel}>다음 단어까지</Text>
+                  <Text style={styles.countdownLabel}>조금만 기다리면 다음 단어가 나와요</Text>
                   <Text style={styles.countdownTime}>{countdown}</Text>
                   {onHome && (
                     <SketchyButton
-                      label="홈으로"
+                      label="우리 홈으로 가볼까요?"
                       onPress={onHome}
                       seed={203}
                       variant="secondary"
@@ -237,13 +230,13 @@ export default function ResultModal({
               ) : (
                 <>
                   <SketchyButton
-                    label="다시 하기"
+                    label="한 번 더 해볼까요?"
                     onPress={onNewGame}
                     seed={201}
                     variant="primary"
                   />
                   <SketchyButton
-                    label="난이도 변경"
+                    label="난이도를 바꿔볼까요?"
                     onPress={onChangeDifficulty}
                     seed={202}
                     variant="secondary"
@@ -278,7 +271,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   card: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: '#ffffff',
     borderWidth: 2,
     borderColor: COLORS.tileBorder,
     padding: 24,
@@ -286,6 +279,21 @@ const styles = StyleSheet.create({
     maxWidth: 480,
     alignItems: 'center',
     maxHeight: '85%',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 12,
+    right: 12,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  closeText: {
+    fontSize: 28,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.textMuted,
   },
   cardContent: {
     alignItems: 'center',
@@ -306,13 +314,18 @@ const styles = StyleSheet.create({
     fontSize: 48,
     marginBottom: 8,
   },
+  heroTextWrapper: {
+    marginBottom: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   title: {
     fontSize: 28,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   attemptsText: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,
@@ -326,16 +339,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: COLORS.achievementBg,
-    borderWidth: 1,
-    borderColor: COLORS.tileBorder,
+    backgroundColor: 'transparent',
+    borderWidth: 1.5,
+    borderColor: COLORS.absentBorder,
     padding: 10,
   },
   achievementIcon: {
     fontSize: 20,
   },
   achievementText: {
-    fontSize: 14,
+    fontSize: 17,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
@@ -352,7 +365,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.correctBorder,
   },
   learnedText: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.correctBorder,
   },
@@ -369,7 +382,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   countdownLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
   },

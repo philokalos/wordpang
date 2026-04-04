@@ -208,11 +208,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   front: {
-    backgroundColor: COLORS.purple,
+    backgroundColor: '#ffffff',
     borderColor: COLORS.purpleDark,
   },
   back: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: '#ffffff',
     borderColor: COLORS.tileBorder,
   },
   swipeOverlay: {
@@ -246,13 +246,13 @@ const styles = StyleSheet.create({
   wordText: {
     fontSize: 34,
     fontFamily: SKETCHY_FONTS.bold,
-    color: '#ffffff',
+    color: COLORS.purpleDark,
     letterSpacing: 4,
   },
   tapHint: {
     fontSize: FONT_SIZES.xs,
     fontFamily: SKETCHY_FONTS.regular,
-    color: 'rgba(255,255,255,0.7)',
+    color: COLORS.textMuted,
     marginTop: 8,
     textAlign: 'center',
   },

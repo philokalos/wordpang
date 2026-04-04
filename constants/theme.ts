@@ -3,8 +3,8 @@
  */
 
 export const SKETCHY_FONTS = {
-  regular: 'Gaegu-Regular',
-  bold: 'Gaegu-Bold',
+  regular: 'HiMelody-Regular',
+  bold: 'HiMelody-Regular',
 } as const;
 
 /** Irregular border radius presets — each corner differs for hand-drawn feel */
@@ -31,7 +31,7 @@ export const SKETCHY_RADIUS = {
 
 /** Crayon-style color palette */
 export const CRAYON = {
-  // Primary accents
+  // Primary accents (kept vibrant like crayons)
   green: '#4CAF50',
   greenDark: '#388E3C',
   orange: '#FFB74D',
@@ -47,25 +47,25 @@ export const CRAYON = {
   pink: '#F48FB1',
   pinkDark: '#C2185B',
 
-  // Pencil/paper tones
-  pencilLine: '#D4C5B2',
-  pencilDark: '#8B7355',
-  paper: '#FFF5EB',
-  paperWhite: '#FFFDF7',
-  paperDark: '#F5EDE0',
-  inkBrown: '#2D1B0E',
-  inkLight: '#5D4037',
-  inkMuted: '#A1887F',
+  // Minimal Pencil/paper tones
+  pencilLine: '#A09E9B',
+  pencilDark: '#4A4A4A',
+  paper: '#FFFFFF',
+  paperWhite: '#FFFFFF',
+  paperDark: '#FAFAFA',
+  inkBrown: '#222222',
+  inkLight: '#555555',
+  inkMuted: '#888888',
 } as const;
 
-/** Font size scale — slightly enlarged for elementary school users */
+/** Font size scale — enlarged significantly for elementary school users */
 export const FONT_SIZES = {
-  xs: 14,   // counters, badges
-  sm: 17,   // secondary labels, chips
-  md: 20,   // body text, buttons
-  lg: 22,   // subtitles, screen titles
-  xl: 26,   // section titles
-  xxl: 34,  // large titles
+  xs: 20,   // counters, badges
+  sm: 24,   // secondary labels, chips
+  md: 28,   // body text, buttons
+  lg: 32,   // subtitles, screen titles
+  xl: 40,   // section titles
+  xxl: 50,  // large titles
 } as const;
 
 /** Wobble animation constants */

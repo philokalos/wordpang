@@ -13,7 +13,7 @@ import type { Difficulty, HintType } from '../types/game';
 import { HINT_COSTS, MAX_HINT_POINTS } from '../types/game';
 import { ACHIEVEMENT_DEFS } from '../types/achievement';
 import type { ReviewStatus } from '../types/review';
-import { getWordList, getWordListByCategory, getRandomWord } from '../data';
+import { getWordList, getRandomWord } from '../data';
 
 const difficulties: Difficulty[] = ['easy', 'normal', 'hard'];
 const categories: WordCategory[] = [
@@ -35,8 +35,9 @@ describe('Domain Model v3: WordCategory value object invariants', () => {
   it.each(difficultyCategory)(
     'category "%s/%s" should have at least 1 word',
     (difficulty, category) => {
-      const { answers } = getWordListByCategory(difficulty, category);
-      expect(answers.length).toBeGreaterThanOrEqual(1);
+      const { answers } = getWordList(difficulty);
+      const filtered = answers.filter((w) => w.category === category);
+      expect(filtered.length).toBeGreaterThanOrEqual(1);
     },
   );
 
@@ -74,38 +75,12 @@ describe('Domain Model v3: WordCategory value object invariants', () => {
 
 describe('Domain Model v3: Category filtering invariants', () => {
   it.each(difficulties)(
-    'getWordListByCategory(%s, undefined) should return same answers as getWordList(%s)',
+    'getWordList(difficulty) should return a valid word list',
     (difficulty) => {
-      const unfiltered = getWordList(difficulty);
-      const withUndefined = getWordListByCategory(difficulty, undefined);
-
-      expect(withUndefined.answers).toEqual(unfiltered.answers);
-    },
-  );
-
-  it.each(difficulties)(
-    'getWordListByCategory(%s, category) should return only words with that category',
-    (difficulty) => {
-      categories.forEach((category) => {
-        const { answers } = getWordListByCategory(difficulty, category);
-
-        answers.forEach((entry: WordEntry) => {
-          expect(entry.category).toBe(category);
-        });
-      });
-    },
-  );
-
-  it.each(difficulties)(
-    'getWordListByCategory(%s) should preserve the validWords set',
-    (difficulty) => {
-      const unfiltered = getWordList(difficulty);
-
-      categories.forEach((category) => {
-        const filtered = getWordListByCategory(difficulty, category);
-        expect(filtered.validWords).toBe(unfiltered.validWords);
-      });
-    },
+      const list = getWordList(difficulty);
+      expect(list.answers.length).toBeGreaterThan(0);
+      expect(list.validWords.size).toBeGreaterThan(0);
+    }
   );
 
   it.each(difficulties)(
@@ -115,7 +90,7 @@ describe('Domain Model v3: Category filtering invariants', () => {
         const word = getRandomWord(difficulty, category);
         expect(word.category).toBe(category);
       });
-    },
+    }
   );
 });
 

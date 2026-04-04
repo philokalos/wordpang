@@ -1,48 +1,48 @@
 import { CRAYON } from './theme';
 
 export const COLORS = {
-  correct: CRAYON.green,
-  correctBorder: CRAYON.greenDark,
-  present: CRAYON.orange,
-  presentBorder: CRAYON.orangeDark,
-  absent: '#B0A899',
-  absentBorder: '#8B7E6F',
+  correct: 'transparent',
+  correctBorder: CRAYON.green,
+  present: 'transparent',
+  presentBorder: CRAYON.orange,
+  absent: 'transparent',
+  absentBorder: '#E0E0E0',
 
-  tileBg: CRAYON.paperWhite,
+  tileBg: 'transparent',
   tileBorder: CRAYON.pencilLine,
-  tileActiveBorder: CRAYON.purple,
+  tileActiveBorder: CRAYON.inkBrown,
 
-  keyDefault: '#EDE8DF',
+  keyDefault: 'transparent',
   keyDefaultText: CRAYON.inkBrown,
-  keyDefaultBorder: CRAYON.pencilLine,
-  keyStatusText: '#ffffff',
+  keyDefaultBorder: '#E0E0E0',
+  keyStatusText: CRAYON.inkBrown,
 
   background: CRAYON.paper,
-  surface: CRAYON.paperWhite,
-  surfaceAlt: CRAYON.paperDark,
+  surface: 'transparent',
+  surfaceAlt: 'transparent',
 
-  purple: CRAYON.purple,
-  purpleDark: CRAYON.purpleDark,
-  purpleBg: '#F3E5F5',
+  purple: 'transparent',
+  purpleDark: CRAYON.purple,
+  purpleBg: 'transparent',
   purpleText: CRAYON.purpleDark,
 
-  pink: CRAYON.pink,
-  pinkLight: '#FCE4EC',
-  pinkBgStrong: '#FFEBEE',
+  pink: 'transparent',
+  pinkLight: 'transparent',
+  pinkBgStrong: 'transparent',
   pinkBorder: CRAYON.pink,
   pinkText: CRAYON.pinkDark,
 
-  correctBg: '#E8F5E9',
-  correctBgActive: '#C8E6C9',
+  correctBg: 'transparent',
+  correctBgActive: 'transparent',
 
-  achievementBg: '#FFF8E1',
-  categoryChipBg: '#EDE7F6',
+  achievementBg: 'transparent',
+  categoryChipBg: 'transparent',
 
   textPrimary: CRAYON.inkBrown,
   textSecondary: CRAYON.inkLight,
   textMuted: CRAYON.inkMuted,
 
-  overlay: 'rgba(0,0,0,0.4)',
+  overlay: 'rgba(255,255,255,0.85)',
 } as const;
 
 export type LetterStatusColor = {

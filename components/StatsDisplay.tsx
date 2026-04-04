@@ -54,7 +54,7 @@ export default function StatsDisplay({ stats, winRate }: StatsDisplayProps) {
                   isHighlighted && styles.distBarHighlight,
                 ]}
               >
-                <Text style={styles.distCount}>{count}</Text>
+                <Text style={[styles.distCount, isHighlighted && styles.distCountHighlight]}>{count}</Text>
               </View>
             </View>
           );
@@ -90,13 +90,13 @@ const styles = StyleSheet.create({
     color: COLORS.textPrimary,
   },
   statLabel: {
-    fontSize: 12,
+    fontSize: 15,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 2,
   },
   distTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
     textAlign: 'center',
@@ -110,21 +110,23 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   distLabel: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
     width: 16,
     textAlign: 'right',
   },
   distBar: {
-    backgroundColor: COLORS.correct,
+    backgroundColor: 'transparent',
+    borderWidth: 1.5,
+    borderColor: COLORS.tileBorder,
     paddingHorizontal: 8,
     paddingVertical: 3,
     minWidth: 24,
     alignItems: 'flex-end',
   },
   distBarHighlight: {
-    backgroundColor: COLORS.purple,
+    backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: COLORS.purpleDark,
   },
@@ -132,8 +134,11 @@ const styles = StyleSheet.create({
     color: COLORS.purpleDark,
   },
   distCount: {
-    fontSize: 13,
+    fontSize: 15,
     fontFamily: SKETCHY_FONTS.bold,
-    color: '#ffffff',
+    color: COLORS.textSecondary,
+  },
+  distCountHighlight: {
+    color: COLORS.purpleDark,
   },
 });

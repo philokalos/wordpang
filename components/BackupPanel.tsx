@@ -79,20 +79,20 @@ export default function BackupPanel() {
 
       <View style={styles.buttons}>
         <SketchyButton
-          label="데이터 내보내기"
+          label="단어장 저장하기"
           onPress={() => void handleExport()}
           variant="primary"
           seed={201}
           icon="📤"
-          accessibilityLabel="데이터 내보내기"
+          accessibilityLabel="단어장 저장하기"
         />
         <SketchyButton
-          label="데이터 가져오기"
+          label="단어장 불러오기"
           onPress={() => setShowImportModal(true)}
           variant="secondary"
           seed={202}
           icon="📥"
-          accessibilityLabel="데이터 가져오기"
+          accessibilityLabel="단어장 불러오기"
         />
       </View>
 
@@ -104,9 +104,9 @@ export default function BackupPanel() {
       >
         <KeyboardAvoidingView style={styles.modalOverlay} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>데이터 가져오기</Text>
+            <Text style={styles.modalTitle}>단어장 불러오기</Text>
             <Text style={styles.modalDesc}>
-              백업 데이터를 아래에 붙여넣어 주세요.
+              소중한 단어 기록을 안전하게 저장하거나 불러올 수 있어요! 백업 데이터를 아래에 붙여넣어 주세요.
             </Text>
             <TextInput
               style={styles.textInput}
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   summaryText: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
   },
@@ -188,12 +188,12 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   modalDesc: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
   },
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     minHeight: 120,
     maxHeight: 200,
     fontFamily: SKETCHY_FONTS.regular,
-    fontSize: 13,
+    fontSize: 16,
     color: COLORS.textPrimary,
     backgroundColor: COLORS.background,
     textAlignVertical: 'top',
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   cancelText: {
-    fontSize: 15,
+    fontSize: 18,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
   },

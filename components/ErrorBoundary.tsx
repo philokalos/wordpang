@@ -31,17 +31,17 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <View style={styles.container}>
           <Text style={styles.emoji}>😢</Text>
-          <Text style={styles.title}>앗, 문제가 생겼어요!</Text>
+          <Text style={styles.title}>앗, 화면이 잠깐 멈췄네요!</Text>
           <Text style={styles.message}>
-            잠시 후 다시 시도해 주세요.
+            선생님이 금방 고쳐볼게요. 다시 한번 눌러볼까요? 🛠️
           </Text>
           <Pressable
             style={styles.button}
             onPress={this.handleRetry}
             accessibilityRole="button"
-            accessibilityLabel="다시 시도"
+            accessibilityLabel="다시 해보기"
           >
-            <Text style={styles.buttonText}>다시 시도</Text>
+            <Text style={styles.buttonText}>다시 해보기</Text>
           </Pressable>
         </View>
       );
@@ -79,7 +79,9 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   button: {
-    backgroundColor: COLORS.purple,
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: COLORS.purpleDark,
     paddingHorizontal: 32,
     paddingVertical: 14,
     ...SKETCHY_RADIUS.medium,
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: SKETCHY_FONTS.bold,
     fontSize: 18,
-    color: '#FFFFFF',
+    color: COLORS.purpleDark,
     textAlign: 'center',
   },
 });

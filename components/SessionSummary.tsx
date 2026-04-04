@@ -28,7 +28,7 @@ export default function SessionSummary({
   return (
     <View style={styles.container}>
       <Text style={styles.emoji}>{percentage >= 80 ? '🎉' : percentage >= 50 ? '👍' : '💪'}</Text>
-      <Text style={styles.title}>연습 완료!</Text>
+      <Text style={styles.title}>참 잘했어요! 오늘의 연습 끝! 💯</Text>
       <Text style={styles.score}>{correctCount}/{totalCount} ({percentage}%)</Text>
 
       <View style={styles.results}>
@@ -63,12 +63,12 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   title: {
-    fontSize: 26,
+    fontSize: 30,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
   },
   score: {
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.purpleText,
     marginTop: 4,
@@ -89,17 +89,17 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   resultIcon: {
-    fontSize: 16,
+    fontSize: 20,
   },
   resultWord: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 20,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
     letterSpacing: 1,
   },
   resultGuesses: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
   },

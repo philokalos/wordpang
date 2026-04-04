@@ -26,23 +26,23 @@ interface SketchyButtonProps {
 
 const VARIANT_STYLES = {
   primary: {
-    bg: CRAYON.purple,
+    bg: 'transparent',
     border: CRAYON.purpleDark,
-    text: '#ffffff',
+    text: CRAYON.purpleDark,
   },
   secondary: {
-    bg: CRAYON.paperWhite,
-    border: CRAYON.pencilLine,
+    bg: 'transparent',
+    border: CRAYON.pencilDark,
     text: CRAYON.inkBrown,
   },
   danger: {
-    bg: '#FFEBEE',
+    bg: 'transparent',
     border: CRAYON.red,
     text: CRAYON.redDark,
   },
   success: {
-    bg: '#E8F5E9',
-    border: CRAYON.green,
+    bg: 'transparent',
+    border: CRAYON.greenDark,
     text: CRAYON.greenDark,
   },
 } as const;

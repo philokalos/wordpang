@@ -29,6 +29,7 @@ const baseProps = {
   isDaily: false,
   onNewGame: jest.fn(),
   onChangeDifficulty: jest.fn(),
+  onMarkLearned: jest.fn(),
 };
 
 describe('ResultModal', () => {
@@ -40,19 +41,27 @@ describe('ResultModal', () => {
     expect(queryByText('아쉬워요!')).toBeNull();
   });
 
+  it('should mark as learned', () => {
+    const { getByText } = render(<ResultModal {...baseProps} gameStatus="won" />);
+    
+    expect(getByText('선생님, 저 이 단어 배웠어요!')).toBeTruthy();
+    
+    // Press button
+    fireEvent.press(getByText('선생님, 저 이 단어 배웠어요!'));
+    expect(baseProps.onMarkLearned).toHaveBeenCalledTimes(1);
+    
+    expect(getByText('머릿속에 쏙! 저장 완료! 🧠')).toBeTruthy();
+  });
+
   it('should show "정답!" when won', () => {
-    const { getByText } = render(
-      <ResultModal {...baseProps} gameStatus="won" />,
-    );
-    expect(getByText('정답!')).toBeTruthy();
-    expect(getByText('3/6 번 만에 맞혔어요!')).toBeTruthy();
+    const { getByLabelText, getByText } = render(<ResultModal {...baseProps} gameStatus="won" attempts={3} />);
+    expect(getByLabelText('우와 정답!!')).toBeTruthy();
+    expect(getByText('대단해요! 3번 만에 맞혔네요! 🌟')).toBeTruthy();
   });
 
   it('should show "아쉬워요!" when lost', () => {
-    const { getByText } = render(
-      <ResultModal {...baseProps} gameStatus="lost" />,
-    );
-    expect(getByText('아쉬워요!')).toBeTruthy();
+    const { getByLabelText } = render(<ResultModal {...baseProps} gameStatus="lost" attempts={6} />);
+    expect(getByLabelText('아쉬워요!')).toBeTruthy();
   });
 
   it('should display word details', () => {
@@ -70,17 +79,17 @@ describe('ResultModal', () => {
     const { getByText } = render(
       <ResultModal {...baseProps} gameStatus="won" onMarkLearned={onMarkLearned} />,
     );
-    expect(getByText('이 단어 배웠어요!')).toBeTruthy();
+    expect(getByText('선생님, 저 이 단어 배웠어요!')).toBeTruthy();
   });
 
-  it('should call onMarkLearned and show "학습 완료!" when button pressed', () => {
+  it('should call onMarkLearned and show "머릿속에 쏙! 저장 완료! 🧠" when button pressed', () => {
     const onMarkLearned = jest.fn();
     const { getByText } = render(
       <ResultModal {...baseProps} gameStatus="won" onMarkLearned={onMarkLearned} />,
     );
-    fireEvent.press(getByText('이 단어 배웠어요!'));
+    fireEvent.press(getByText('선생님, 저 이 단어 배웠어요!'));
     expect(onMarkLearned).toHaveBeenCalledTimes(1);
-    expect(getByText('학습 완료!')).toBeTruthy();
+    expect(getByText('머릿속에 쏙! 저장 완료! 🧠')).toBeTruthy();
   });
 
   it('should show achievement badges when newAchievements provided', () => {

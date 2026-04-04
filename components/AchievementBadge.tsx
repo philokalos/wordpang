@@ -81,14 +81,14 @@ const styles = StyleSheet.create({
     marginTop: 3,
   },
   conditionLabel: {
-    fontSize: 11,
+    fontSize: 15,
     fontFamily: SKETCHY_FONTS.bold,
-    color: COLORS.purple,
-    backgroundColor: COLORS.purpleBg,
+    color: COLORS.purpleText,
+    borderWidth: 1,
+    borderColor: COLORS.purpleDark,
     paddingHorizontal: 5,
     paddingVertical: 1,
     borderRadius: 4,
-    overflow: 'hidden',
   },
   conditionText: {
     fontSize: FONT_SIZES.xs,

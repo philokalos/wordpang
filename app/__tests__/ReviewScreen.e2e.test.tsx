@@ -52,10 +52,11 @@ const mockEntries = [
   { word: 'CHAIR', lastReviewed: '2024-01-01', reviewCount: 0, nextReview: '2024-01-01', status: 'new' as const },
 ];
 
-const mockDueWords = [
+let mockDueWords = [
   { word: 'BREAD', lastReviewed: '2024-01-01', reviewCount: 1, nextReview: '2024-01-01', status: 'learning' as const },
   { word: 'CHAIR', lastReviewed: '2024-01-01', reviewCount: 0, nextReview: '2024-01-01', status: 'new' as const },
 ];
+let mockDueCount = 2;
 
 const mockMarkReviewed = jest.fn().mockResolvedValue(undefined);
 const mockRefresh = jest.fn().mockResolvedValue(undefined);
@@ -63,7 +64,7 @@ const mockPlay = jest.fn();
 
 jest.mock('../../hooks/useReview', () => ({
   useReview: () => ({
-    entries: mockEntries, dueWords: mockDueWords, dueCount: 2,
+    entries: mockEntries, dueWords: mockDueWords, dueCount: mockDueCount,
     markReviewed: mockMarkReviewed, refresh: mockRefresh,
   }),
 }));
@@ -121,6 +122,21 @@ describe('ReviewScreen E2E', () => {
       expect(getByText('1 / 2')).toBeTruthy();
       fireEvent.press(getByText('📚 컬렉션 (3)'));
       expect(getByText('APPLE')).toBeTruthy();
+    });
+
+    it('should show empty state in quiz tab when no words due', () => {
+      const prevDueWords = mockDueWords;
+      const prevDueCount = mockDueCount;
+      mockDueWords = [];
+      mockDueCount = 0;
+      
+      const { getByText } = render(<ReviewScreen />);
+      fireEvent.press(getByText(/🎯 퀴즈/));
+      expect(getByText('아직 복습할 단어가 없네요!')).toBeTruthy();
+      expect(getByText('게임을 더 즐기고 나중에 다시 와볼까요? 🎈')).toBeTruthy();
+      
+      mockDueWords = prevDueWords;
+      mockDueCount = prevDueCount;
     });
   });
 

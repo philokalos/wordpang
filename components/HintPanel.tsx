@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 10,
     paddingVertical: 8,
-    borderWidth: 2,
+    borderWidth: 1.5,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 2,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   hintCard: {
     backgroundColor: COLORS.pinkLight,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: COLORS.pinkBorder,
     paddingHorizontal: 14,
     paddingVertical: 10,

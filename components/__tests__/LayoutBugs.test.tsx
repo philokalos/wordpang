@@ -182,8 +182,12 @@ describe('ResultModal — scrollable content', () => {
   });
 
   it('renders without ScrollView issues when no achievements', () => {
-    const { getByText } = render(<ResultModal {...baseProps} />);
-    expect(getByText('정답!')).toBeTruthy();
+    const { getByLabelText, getByText } = render(
+      <ResultModal
+        {...baseProps}
+      />
+    );
+    expect(getByLabelText('우와 정답!!')).toBeTruthy();
     expect(getByText('다시 하기')).toBeTruthy();
   });
 });

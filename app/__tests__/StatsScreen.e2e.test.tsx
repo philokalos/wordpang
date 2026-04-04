@@ -135,11 +135,10 @@ describe('StatsScreen E2E', () => {
   });
 
   describe('Backup Panel', () => {
-    it('should render backup title and buttons', () => {
-      const { getByText, getByLabelText } = render(<StatsScreen />);
-      expect(getByText('데이터 백업')).toBeTruthy();
-      expect(getByLabelText('데이터 내보내기')).toBeTruthy();
-      expect(getByLabelText('데이터 가져오기')).toBeTruthy();
+    it('should show export and import buttons', () => {
+      const { getByLabelText } = render(<StatsScreen />);
+      expect(getByLabelText('단어장 저장하기')).toBeTruthy();
+      expect(getByLabelText('단어장 불러오기')).toBeTruthy();
     });
 
     it('should display backup summary', async () => {
@@ -153,10 +152,10 @@ describe('StatsScreen E2E', () => {
 
     it('should show import modal and close it', () => {
       const { getByLabelText } = render(<StatsScreen />);
-      fireEvent.press(getByLabelText('데이터 가져오기'));
+      fireEvent.press(getByLabelText('단어장 불러오기'));
       expect(getByLabelText('백업 데이터 입력')).toBeTruthy();
       fireEvent.press(getByLabelText('취소'));
-      expect(getByLabelText('데이터 내보내기')).toBeTruthy();
+      expect(getByLabelText('단어장 저장하기')).toBeTruthy();
     });
   });
 });

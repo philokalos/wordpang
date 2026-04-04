@@ -110,11 +110,11 @@ describe('PracticeScreen E2E', () => {
   });
 
   describe('Empty State', () => {
-    it('should show empty message when no due words', () => {
+    it('should show empty state initially', () => {
       mockCurrentDueWords = [];
       const { getByText } = render(<PracticeScreen />);
-      expect(getByText('연습할 단어가 없어요')).toBeTruthy();
-      expect(getByText('게임에서 단어를 학습하면 여기에 나타나요!')).toBeTruthy();
+      expect(getByText('아직 연습장에 단어가 없어요.')).toBeTruthy();
+      expect(getByText('새로운 단어를 만나고 오면 선생님이 여기에 모아둘게요! 📚')).toBeTruthy();
     });
 
     it('should navigate back from empty state', () => {

@@ -106,8 +106,8 @@ export default function ReviewScreen() {
                   <Text style={styles.emptyEmoji}>🎉</Text>
                   <DoodleDecoration type="star" size={18} seed={51} />
                 </View>
-                <Text style={styles.emptyText}>복습할 단어가 없어요!</Text>
-                <Text style={styles.emptySubtext}>나중에 다시 확인해 보세요</Text>
+                <Text style={styles.emptyText}>아직 복습할 단어가 없네요!</Text>
+                <Text style={styles.emptySubtext}>게임을 더 즐기고 나중에 다시 와볼까요? 🎈</Text>
                 <DoodleDecoration type="squiggle" size={48} seed={52} style={styles.emptySquiggle} />
               </View>
             )}

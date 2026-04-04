@@ -195,25 +195,24 @@ describe('GameScreen E2E', () => {
       ];
     });
 
-    it('should show "정답!" and attempt count', () => {
-      const { getByText } = render(<GameScreen />);
-      expect(getByText('정답!')).toBeTruthy();
-      expect(getByText('3/6 번 만에 맞혔어요!')).toBeTruthy();
-    });
-
-    it('should show word details in result modal', () => {
+    it('should show ResultModal with win text and attempt count', () => {
+      const { getByText, getByLabelText } = render(<GameScreen />);
+      expect(getByLabelText('우와 정답!!')).toBeTruthy();
+      expect(getByText('대단해요! 3번 만에 맞혔네요! 🌟')).toBeTruthy();
+      expect(getByText('APPLE')).toBeTruthy();
+    }); it('should show word details in result modal', () => {
       const { getByText } = render(<GameScreen />);
       expect(getByText('APPLE')).toBeTruthy();
       expect(getByText('사과')).toBeTruthy();
     });
 
-    it('should show and handle "이 단어 배웠어요!" button', async () => {
+    it('should show and handle "선생님, 저 이 단어 배웠어요!" button', async () => {
       const { getByText } = render(<GameScreen />);
-      expect(getByText('이 단어 배웠어요!')).toBeTruthy();
-      await act(async () => { fireEvent.press(getByText('이 단어 배웠어요!')); });
+      expect(getByText('선생님, 저 이 단어 배웠어요!')).toBeTruthy();
+      await act(async () => { fireEvent.press(getByText('선생님, 저 이 단어 배웠어요!')); });
       expect(mockMarkLearned).toHaveBeenCalledWith('APPLE');
       expect(mockReviewAddWord).toHaveBeenCalledWith('APPLE');
-      expect(getByText('학습 완료!')).toBeTruthy();
+      expect(getByText('머릿속에 쏙! 저장 완료! 🧠')).toBeTruthy();
     });
 
     it('should show "다시 하기" and "난이도 변경" buttons', () => {
@@ -238,12 +237,12 @@ describe('GameScreen E2E', () => {
   // ── Game Lose Flow ──
 
   describe('Game Lose Flow', () => {
-    it('should show "아쉬워요!" and target word when lost', () => {
+    it('should show ResultModal with lose text and target word when lost', () => {
       mockGame.gameStatus = 'lost';
-      const { getByText, queryByText } = render(<GameScreen />);
-      expect(getByText('아쉬워요!')).toBeTruthy();
+      const { getByText, getByLabelText, queryByText } = render(<GameScreen />);
+      expect(getByLabelText('아쉬워요!')).toBeTruthy();
       expect(getByText('APPLE')).toBeTruthy();
-      expect(queryByText(/번 만에 맞혔어요/)).toBeNull();
+      expect(queryByText(/번에 맞혔네요/)).toBeNull();
     });
   });
 

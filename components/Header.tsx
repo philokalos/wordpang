@@ -12,6 +12,7 @@ import { SKETCHY_FONTS } from '../constants/theme';
 import { useResponsive } from '../hooks/useResponsive';
 import { WOBBLE_ROTATION, WOBBLE_DURATION, EASING } from '../constants/animations';
 import DoodleDecoration from './sketchy/DoodleDecoration';
+import HeroText from './sketchy/HeroText';
 
 interface HeaderProps {
   showStats?: boolean;
@@ -58,21 +59,21 @@ export default function Header({ showStats, onStatsPress, showBack, onBackPress 
       <View style={styles.titleRow}>
         {showBack && onBackPress ? (
           <Pressable onPress={onBackPress} style={styles.backButton} accessibilityRole="button" accessibilityLabel="뒤로가기">
-            <Text style={[styles.backText, { fontSize: isTablet ? 20 : 17 }]}>← 뒤로</Text>
+            <Text style={[styles.backText, { fontSize: isTablet ? 28 : 24 }]}>← 뒤로</Text>
           </Pressable>
-        ) : (showStats ? <View style={styles.spacer} /> : null)}
+        ) : (showStats ? <View style={styles.sideSpacer} /> : null)}
         <Animated.View style={[styles.doodleLeft, leftAnimStyle]}>
-          <DoodleDecoration type="star" size={20} seed={1} />
+          <DoodleDecoration type="star" size={24} seed={1} />
         </Animated.View>
-        <Text style={[styles.title, { fontSize: isTablet ? 38 : 32 }]}>WordPang</Text>
+        <HeroText text="WordPang" baseSize={isTablet ? 42 : 36} seedOffset={123} />
         <Animated.View style={[styles.doodleRight, rightAnimStyle]}>
-          <DoodleDecoration type="star" size={20} seed={2} />
+          <DoodleDecoration type="star" size={24} seed={2} />
         </Animated.View>
         {showStats && onStatsPress ? (
           <Text style={styles.statsButton} onPress={onStatsPress}>📊</Text>
-        ) : (showBack ? <View style={styles.spacer} /> : null)}
+        ) : (showBack ? <View style={styles.sideSpacer} /> : null)}
       </View>
-      <Text style={[styles.subtitle, { fontSize: isTablet ? 18 : 15 }]}>영어 단어 팡!</Text>
+      <Text style={[styles.subtitle, { fontSize: isTablet ? 22 : 18 }]}>영어 단어 팡!</Text>
     </View>
   );
 }
@@ -86,8 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  spacer: {
-    width: 40,
+  sideSpacer: {
+    width: 80,
   },
   doodleLeft: {
     marginRight: 6,
@@ -113,8 +114,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   backButton: {
-    width: 60,
+    width: 80,
     justifyContent: 'center',
+    paddingLeft: 8,
   },
   backText: {
     fontFamily: SKETCHY_FONTS.regular,

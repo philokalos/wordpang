@@ -28,22 +28,20 @@ export function getWordList(difficulty: Difficulty): WordList {
   }
 }
 
-export function getWordListByCategory(
-  difficulty: Difficulty,
-  category?: WordCategory,
-): WordList {
-  const list = getWordList(difficulty);
-  if (!category) return list;
-  return {
-    answers: list.answers.filter((w) => w.category === category),
-    validWords: list.validWords,
-  };
-}
+// Function removed to avoid mysterious bundling ReferenceError. Use inline filtering instead.
 
 export function getRandomWord(difficulty: Difficulty, category?: WordCategory): WordEntry {
-  const { answers } = category
-    ? getWordListByCategory(difficulty, category)
-    : getWordList(difficulty);
-  const index = Math.floor(Math.random() * answers.length);
-  return answers[index]!;
+  const { answers } = getWordList(difficulty);
+  const filtered = category 
+    ? answers.filter(w => w.category === category)
+    : answers;
+
+  if (filtered.length === 0) {
+    // If category filtering results in zero words, fallback to any word of this difficulty
+    const index = Math.floor(Math.random() * answers.length);
+    return answers[index]!;
+  }
+
+  const index = Math.floor(Math.random() * filtered.length);
+  return filtered[index]!;
 }

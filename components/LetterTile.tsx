@@ -7,6 +7,7 @@ import Animated, {
   withDelay,
   withSequence,
   interpolate,
+  Easing,
 } from 'react-native-reanimated';
 import type { LetterStatus } from '../src/types/game';
 import { COLORS, STATUS_COLORS } from '../constants/colors';
@@ -37,6 +38,7 @@ export default function LetterTile({
   const flipProgress = useSharedValue(0);
   const popScale = useSharedValue(1);
   const bounceY = useSharedValue(0);
+  const winRotate = useSharedValue(0);
 
   const tileSize = getTileSize(wordLength);
 
@@ -76,17 +78,27 @@ export default function LetterTile({
 
   useEffect(() => {
     if (isBouncing) {
+      // More dramatic jump and rotate for kids!
       bounceY.value = withDelay(
         delay,
         withSequence(
-          withTiming(-12, { duration: BOUNCE_DURATION * 0.4, easing: EASING.bounce }),
-          withTiming(0, { duration: BOUNCE_DURATION * 0.6 }),
+          withTiming(-40, { duration: BOUNCE_DURATION * 0.4, easing: EASING.bounce }),
+          withTiming(0, { duration: BOUNCE_DURATION * 0.6, easing: Easing.bounce }),
+        ),
+      );
+      winRotate.value = withDelay(
+        delay,
+        withSequence(
+          withTiming(15, { duration: BOUNCE_DURATION * 0.5 }),
+          withTiming(-15, { duration: BOUNCE_DURATION * 0.5 }),
+          withTiming(0, { duration: BOUNCE_DURATION * 0.5 }),
         ),
       );
     } else {
       bounceY.value = 0;
+      winRotate.value = 0;
     }
-  }, [isBouncing, delay, bounceY]);
+  }, [isBouncing, delay, bounceY, winRotate]);
 
   const animatedStyle = useAnimatedStyle(() => {
     const rotateX = interpolate(flipProgress.value, [0, 0.5, 1], [0, 90, 0]);
@@ -98,6 +110,7 @@ export default function LetterTile({
       transform: [
         { perspective: 800 },
         { rotateX: `${rotateX}deg` },
+        { rotateZ: `${winRotate.value}deg` },
         { scale: popScale.value },
         { translateY: bounceY.value },
       ],
@@ -110,8 +123,9 @@ export default function LetterTile({
 
   const textStyle = useAnimatedStyle(() => {
     const isRevealed = flipProgress.value > 0.5;
+    const statusColors = status ? STATUS_COLORS[status] : undefined;
     return {
-      color: isRevealed && status ? '#ffffff' : COLORS.textPrimary,
+      color: isRevealed && statusColors ? statusColors.border : COLORS.textPrimary,
     };
   });
 

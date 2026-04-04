@@ -109,8 +109,8 @@ export default function PracticeScreen() {
               <Text style={styles.emptyEmoji}>📚</Text>
               <DoodleDecoration type="star" size={18} seed={41} />
             </View>
-            <Text style={styles.emptyText}>연습할 단어가 없어요</Text>
-            <Text style={styles.emptySubtext}>게임에서 단어를 학습하면 여기에 나타나요!</Text>
+            <Text style={styles.emptyText}>아직 연습장에 단어가 없어요.</Text>
+            <Text style={styles.emptySubtext}>새로운 단어를 만나고 오면 선생님이 여기에 모아둘게요! 📚</Text>
             <DoodleDecoration type="squiggle" size={48} seed={42} style={styles.emptySquiggle} />
           </View>
         </SafeAreaView>

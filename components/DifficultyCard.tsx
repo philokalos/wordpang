@@ -63,6 +63,7 @@ export default function DifficultyCard({ difficulty, isSelected, onPress }: Diff
           isSelected && styles.cardSelected,
           {
             opacity: pressed ? 0.8 : 1,
+            backgroundColor: 'transparent',
           },
         ]}
       >
@@ -80,35 +81,35 @@ const styles = StyleSheet.create({
   card: {
     paddingHorizontal: 24,
     paddingVertical: 14,
-    borderWidth: 2,
-    borderColor: COLORS.tileBorder,
-    backgroundColor: COLORS.surface,
+    borderWidth: 1.5,
+    borderColor: COLORS.absentBorder,
+    backgroundColor: 'transparent',
     alignItems: 'center',
     minWidth: 80,
   },
   cardSelected: {
-    backgroundColor: COLORS.purple,
     borderColor: COLORS.purpleDark,
+    borderWidth: 2.5,
   },
   emoji: {
     fontSize: 24,
     marginBottom: 4,
   },
   label: {
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: SKETCHY_FONTS.bold,
-    color: COLORS.purpleText,
+    color: COLORS.textMuted,
   },
   labelSelected: {
-    color: COLORS.surface,
+    color: COLORS.purpleText,
   },
   detail: {
-    fontSize: 13,
+    fontSize: 16,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 2,
   },
   detailSelected: {
-    color: 'rgba(255,255,255,0.8)',
+    color: COLORS.purpleText,
   },
 });

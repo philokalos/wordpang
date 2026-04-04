@@ -2,7 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import type { Difficulty, GameStatus, LetterStatus, Hint, HintType } from '../src/types/game';
 import { DIFFICULTY_CONFIG, HINT_COSTS, MAX_HINT_POINTS } from '../src/types/game';
 import type { WordEntry, WordCategory } from '../src/types/word';
-import { getWordList, getRandomWord } from '../src/data';
+import { getWordList, getRandomWord } from '../src/data/index';
 import { evaluateGuess, isValidWord, updateKeyStatuses, generateHint } from '../src/lib/game-logic';
 import { TOTAL_REVEAL_TIME } from '../constants/animations';
 
@@ -43,7 +43,20 @@ export function useGame(options: UseGameOptions = {}): UseGameReturn {
 
   const [difficulty, setDifficulty] = useState<Difficulty>(initialDifficulty);
   const [category] = useState<WordCategory | undefined>(initialCategory);
-  const [targetWord, setTargetWord] = useState<WordEntry>(() => getRandomWord(initialDifficulty, initialCategory));
+  
+  const [targetWord, setTargetWord] = useState<WordEntry>(() => {
+    // strict filtering for initial word
+    const { answers } = getWordList(initialDifficulty);
+    const filtered = initialCategory 
+      ? answers.filter(w => w.category === initialCategory)
+      : answers;
+
+    if (filtered.length === 0) {
+      return getRandomWord(initialDifficulty);
+    }
+    const index = Math.floor(Math.random() * filtered.length);
+    return filtered[index]!;
+  });
   const [guesses, setGuesses] = useState<string[]>([]);
   const [evaluations, setEvaluations] = useState<LetterStatus[][]>([]);
   const [currentGuess, setCurrentGuess] = useState('');
@@ -89,12 +102,12 @@ export function useGame(options: UseGameOptions = {}): UseGameReturn {
     const { validWords } = getWordList(difficulty);
     if (!isValidWord(currentGuess, validWords)) {
       setIsShaking(true);
-      setToastMessage('단어 목록에 없어요!');
+      setToastMessage('어라? 이 단어는 우리 단어장에 없네요. 다른 예쁜 단어를 찾아볼까요?');
       if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current);
       shakeTimerRef.current = setTimeout(() => {
         setIsShaking(false);
         setToastMessage('');
-      }, 1500);
+      }, 2000);
       return;
     }
 
@@ -138,7 +151,22 @@ export function useGame(options: UseGameOptions = {}): UseGameReturn {
   const resetGame = useCallback((diff: Difficulty, word?: WordEntry) => {
     if (revealTimerRef.current) clearTimeout(revealTimerRef.current);
     if (shakeTimerRef.current) clearTimeout(shakeTimerRef.current);
-    setTargetWord(word ?? getRandomWord(diff, category));
+    
+    let nextWord = word;
+    if (!nextWord) {
+      const { answers } = getWordList(diff);
+      const filtered = initialCategory 
+        ? answers.filter(w => w.category === initialCategory)
+        : answers;
+
+      if (filtered.length > 0) {
+        nextWord = filtered[Math.floor(Math.random() * filtered.length)]!;
+      } else {
+        nextWord = getRandomWord(diff);
+      }
+    }
+
+    setTargetWord(nextWord);
     setGuesses([]);
     setEvaluations([]);
     setCurrentGuess('');
@@ -150,7 +178,7 @@ export function useGame(options: UseGameOptions = {}): UseGameReturn {
     setIsRevealing(false);
     setIsShaking(false);
     setToastMessage('');
-  }, [category]);
+  }, [initialCategory]);
 
   const changeDifficulty = useCallback((newDifficulty: Difficulty) => {
     setDifficulty(newDifficulty);

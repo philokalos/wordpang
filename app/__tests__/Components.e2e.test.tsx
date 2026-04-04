@@ -132,7 +132,7 @@ describe('SessionSummary E2E', () => {
 
   it('should display title and close button', () => {
     const { getByText } = render(<SessionSummary results={[]} correctCount={0} totalCount={0} onClose={onClose} />);
-    expect(getByText('연습 완료!')).toBeTruthy();
+    expect(getByText('참 잘했어요! 오늘의 연습 끝! 💯')).toBeTruthy();
     fireEvent.press(getByText('돌아가기'));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -215,8 +215,8 @@ import Header from '../../components/Header';
 
 describe('Header E2E', () => {
   it('should display title and subtitle', () => {
-    const { getByText } = render(<Header />);
-    expect(getByText('WordPang')).toBeTruthy();
+    const { getByText, getByLabelText } = render(<Header />);
+    expect(getByLabelText('WordPang')).toBeTruthy();
     expect(getByText('영어 단어 팡!')).toBeTruthy();
   });
 
@@ -250,21 +250,21 @@ describe('DifficultyPrompt E2E', () => {
 
   it('should show up recommendation', () => {
     const { getByText } = render(<DifficultyPrompt visible={true} recommendation="up" onAccept={onAccept} onDismiss={onDismiss} />);
-    expect(getByText('도전해 볼까요?')).toBeTruthy();
-    expect(getByText('난이도 올리기')).toBeTruthy();
+    expect(getByText('우리, 한 단계 더 도전해 볼까요?')).toBeTruthy();
+    expect(getByText('네! 더 어려운 거 해볼래요!')).toBeTruthy();
   });
 
   it('should show down recommendation', () => {
     const { getByText } = render(<DifficultyPrompt visible={true} recommendation="down" onAccept={onAccept} onDismiss={onDismiss} />);
-    expect(getByText('조금 쉽게 해볼까요?')).toBeTruthy();
-    expect(getByText('난이도 내리기')).toBeTruthy();
+    expect(getByText('선생님이 조금 더 쉬운 문제를 내줄까요?')).toBeTruthy();
+    expect(getByText('네! 조금 쉬운 걸로 할래요!')).toBeTruthy();
   });
 
   it('should call onAccept and onDismiss', () => {
     const { getByText, getByLabelText } = render(<DifficultyPrompt visible={true} recommendation="up" onAccept={onAccept} onDismiss={onDismiss} />);
-    fireEvent.press(getByText('난이도 올리기'));
+    fireEvent.press(getByText('네! 더 어려운 거 해볼래요!'));
     expect(onAccept).toHaveBeenCalledTimes(1);
-    fireEvent.press(getByLabelText('괜찮아요, 지금 난이도 유지할게요'));
+    fireEvent.press(getByLabelText('아니요, 지금 이대로가 딱 좋아요!'));
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 });

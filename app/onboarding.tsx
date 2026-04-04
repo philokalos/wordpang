@@ -228,7 +228,7 @@ const PAGES: OnboardingPage[] = [
   },
   {
     title: '영어 단어를\n맞혀보세요 ✏️',
-    description: '글자를 입력하면 색이 바뀌어요',
+    description: '글자를 하나씩 입력하면\n색깔 힌트가 나타날 거예요!',
     content: (
       <View style={styles.tileContent}>
         <View style={styles.tileRow}>
@@ -257,7 +257,7 @@ const PAGES: OnboardingPage[] = [
   },
   {
     title: '힌트를 활용하세요 💡',
-    description: '최대 4포인트까지 힌트를 쓸 수 있어요',
+    description: '어려울 땐 선생님이 주는\n힌트를 쏙쏙 골라 쓸 수 있어요',
     content: (
       <View style={styles.hintContent}>
         <View style={styles.hintGrid}>
@@ -275,7 +275,7 @@ const PAGES: OnboardingPage[] = [
   },
   {
     title: '준비됐나요? 🚀',
-    description: '매일 새로운 단어를 배워봐요!\n복습, 연습, 통계도 있어요',
+    description: '매일매일 즐겁게 새로운 단어를 배워봐요!\n복습도 연습도 다 다 재미있을 거예요',
     content: (
       <View style={styles.readyContent}>
         <View style={styles.featureRow}>

@@ -21,10 +21,10 @@ const ROWS = [
   ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'BACK'],
 ];
 
-const KEY_BG: Record<LetterStatus, string> = {
-  correct: COLORS.correct,
-  present: COLORS.present,
-  absent: COLORS.absent,
+const KEY_BORDER: Record<LetterStatus, string> = {
+  correct: COLORS.correctBorder,
+  present: COLORS.presentBorder,
+  absent: COLORS.absentBorder,
 };
 
 const KEY_RADII = (() => {
@@ -69,10 +69,12 @@ export default function Keyboard({
     const isBack = key === 'BACK';
     const status = isSpecial ? undefined : keyStatuses[key];
     const displayKey = key === 'BACK' ? '⌫' : key === 'ENTER' ? '↵' : key;
-    let bgColor = status ? KEY_BG[status] : COLORS.keyDefault;
-    if (isEnter) bgColor = COLORS.correctBgActive;
-    if (isBack) bgColor = COLORS.pinkLight;
-    const textColor = status ? COLORS.keyStatusText : COLORS.keyDefaultText;
+    
+    let borderColor = status ? KEY_BORDER[status] : COLORS.keyDefaultBorder;
+    if (isEnter) borderColor = COLORS.correctBorder;
+    if (isBack) borderColor = COLORS.pinkBorder;
+    
+    const textColor = status ? KEY_BORDER[status] : COLORS.keyDefaultText;
 
     return (
       <Pressable
@@ -81,12 +83,11 @@ export default function Keyboard({
         style={({ pressed }) => [
           styles.key,
           KEY_RADII[key],
-          isEnter && styles.enterKey,
-          isBack && styles.backKey,
           {
             width: isSpecial ? specialKeyWidth : normalKeyWidth,
             height: keyHeight,
-            backgroundColor: bgColor,
+            backgroundColor: 'transparent',
+            borderColor: borderColor,
             opacity: pressed ? 0.7 : 1,
             transform: [{ scale: pressed ? 0.95 : 1 }],
           },
@@ -97,8 +98,8 @@ export default function Keyboard({
         <Text
           style={[
             styles.keyText,
-            { color: textColor, fontSize: isTablet ? 23 : 19 },
-            isSpecial && { fontSize: isTablet ? 25 : 21 },
+            { color: textColor, fontSize: isTablet ? 27 : 23 },
+            isSpecial && { fontSize: isTablet ? 29 : 25 },
           ]}
         >
           {displayKey}
@@ -148,11 +149,5 @@ const styles = StyleSheet.create({
   },
   keyText: {
     fontFamily: SKETCHY_FONTS.bold,
-  },
-  enterKey: {
-    borderColor: COLORS.correctBorder,
-  },
-  backKey: {
-    borderColor: COLORS.pinkBorder,
   },
 });

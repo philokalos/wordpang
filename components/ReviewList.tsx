@@ -10,9 +10,9 @@ interface ReviewListProps {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  new: { label: '새 단어', color: '#1976D2', bg: '#E3F2FD' },
-  learning: { label: '학습 중', color: '#F57C00', bg: '#FFF3E0' },
-  mastered: { label: '마스터', color: '#388E3C', bg: '#E8F5E9' },
+  new: { label: '새 단어', color: '#1976D2', bg: 'transparent' },
+  learning: { label: '학습 중', color: '#F57C00', bg: 'transparent' },
+  mastered: { label: '마스터', color: '#388E3C', bg: 'transparent' },
 };
 
 export default function ReviewList({ entries }: ReviewListProps) {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     padding: 14,
   },
   word: {
-    fontSize: 17,
+    fontSize: 20,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
     letterSpacing: 2,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.tileBorder,
   },
   badgeText: {
-    fontSize: 13,
+    fontSize: 16,
     fontFamily: SKETCHY_FONTS.bold,
   },
   empty: {
@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   emptyText: {
-    fontSize: 17,
+    fontSize: 20,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textSecondary,
   },
   emptySubtext: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textMuted,
     marginTop: 4,

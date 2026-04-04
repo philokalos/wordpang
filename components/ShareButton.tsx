@@ -40,14 +40,14 @@ export default function ShareButton({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: COLORS.correct,
+    backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: COLORS.correctBorder,
     paddingVertical: 12,
     alignItems: 'center',
   },
   text: {
-    color: '#ffffff',
+    color: COLORS.correctBorder,
     fontSize: 16,
     fontFamily: SKETCHY_FONTS.bold,
   },

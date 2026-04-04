@@ -12,8 +12,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    'Gaegu-Regular': require('../assets/fonts/Gaegu-Regular.ttf'),
-    'Gaegu-Bold': require('../assets/fonts/Gaegu-Bold.ttf'),
+    'HiMelody-Regular': require('../assets/fonts/HiMelody-Regular.ttf'),
   });
 
   useEffect(() => {

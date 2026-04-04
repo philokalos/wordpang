@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
 import type { WordCategory } from '../src/types/word';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, FONT_SIZES } from '../constants/theme';
@@ -41,27 +41,31 @@ interface CategoryChipProps {
 export default function CategoryChip({ selected, onSelect }: CategoryChipProps) {
   return (
     <View style={styles.wrapper}>
-      {/* 전체 선택 칩 — 가로 전체 차지 */}
-      <Pressable
-        onPress={() => onSelect(undefined)}
-        accessibilityRole="button"
-        accessibilityLabel="전체"
-        accessibilityState={{ selected: !selected }}
-        style={({ pressed }) => [
-          styles.allChip,
-          CHIP_RADII.all,
-          !selected && styles.chipSelected,
-          { opacity: pressed ? 0.8 : 1 },
-        ]}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
       >
-        <Text style={styles.allIcon}>🌟</Text>
-        <Text style={[styles.chipText, !selected && styles.chipTextSelected]}>
-          전체
-        </Text>
-      </Pressable>
+        {/* 전체 선택 칩 */}
+        <Pressable
+          onPress={() => onSelect(undefined)}
+          accessibilityRole="button"
+          accessibilityLabel="전체"
+          accessibilityState={{ selected: !selected }}
+          style={({ pressed }) => [
+            styles.chip,
+            CHIP_RADII.all,
+            !selected && styles.chipSelected,
+            { opacity: pressed ? 0.8 : 1 },
+          ]}
+        >
+          <Text style={styles.chipIcon}>🌟</Text>
+          <Text style={[styles.chipText, !selected && styles.chipTextSelected]}>
+            전체
+          </Text>
+        </Pressable>
 
-      {/* 4x2 그리드 */}
-      <View style={styles.grid}>
+        {/* 각 카테고리 칩 */}
         {ALL_CATEGORIES.map((cat) => {
           const config = CATEGORY_CONFIG[cat];
           const isSelected = selected === cat;
@@ -86,7 +90,7 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
             </Pressable>
           );
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -94,49 +98,32 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
 const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
-    gap: 8,
-    paddingHorizontal: 4,
+    paddingVertical: 4,
   },
-  allChip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 10,
-    borderWidth: 2,
-    borderColor: COLORS.tileBorder,
-    backgroundColor: COLORS.surface,
-  },
-  allIcon: {
-    fontSize: 22,
-  },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
+  scrollContent: {
+    paddingHorizontal: 16,
+    gap: 12,
   },
   chip: {
-    // 4개 per row: (100% - 3 gaps of 8px) / 4 = ~23.5%
-    // Using flexBasis instead of hardcoded percentage
-    flexBasis: '22%',
-    flexGrow: 1,
+    width: 90,
+    height: 90,
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 4,
-    borderWidth: 2,
-    borderColor: COLORS.tileBorder,
-    backgroundColor: COLORS.surface,
-    gap: 4,
+    justifyContent: 'center',
+    borderWidth: 1.5,
+    borderColor: COLORS.absentBorder,
+    backgroundColor: 'transparent',
+    gap: 2,
   },
   chipSelected: {
-    backgroundColor: COLORS.purpleBg,
-    borderColor: COLORS.purple,
+    borderColor: COLORS.purpleDark,
+    borderWidth: 2.5,
+    backgroundColor: COLORS.surfaceAlt,
   },
   chipIcon: {
-    fontSize: 22,
+    fontSize: 32,
   },
   chipText: {
-    fontSize: FONT_SIZES.sm,
+    fontSize: FONT_SIZES.sm * 0.8,
     fontFamily: SKETCHY_FONTS.regular,
     color: COLORS.textSecondary,
     textAlign: 'center',
