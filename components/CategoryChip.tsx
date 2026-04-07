@@ -1,20 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, Image } from 'react-native';
 import type { WordCategory } from '../src/types/word';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, FONT_SIZES } from '../constants/theme';
 import { seededRandom } from '../utils/sketchy';
 
-const CATEGORY_CONFIG: Record<WordCategory, { label: string; icon: string }> = {
-  animal: { label: '동물', icon: '🐾' },
-  food: { label: '음식', icon: '🍎' },
-  school: { label: '학교', icon: '📚' },
-  nature: { label: '자연', icon: '🌿' },
-  body: { label: '몸', icon: '🫀' },
-  home: { label: '집', icon: '🏠' },
-  action: { label: '동작', icon: '🏃' },
-  feeling: { label: '감정', icon: '💭' },
+const CATEGORY_CONFIG: Record<WordCategory, { label: string; icon?: string; image?: any }> = {
+  animal: { label: '동물', image: require('../assets/categories/animal.png') },
+  food: { label: '음식', image: require('../assets/categories/food.png') },
+  school: { label: '학교', image: require('../assets/categories/school.png') },
+  nature: { label: '자연', image: require('../assets/categories/nature.png') },
+  body: { label: '몸', image: require('../assets/categories/body.png') },
+  home: { label: '집', image: require('../assets/categories/home.png') },
+  action: { label: '동작', image: require('../assets/categories/action.png') },
+  feeling: { label: '감정', image: require('../assets/categories/feeling.png') },
 };
+
+const ALL_CATEGORY_IMAGE = require('../assets/categories/all.png');
 
 const ALL_CATEGORIES: WordCategory[] = ['animal', 'food', 'school', 'nature', 'body', 'home', 'action', 'feeling'];
 
@@ -59,7 +61,7 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
             { opacity: pressed ? 0.8 : 1 },
           ]}
         >
-          <Text style={styles.chipIcon}>🌟</Text>
+          <Image source={ALL_CATEGORY_IMAGE} style={styles.chipImage} />
           <Text style={[styles.chipText, !selected && styles.chipTextSelected]}>
             전체
           </Text>
@@ -83,7 +85,11 @@ export default function CategoryChip({ selected, onSelect }: CategoryChipProps) 
                 { opacity: pressed ? 0.8 : 1 },
               ]}
             >
-              <Text style={styles.chipIcon}>{config.icon}</Text>
+              {config.image ? (
+                <Image source={config.image} style={styles.chipImage} />
+              ) : (
+                <Text style={styles.chipIcon}>{config.icon}</Text>
+              )}
               <Text style={[styles.chipText, isSelected && styles.chipTextSelected]}>
                 {config.label}
               </Text>
@@ -121,6 +127,11 @@ const styles = StyleSheet.create({
   },
   chipIcon: {
     fontSize: 32,
+  },
+  chipImage: {
+    width: 44,
+    height: 44,
+    resizeMode: 'contain',
   },
   chipText: {
     fontSize: FONT_SIZES.sm * 0.8,
