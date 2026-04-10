@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ScrollView, Image, type ImageSourcePropType } from 'react-native';
 import type { WordCategory } from '../src/types/word';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, FONT_SIZES } from '../constants/theme';
 import { seededRandom } from '../utils/sketchy';
 
-const CATEGORY_CONFIG: Record<WordCategory, { label: string; icon?: string; image?: any }> = {
+const CATEGORY_CONFIG: Record<WordCategory, { label: string; icon?: string; image?: ImageSourcePropType }> = {
   animal: { label: '동물', image: require('../assets/categories/animal.png') },
   food: { label: '음식', image: require('../assets/categories/food.png') },
   school: { label: '학교', image: require('../assets/categories/school.png') },
