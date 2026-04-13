@@ -2,7 +2,7 @@ export default {
   expo: {
     name: 'WordPang',
     slug: 'wordpop',
-    version: '3.1.0',
+    version: '3.2.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
     scheme: 'wordpang',
@@ -44,6 +44,7 @@ export default {
         projectId: 'deb53a91-bcbb-4cb4-a020-7aeae4085b81',
       },
     },
+    privacyPolicyUrl: 'https://philokalos.github.io/wordpang/privacy-policy.html',
     experiments: {
       typedRoutes: true,
     },
