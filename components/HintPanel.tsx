@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View, Text, Pressable, ScrollView } from 'react-native';
+import * as Speech from 'expo-speech';
 import type { Hint, HintType, GameStatus } from '../src/types/game';
 import { MAX_HINT_POINTS } from '../src/types/game';
 import { COLORS } from '../constants/colors';
@@ -12,6 +13,7 @@ interface HintPanelProps {
   hintPointsUsed: number;
   gameStatus: GameStatus;
   onRequestHint: (type: HintType) => void;
+  targetWord?: string;
 }
 
 interface HintButtonConfig {
@@ -26,13 +28,13 @@ const HINT_BUTTONS: HintButtonConfig[] = [
   { type: 'firstLetter', label: '첫 글자', icon: '🔤', cost: 1 },
   { type: 'vowelCount', label: '모음 수', icon: '🔢', cost: 1 },
   { type: 'meaning', label: '뜻', icon: '💡', cost: 1 },
-
+  { type: 'pronunciation', label: '발음', icon: '🔊', cost: 1 },
   { type: 'rhyming', label: '라이밍 힌트', icon: '🎵', cost: 1 },
   { type: 'letterPosition', label: '위치', icon: '📍', cost: 2 },
   { type: 'wordFamily', label: '단어 패턴', icon: '🧩', cost: 2 },
 ];
 
-// Pre-compute irregular radii for hint buttons
+// Pre-compute irregular radii for hint buttons (one entry per HINT_BUTTONS item)
 const HINT_RADII = HINT_BUTTONS.map((_, i) => {
   const rand = seededRandom(i * 17 + 200);
   return {
@@ -48,6 +50,7 @@ export default function HintPanel({
   hintPointsUsed,
   gameStatus,
   onRequestHint,
+  targetWord,
 }: HintPanelProps) {
   const { isTablet } = useResponsive();
   const remainingPoints = MAX_HINT_POINTS - hintPointsUsed;
@@ -109,6 +112,16 @@ export default function HintPanel({
           {hints.map((hint, i) => (
             <View key={i} style={[styles.hintCard, SKETCHY_RADIUS.small]}>
               <Text style={styles.hintText}>{hint.content}</Text>
+              {hint.type === 'pronunciation' && targetWord && (
+                <Pressable
+                  onPress={() => Speech.speak(targetWord, { language: 'en-US', rate: 0.8 })}
+                  style={({ pressed }) => [styles.speakBtn, SKETCHY_RADIUS.small, { opacity: pressed ? 0.7 : 1 }]}
+                  accessibilityRole="button"
+                  accessibilityLabel="발음 듣기"
+                >
+                  <Text style={styles.speakBtnText}>🔊</Text>
+                </Pressable>
+              )}
             </View>
           ))}
         </ScrollView>
@@ -193,11 +206,25 @@ const styles = StyleSheet.create({
     borderColor: COLORS.pinkBorder,
     paddingHorizontal: 14,
     paddingVertical: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
   },
   hintText: {
     fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.pinkText,
     textAlign: 'center',
+    flexShrink: 1,
+  },
+  speakBtn: {
+    borderWidth: 1.5,
+    borderColor: COLORS.pinkBorder,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  speakBtnText: {
+    fontSize: 16,
   },
 });

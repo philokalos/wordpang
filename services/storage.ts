@@ -49,6 +49,10 @@ export interface GameStats {
   maxStreak: number;
   guessDistribution: Record<number, number>;
   difficultyStats: Record<Difficulty, DifficultyStats>;
+  /** ISO date string (YYYY-MM-DD) of the last game played */
+  lastPlayedDate?: string;
+  /** Streak value just before it dropped to 0 — used for streak recovery */
+  streakBeforeLoss?: number;
 }
 
 export interface DailyState {
@@ -115,12 +119,23 @@ export async function saveStats(stats: GameStats): Promise<void> {
   }
 }
 
+function todayDateString(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function daysBetween(a: string, b: string): number {
+  const msPerDay = 86_400_000;
+  return Math.round((new Date(b).getTime() - new Date(a).getTime()) / msPerDay);
+}
+
 export async function recordGame(
   won: boolean,
   guessCount: number,
   difficulty: Difficulty = 'normal',
 ): Promise<GameStats> {
   const stats = await loadStats();
+  const today = todayDateString();
+
   stats.totalPlayed += 1;
 
   const ds = stats.difficultyStats[difficulty];
@@ -129,16 +144,43 @@ export async function recordGame(
 
   if (won) {
     stats.totalWon += 1;
-    stats.currentStreak += 1;
+
+    // Streak recovery: if streak is 0 and last game was exactly 1 day ago
+    const canRecover =
+      stats.currentStreak === 0 &&
+      stats.lastPlayedDate !== undefined &&
+      daysBetween(stats.lastPlayedDate, today) === 1 &&
+      (stats.streakBeforeLoss ?? 0) > 0;
+
+    if (canRecover) {
+      stats.currentStreak = (stats.streakBeforeLoss ?? 0) + 1;
+      stats.streakBeforeLoss = undefined;
+    } else {
+      stats.currentStreak += 1;
+    }
+
     stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
     stats.guessDistribution[guessCount] = (stats.guessDistribution[guessCount] ?? 0) + 1;
     ds.gamesWon += 1;
   } else {
+    if (stats.currentStreak > 0) {
+      stats.streakBeforeLoss = stats.currentStreak;
+    }
     stats.currentStreak = 0;
   }
 
+  stats.lastPlayedDate = today;
   await saveStats(stats);
   return stats;
+}
+
+/** Returns true if streak recovery is available (streak broke yesterday, not older) */
+export async function canRecoverStreak(): Promise<boolean> {
+  const stats = await loadStats();
+  if (stats.currentStreak !== 0) return false;
+  if (!stats.lastPlayedDate) return false;
+  if ((stats.streakBeforeLoss ?? 0) <= 0) return false;
+  return daysBetween(stats.lastPlayedDate, todayDateString()) === 1;
 }
 
 export async function loadDailyState(): Promise<DailyState | null> {

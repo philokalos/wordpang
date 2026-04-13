@@ -137,7 +137,15 @@ export default function LetterTile({
         { width: tileSize, height: tileSize },
         animatedStyle,
       ]}
-      accessibilityLabel={letter ? `${letter}${status ? `, ${status}` : ''}` : 'empty'}
+      accessibilityLabel={
+        letter
+          ? `${letter}${
+              status === 'correct' ? ', 정확한 위치' :
+              status === 'present' ? ', 있지만 다른 위치' :
+              status === 'absent' ? ', 이 단어에 없음' : ''
+            }`
+          : '빈 칸'
+      }
     >
       <Animated.Text
         style={[

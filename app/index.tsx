@@ -13,6 +13,8 @@ import Header from '../components/Header';
 import DifficultyCard from '../components/DifficultyCard';
 import CategoryChip from '../components/CategoryChip';
 import { useStats } from '../hooks/useStats';
+import { useReview } from '../hooks/useReview';
+import { canRecoverStreak } from '../services/storage';
 import { useOnboarding } from '../hooks/useOnboarding';
 import { useResponsive } from '../hooks/useResponsive';
 
@@ -22,7 +24,13 @@ export default function HomeScreen() {
   const router = useRouter();
   const { isTablet, maxContentWidth } = useResponsive();
   const { stats } = useStats();
+  const { dueCount } = useReview();
+  const [streakRecoverable, setStreakRecoverable] = useState(false);
   const { isLoading, isOnboardingDone } = useOnboarding();
+
+  useEffect(() => {
+    canRecoverStreak().then(setStreakRecoverable);
+  }, []);
   const [selected, setSelected] = useState<Difficulty>('normal');
   const [dailyMode, setDailyMode] = useState(false);
   const [category, setCategory] = useState<WordCategory | undefined>(undefined);
@@ -59,6 +67,24 @@ export default function HomeScreen() {
               {'\uD83D\uDD25'} {stats.currentStreak}일 연속!
             </Text>
           </View>
+        )}
+
+        {streakRecoverable && (
+          <View style={[styles.recoveryBanner, SKETCHY_RADIUS.small]}>
+            <Text style={styles.recoveryText}>⚡ 오늘 게임하면 streak 복구 가능!</Text>
+          </View>
+        )}
+
+        {dueCount > 0 && (
+          <Pressable
+            onPress={() => router.push('/review' as never)}
+            style={({ pressed }) => [styles.reviewCard, SKETCHY_RADIUS.small, { opacity: pressed ? 0.85 : 1 }]}
+            accessibilityRole="button"
+            accessibilityLabel={`복습 ${dueCount}개 준비됨. 복습 화면으로 이동`}
+          >
+            <Text style={styles.reviewCardText}>📚 복습 {dueCount}개 준비됐어요!</Text>
+            <Text style={styles.reviewCardSub}>탭해서 바로 복습하기 →</Text>
+          </Pressable>
         )}
 
         <View style={[styles.content, isTablet && { maxWidth: maxContentWidth, alignSelf: 'center' }]}>
@@ -145,6 +171,41 @@ const styles = StyleSheet.create({
   },
   streakText: {
     fontSize: FONT_SIZES.md,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: '#ffffff',
+  },
+  reviewCard: {
+    alignSelf: 'center',
+    backgroundColor: COLORS.pinkLight,
+    borderWidth: 1.5,
+    borderColor: COLORS.pinkBorder,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  reviewCardText: {
+    fontSize: FONT_SIZES.md,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.pinkText,
+  },
+  reviewCardSub: {
+    fontSize: FONT_SIZES.xs,
+    fontFamily: SKETCHY_FONTS.regular,
+    color: COLORS.textMuted,
+    marginTop: 2,
+  },
+  recoveryBanner: {
+    alignSelf: 'center',
+    backgroundColor: COLORS.present,
+    borderWidth: 1.5,
+    borderColor: COLORS.presentBorder,
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    marginTop: 2,
+  },
+  recoveryText: {
+    fontSize: FONT_SIZES.sm,
     fontFamily: SKETCHY_FONTS.bold,
     color: '#ffffff',
   },

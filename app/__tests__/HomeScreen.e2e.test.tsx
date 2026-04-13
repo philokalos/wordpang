@@ -64,6 +64,8 @@ const mockOnboarding = {
 
 jest.mock('../../hooks/useStats', () => ({ useStats: () => mockStats }));
 jest.mock('../../hooks/useOnboarding', () => ({ useOnboarding: () => mockOnboarding }));
+jest.mock('../../hooks/useReview', () => ({ useReview: () => ({ dueCount: 0 }) }));
+jest.mock('../../services/storage', () => ({ canRecoverStreak: jest.fn().mockResolvedValue(false) }));
 
 import HomeScreen from '../index';
 

@@ -93,7 +93,11 @@ jest.mock('../../hooks/useLearnedWords', () => ({
   useLearnedWords: () => ({ markLearned: mockMarkLearned, learnedCount: 10 }),
 }));
 jest.mock('../../hooks/useAchievements', () => ({
-  useAchievements: () => ({ check: jest.fn().mockResolvedValue([]), trackCategory: jest.fn() }),
+  useAchievements: () => ({ check: jest.fn().mockResolvedValue([]), trackCategory: jest.fn(), achievements: [] }),
+}));
+jest.mock('../../services/storage', () => ({
+  canRecoverStreak: jest.fn().mockResolvedValue(false),
+  recordGame: jest.fn().mockResolvedValue({ totalPlayed: 1, totalWon: 1, currentStreak: 1, maxStreak: 1, guessDistribution: {}, difficultyStats: { easy: {}, normal: {}, hard: {} } }),
 }));
 jest.mock('../../hooks/useReview', () => ({
   useReview: () => ({ addWord: mockReviewAddWord, totalCount: 5 }),

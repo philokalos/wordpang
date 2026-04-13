@@ -126,32 +126,42 @@ describe('PracticeScreen E2E', () => {
   });
 
   describe('Practice Session', () => {
-    it('should show progress indicator', () => {
-      const { getByLabelText } = render(<PracticeScreen />);
+    it('should show goal selection before session starts', () => {
+      const { getByText } = render(<PracticeScreen />);
+      expect(getByText('오늘 몇 단어 연습할까요?')).toBeTruthy();
+      expect(getByText('3단어')).toBeTruthy();
+    });
+
+    it('should show progress indicator after selecting goal', () => {
+      const { getByText, getByLabelText } = render(<PracticeScreen />);
+      fireEvent.press(getByText('3단어'));
       expect(getByLabelText('1/2 진행 중')).toBeTruthy();
     });
 
-    it('should render game board', () => {
-      const { getByLabelText } = render(<PracticeScreen />);
+    it('should render game board after selecting goal', () => {
+      const { getByText, getByLabelText } = render(<PracticeScreen />);
+      fireEvent.press(getByText('3단어'));
       expect(getByLabelText('game board')).toBeTruthy();
     });
 
-    it('should handle letter input', () => {
+    it('should handle letter input after selecting goal', () => {
       const { getByText } = render(<PracticeScreen />);
+      fireEvent.press(getByText('3단어'));
       fireEvent.press(getByText('A'));
       expect(mockPlay).toHaveBeenCalledWith('pop');
       expect(mockGame.addLetter).toHaveBeenCalledWith('A');
     });
 
-    it('should handle submit and backspace', () => {
-      const { getByLabelText } = render(<PracticeScreen />);
+    it('should handle submit and backspace after selecting goal', () => {
+      const { getByText, getByLabelText } = render(<PracticeScreen />);
+      fireEvent.press(getByText('3단어'));
       fireEvent.press(getByLabelText('enter'));
       expect(mockGame.submitGuess).toHaveBeenCalled();
       fireEvent.press(getByLabelText('backspace'));
       expect(mockGame.removeLetter).toHaveBeenCalled();
     });
 
-    it('should navigate back', () => {
+    it('should navigate back from goal selection', () => {
       const { getByText } = render(<PracticeScreen />);
       fireEvent.press(getByText('← 뒤로'));
       expect(mockBack).toHaveBeenCalled();
@@ -162,10 +172,12 @@ describe('PracticeScreen E2E', () => {
     it('should display and hide toast', () => {
       mockGame.toastMessage = '유효하지 않은 단어예요';
       const { getByText } = render(<PracticeScreen />);
+      fireEvent.press(getByText('3단어'));
       expect(getByText('유효하지 않은 단어예요')).toBeTruthy();
 
       mockGame.toastMessage = '';
-      const { queryByText } = render(<PracticeScreen />);
+      const { queryByText, getByText: getByText2 } = render(<PracticeScreen />);
+      fireEvent.press(getByText2('3단어'));
       expect(queryByText('유효하지 않은 단어예요')).toBeNull();
     });
   });

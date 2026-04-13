@@ -10,6 +10,13 @@ import WordCard from './WordCard';
 import SketchyButton from './sketchy/SketchyButton';
 import HeroText from './sketchy/HeroText';
 
+export interface NextBadgeProgress {
+  icon: string;
+  title: string;
+  remaining: number;
+  unit: string;
+}
+
 interface ResultModalProps {
   gameStatus: GameStatus;
   targetWord: WordEntry;
@@ -19,6 +26,7 @@ interface ResultModalProps {
   isDaily: boolean;
   countdown?: string;
   newAchievements?: Achievement[];
+  nextBadgeProgress?: NextBadgeProgress;
   onNewGame: () => void;
   onChangeDifficulty: () => void;
   onMarkLearned?: () => void;
@@ -114,6 +122,7 @@ export default function ResultModal({
   isDaily,
   countdown,
   newAchievements,
+  nextBadgeProgress,
   onNewGame,
   onChangeDifficulty,
   onMarkLearned,
@@ -182,6 +191,15 @@ export default function ResultModal({
                     <Text style={styles.achievementText}>{a.title}</Text>
                   </View>
                 ))}
+              </View>
+            )}
+
+            {nextBadgeProgress && nextBadgeProgress.remaining > 0 && (
+              <View style={[styles.badgeProgress, SKETCHY_RADIUS.small]}>
+                <Text style={styles.badgeProgressText}>
+                  {nextBadgeProgress.icon} {nextBadgeProgress.title}까지{' '}
+                  <Text style={styles.badgeProgressBold}>{nextBadgeProgress.remaining}{nextBadgeProgress.unit}</Text> 남았어요!
+                </Text>
               </View>
             )}
 
@@ -351,6 +369,25 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: SKETCHY_FONTS.bold,
     color: COLORS.textPrimary,
+  },
+  badgeProgress: {
+    backgroundColor: COLORS.pinkLight,
+    borderWidth: 1.5,
+    borderColor: COLORS.pinkBorder,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginVertical: 4,
+    width: '100%',
+    alignItems: 'center',
+  },
+  badgeProgressText: {
+    fontSize: 15,
+    fontFamily: SKETCHY_FONTS.regular,
+    color: COLORS.pinkText,
+    textAlign: 'center',
+  },
+  badgeProgressBold: {
+    fontFamily: SKETCHY_FONTS.bold,
   },
   learnedButton: {
     backgroundColor: COLORS.correctBg,

@@ -28,9 +28,11 @@ export default function PracticeScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [results, setResults] = useState<PracticeResult[]>([]);
   const [isComplete, setIsComplete] = useState(false);
+  const [goalCount, setGoalCount] = useState<3 | 5 | 10 | null>(null);
   const nextWordTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const sessionWords = dueWords.slice(0, 5);
+  const maxGoal = Math.min(dueWords.length, 10);
+  const sessionWords = dueWords.slice(0, goalCount ?? 5);
   const totalWords = sessionWords.length;
 
   const currentDueWord = sessionWords[currentIndex];
@@ -118,6 +120,40 @@ export default function PracticeScreen() {
     );
   }
 
+  if (goalCount === null && dueWords.length > 0) {
+    const availableGoals: Array<3 | 5 | 10> = ([3, 5, 10] as const).filter((n) => n <= maxGoal || n === 3);
+    return (
+      <PaperBackground>
+        <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
+          <View style={styles.header}>
+            <Pressable onPress={() => router.back()} style={styles.backButton}>
+              <Text style={styles.backText}>{'\u2190'} 뒤로</Text>
+            </Pressable>
+            <Text style={styles.title}>연습</Text>
+            <View style={styles.spacer} />
+          </View>
+          <View style={styles.goalContainer}>
+            <Text style={styles.goalTitle}>오늘 몇 단어 연습할까요?</Text>
+            <Text style={styles.goalSub}>복습할 단어 {dueWords.length}개 준비됨</Text>
+            <View style={styles.goalButtons}>
+              {availableGoals.map((n) => (
+                <Pressable
+                  key={n}
+                  onPress={() => setGoalCount(n)}
+                  style={({ pressed }) => [styles.goalButton, SKETCHY_RADIUS.medium, { opacity: pressed ? 0.8 : 1 }]}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${n}단어 연습`}
+                >
+                  <Text style={styles.goalButtonText}>{n}단어</Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        </SafeAreaView>
+      </PaperBackground>
+    );
+  }
+
   if (isComplete) {
     const correctCount = results.filter((r) => r.correct).length;
     return (
@@ -145,17 +181,20 @@ export default function PracticeScreen() {
           <View style={styles.spacer} />
         </View>
 
-        <View style={styles.progressDots} accessibilityLabel={`${currentIndex + 1}/${totalWords} 진행 중`}>
-          {Array.from({ length: totalWords }).map((_, i) => (
-            <View
-              key={i}
-              style={[
-                styles.dot,
-                i < currentIndex && styles.dotDone,
-                i === currentIndex && styles.dotCurrent,
-              ]}
-            />
-          ))}
+        <View style={styles.progressRow} accessibilityLabel={`${currentIndex + 1}/${totalWords} 진행 중`}>
+          <Text style={styles.progressText}>{currentIndex + 1}/{totalWords} 완료</Text>
+          <View style={styles.progressDots}>
+            {Array.from({ length: totalWords }).map((_, i) => (
+              <View
+                key={i}
+                style={[
+                  styles.dot,
+                  i < currentIndex && styles.dotDone,
+                  i === currentIndex && styles.dotCurrent,
+                ]}
+              />
+            ))}
+          </View>
         </View>
 
         <View style={styles.content}>
@@ -241,11 +280,55 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     width: '100%',
   },
+  goalContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 20,
+    padding: 32,
+  },
+  goalTitle: {
+    fontSize: FONT_SIZES.xl,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.textPrimary,
+    textAlign: 'center',
+  },
+  goalSub: {
+    fontSize: FONT_SIZES.sm,
+    fontFamily: SKETCHY_FONTS.regular,
+    color: COLORS.textMuted,
+  },
+  goalButtons: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  goalButton: {
+    backgroundColor: COLORS.pinkLight,
+    borderWidth: 2,
+    borderColor: COLORS.pinkBorder,
+    paddingHorizontal: 28,
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  goalButtonText: {
+    fontSize: FONT_SIZES.lg,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.pinkText,
+  },
+  progressRow: {
+    alignItems: 'center',
+    gap: 4,
+  },
+  progressText: {
+    fontSize: FONT_SIZES.sm,
+    fontFamily: SKETCHY_FONTS.bold,
+    color: COLORS.textMuted,
+  },
   progressDots: {
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 10,
-    paddingVertical: 8,
+    paddingVertical: 4,
   },
   dot: {
     width: 14,

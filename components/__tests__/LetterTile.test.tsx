@@ -21,13 +21,13 @@ describe('LetterTile', () => {
     const { getByLabelText } = render(
       <LetterTile letter="" wordLength={5} />,
     );
-    expect(getByLabelText('empty')).toBeTruthy();
+    expect(getByLabelText('빈 칸')).toBeTruthy();
   });
 
   it('should include status in accessibility label', () => {
     const { getByLabelText } = render(
       <LetterTile letter="B" status="correct" wordLength={5} />,
     );
-    expect(getByLabelText('B, correct')).toBeTruthy();
+    expect(getByLabelText('B, 정확한 위치')).toBeTruthy();
   });
 });

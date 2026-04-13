@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import type { Difficulty, HintType } from '../src/types/game';
 import type { WordCategory } from '../src/types/word';
 import type { Achievement } from '../src/types/achievement';
+import type { NextBadgeProgress } from '../components/ResultModal';
 import { COLORS } from '../constants/colors';
 import { SKETCHY_FONTS, SKETCHY_RADIUS, FONT_SIZES } from '../constants/theme';
 import { useGame } from '../hooks/useGame';
@@ -42,6 +43,7 @@ export default function GameScreen() {
   const gameEndRecorded = useRef(false);
   const difficultyPromptTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [newAchievements, setNewAchievements] = useState<Achievement[]>([]);
+  const [nextBadgeProgress, setNextBadgeProgress] = useState<NextBadgeProgress | undefined>(undefined);
   const [showDifficultyPrompt, setShowDifficultyPrompt] = useState(false);
 
   // Start with daily word if daily mode
@@ -101,6 +103,23 @@ export default function GameScreen() {
         setNewAchievements(unlocked);
       }
 
+      // Calculate next badge progress
+      const allAchievements = achievements.achievements;
+      const unlockedIds = new Set(allAchievements.filter((a) => a.unlockedAt).map((a) => a.id));
+      const GAME_BADGES: Array<{ id: string; target: number; icon: string; title: string }> = [
+        { id: 'games_10', target: 10, icon: '🎮', title: '열정 게이머' },
+        { id: 'games_50', target: 50, icon: '💜', title: '단어 팡 팬' },
+      ];
+      for (const badge of GAME_BADGES) {
+        if (!unlockedIds.has(badge.id)) {
+          const remaining = badge.target - stats.totalPlayed;
+          if (remaining > 0) {
+            setNextBadgeProgress({ icon: badge.icon, title: badge.title, remaining, unit: '게임' });
+            break;
+          }
+        }
+      }
+
       // Check difficulty recommendation after game
       const rec = getDifficultyRecommendation(difficulty);
       if (rec) {
@@ -118,6 +137,7 @@ export default function GameScreen() {
   const handleNewGame = () => {
     gameEndRecorded.current = false;
     setNewAchievements([]);
+    setNextBadgeProgress(undefined);
     game.newGame();
   };
 
@@ -193,6 +213,7 @@ export default function GameScreen() {
             hintPointsUsed={game.hintPointsUsed}
             gameStatus={game.gameStatus}
             onRequestHint={handleRequestHint}
+            targetWord={game.targetWord.word}
           />
 
           <View style={styles.keyboardArea}>
@@ -214,6 +235,7 @@ export default function GameScreen() {
           isDaily={isDaily}
           countdown={daily.countdown}
           newAchievements={newAchievements.length > 0 ? newAchievements : undefined}
+          nextBadgeProgress={nextBadgeProgress}
           onNewGame={handleNewGame}
           onChangeDifficulty={handleChangeDifficulty}
           onMarkLearned={handleMarkLearned}

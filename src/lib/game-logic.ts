@@ -130,6 +130,8 @@ export function generateHint(
     }
     case 'meaning':
       return `뜻: ${wordEntry.meaning}`;
+    case 'pronunciation':
+      return `발음: [${wordEntry.pronunciation}]`;
     case 'letterPosition': {
       // Find a letter position not yet revealed by guesses
       const word = wordEntry.word;
