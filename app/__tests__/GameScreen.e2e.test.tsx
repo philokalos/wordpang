@@ -197,8 +197,8 @@ describe('GameScreen E2E', () => {
 
     it('should show ResultModal with win text and attempt count', () => {
       const { getByText, getByLabelText } = render(<GameScreen />);
-      expect(getByLabelText('우와 정답!!')).toBeTruthy();
-      expect(getByText('대단해요! 3번 만에 맞혔네요! 🌟')).toBeTruthy();
+      expect(getByLabelText('게임 결과')).toBeTruthy();
+      expect(getByText('우리 친구, 정말 대단해요! 3번 만에 맞혔네요! ✨')).toBeTruthy();
       expect(getByText('APPLE')).toBeTruthy();
     }); it('should show word details in result modal', () => {
       const { getByText } = render(<GameScreen />);
@@ -206,30 +206,30 @@ describe('GameScreen E2E', () => {
       expect(getByText('사과')).toBeTruthy();
     });
 
-    it('should show and handle "선생님, 저 이 단어 배웠어요!" button', async () => {
+    it('should show and handle "선생님, 저 이 단어 이제 알아요!" button', async () => {
       const { getByText } = render(<GameScreen />);
-      expect(getByText('선생님, 저 이 단어 배웠어요!')).toBeTruthy();
-      await act(async () => { fireEvent.press(getByText('선생님, 저 이 단어 배웠어요!')); });
+      expect(getByText('선생님, 저 이 단어 이제 알아요!')).toBeTruthy();
+      await act(async () => { fireEvent.press(getByText('선생님, 저 이 단어 이제 알아요!')); });
       expect(mockMarkLearned).toHaveBeenCalledWith('APPLE');
       expect(mockReviewAddWord).toHaveBeenCalledWith('APPLE');
-      expect(getByText('머릿속에 쏙! 저장 완료! 🧠')).toBeTruthy();
+      expect(getByText('머릿속에 쏙쏙! 아주 잘했어요! 🧠')).toBeTruthy();
     });
 
-    it('should show "다시 하기" and "난이도 변경" buttons', () => {
+    it('should show "한 번 더 해볼까요?" and "난이도를 바꿔볼까요?" buttons', () => {
       const { getByText } = render(<GameScreen />);
-      expect(getByText('다시 하기')).toBeTruthy();
-      expect(getByText('난이도 변경')).toBeTruthy();
+      expect(getByText('한 번 더 해볼까요?')).toBeTruthy();
+      expect(getByText('난이도를 바꿔볼까요?')).toBeTruthy();
     });
 
-    it('should call newGame when "다시 하기" pressed', () => {
+    it('should call newGame when "한 번 더 해볼까요?" pressed', () => {
       const { getByText } = render(<GameScreen />);
-      fireEvent.press(getByText('다시 하기'));
+      fireEvent.press(getByText('한 번 더 해볼까요?'));
       expect(mockGame.newGame).toHaveBeenCalled();
     });
 
-    it('should navigate back when "난이도 변경" pressed', () => {
+    it('should navigate back when "난이도를 바꿔볼까요?" pressed', () => {
       const { getByText } = render(<GameScreen />);
-      fireEvent.press(getByText('난이도 변경'));
+      fireEvent.press(getByText('난이도를 바꿔볼까요?'));
       expect(mockBack).toHaveBeenCalled();
     });
   });
@@ -240,7 +240,7 @@ describe('GameScreen E2E', () => {
     it('should show ResultModal with lose text and target word when lost', () => {
       mockGame.gameStatus = 'lost';
       const { getByText, getByLabelText, queryByText } = render(<GameScreen />);
-      expect(getByLabelText('아쉬워요!')).toBeTruthy();
+      expect(getByLabelText('게임 결과')).toBeTruthy();
       expect(getByText('APPLE')).toBeTruthy();
       expect(queryByText(/번에 맞혔네요/)).toBeNull();
     });
@@ -253,9 +253,9 @@ describe('GameScreen E2E', () => {
       (useLocalSearchParams as jest.Mock).mockReturnValue({ difficulty: 'normal', daily: '1' });
       mockGame.gameStatus = 'won';
       const { getByText, queryByText } = render(<GameScreen />);
-      expect(getByText('다음 단어까지')).toBeTruthy();
+      expect(getByText('조금만 기다리면 다음 단어가 나와요')).toBeTruthy();
       expect(getByText('05:23:41')).toBeTruthy();
-      expect(queryByText('다시 하기')).toBeNull();
+      expect(queryByText('한 번 더 해볼까요?')).toBeNull();
     });
   });
 

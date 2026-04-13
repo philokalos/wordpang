@@ -84,7 +84,7 @@ describe('useGame', () => {
     });
 
     expect(result.current.isShaking).toBe(true);
-    expect(result.current.toastMessage).toBe('단어 목록에 없어요!');
+    expect(result.current.toastMessage).toBe('어라? 이 단어는 우리 단어장에 없네요. 다른 예쁜 단어를 찾아볼까요?');
   });
 
   it('should submit a valid guess and add to evaluations', () => {

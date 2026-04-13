@@ -187,8 +187,8 @@ describe('ResultModal — scrollable content', () => {
         {...baseProps}
       />
     );
-    expect(getByLabelText('우와 정답!!')).toBeTruthy();
-    expect(getByText('다시 하기')).toBeTruthy();
+    expect(getByLabelText('게임 결과')).toBeTruthy();
+    expect(getByText('한 번 더 해볼까요?')).toBeTruthy();
   });
 });
 

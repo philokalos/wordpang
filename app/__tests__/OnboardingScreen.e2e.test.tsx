@@ -77,7 +77,7 @@ describe('OnboardingScreen E2E', () => {
       const { getByText } = render(<OnboardingScreen />);
       // Text has newline in the middle, so match parts
       expect(getByText(/맞혀보세요/)).toBeTruthy();
-      expect(getByText('글자를 입력하면 색이 바뀌어요')).toBeTruthy();
+      expect(getByText(/색깔 힌트가 나타날 거예요/)).toBeTruthy();
     });
 
     it('should show tile color legend', () => {
@@ -101,7 +101,7 @@ describe('OnboardingScreen E2E', () => {
     it('should render hints title and description', () => {
       const { getByText } = render(<OnboardingScreen />);
       expect(getByText(/힌트를 활용하세요/)).toBeTruthy();
-      expect(getByText(/최대 4포인트까지/)).toBeTruthy();
+      expect(getByText(/힌트를 쏙쏙 골라 쓸 수 있어요/)).toBeTruthy();
     });
 
     it('should list all 5 hint types', () => {
@@ -131,7 +131,7 @@ describe('OnboardingScreen E2E', () => {
 
     it('should show daily word description', () => {
       const { getByText } = render(<OnboardingScreen />);
-      expect(getByText(/매일 새로운 단어를 배워봐요/)).toBeTruthy();
+      expect(getByText(/매일매일 즐겁게 새로운 단어를 배워봐요/)).toBeTruthy();
     });
   });
 
@@ -139,9 +139,9 @@ describe('OnboardingScreen E2E', () => {
     it('should pre-render all 4 pages in ScrollView', () => {
       const { getByText } = render(<OnboardingScreen />);
       expect(getByText('WordPang')).toBeTruthy();
-      expect(getByText('글자를 입력하면 색이 바뀌어요')).toBeTruthy();
-      expect(getByText(/최대 4포인트까지 힌트를 쓸 수 있어요/)).toBeTruthy();
-      expect(getByText(/매일 새로운 단어를 배워봐요/)).toBeTruthy();
+      expect(getByText(/색깔 힌트가 나타날 거예요/)).toBeTruthy();
+      expect(getByText(/힌트를 쏙쏙 골라 쓸 수 있어요/)).toBeTruthy();
+      expect(getByText(/매일매일 즐겁게 새로운 단어를 배워봐요/)).toBeTruthy();
     });
   });
 });

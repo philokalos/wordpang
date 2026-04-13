@@ -43,25 +43,25 @@ describe('ResultModal', () => {
 
   it('should mark as learned', () => {
     const { getByText } = render(<ResultModal {...baseProps} gameStatus="won" />);
-    
-    expect(getByText('선생님, 저 이 단어 배웠어요!')).toBeTruthy();
-    
+
+    expect(getByText('선생님, 저 이 단어 이제 알아요!')).toBeTruthy();
+
     // Press button
-    fireEvent.press(getByText('선생님, 저 이 단어 배웠어요!'));
+    fireEvent.press(getByText('선생님, 저 이 단어 이제 알아요!'));
     expect(baseProps.onMarkLearned).toHaveBeenCalledTimes(1);
-    
-    expect(getByText('머릿속에 쏙! 저장 완료! 🧠')).toBeTruthy();
+
+    expect(getByText('머릿속에 쏙쏙! 아주 잘했어요! 🧠')).toBeTruthy();
   });
 
   it('should show "정답!" when won', () => {
     const { getByLabelText, getByText } = render(<ResultModal {...baseProps} gameStatus="won" attempts={3} />);
-    expect(getByLabelText('우와 정답!!')).toBeTruthy();
-    expect(getByText('대단해요! 3번 만에 맞혔네요! 🌟')).toBeTruthy();
+    expect(getByLabelText('게임 결과')).toBeTruthy();
+    expect(getByText('우리 친구, 정말 대단해요! 3번 만에 맞혔네요! ✨')).toBeTruthy();
   });
 
   it('should show "아쉬워요!" when lost', () => {
     const { getByLabelText } = render(<ResultModal {...baseProps} gameStatus="lost" attempts={6} />);
-    expect(getByLabelText('아쉬워요!')).toBeTruthy();
+    expect(getByLabelText('게임 결과')).toBeTruthy();
   });
 
   it('should display word details', () => {
@@ -79,17 +79,17 @@ describe('ResultModal', () => {
     const { getByText } = render(
       <ResultModal {...baseProps} gameStatus="won" onMarkLearned={onMarkLearned} />,
     );
-    expect(getByText('선생님, 저 이 단어 배웠어요!')).toBeTruthy();
+    expect(getByText('선생님, 저 이 단어 이제 알아요!')).toBeTruthy();
   });
 
-  it('should call onMarkLearned and show "머릿속에 쏙! 저장 완료! 🧠" when button pressed', () => {
+  it('should call onMarkLearned and show "머릿속에 쏙쏙! 아주 잘했어요! 🧠" when button pressed', () => {
     const onMarkLearned = jest.fn();
     const { getByText } = render(
       <ResultModal {...baseProps} gameStatus="won" onMarkLearned={onMarkLearned} />,
     );
-    fireEvent.press(getByText('선생님, 저 이 단어 배웠어요!'));
+    fireEvent.press(getByText('선생님, 저 이 단어 이제 알아요!'));
     expect(onMarkLearned).toHaveBeenCalledTimes(1);
-    expect(getByText('머릿속에 쏙! 저장 완료! 🧠')).toBeTruthy();
+    expect(getByText('머릿속에 쏙쏙! 아주 잘했어요! 🧠')).toBeTruthy();
   });
 
   it('should show achievement badges when newAchievements provided', () => {
@@ -113,8 +113,8 @@ describe('ResultModal', () => {
         countdown="05:23:41"
       />,
     );
-    expect(getByText('다음 단어까지')).toBeTruthy();
+    expect(getByText('조금만 기다리면 다음 단어가 나와요')).toBeTruthy();
     expect(getByText('05:23:41')).toBeTruthy();
-    expect(queryByText('다시 하기')).toBeNull();
+    expect(queryByText('한 번 더 해볼까요?')).toBeNull();
   });
 });
