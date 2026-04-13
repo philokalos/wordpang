@@ -5,6 +5,7 @@
 | 항목 | 값 |
 |------|-----|
 | 앱 이름 | WordPang |
+| 버전 | 3.2.0 |
 | 부제목 (한국어) | 퍼즐로 배우는 초등 영단어 |
 | 부제목 (English) | Learn Words Through Puzzles |
 | 번들 ID | com.philokalos.wordpop |
@@ -14,6 +15,8 @@
 | 연령 등급 | 4+ |
 | 가격 | 무료 |
 | 언어 | 한국어 (기본), English |
+| Support URL | https://philokalos.github.io/wordpang/ |
+| Privacy Policy URL | https://philokalos.github.io/wordpang/privacy-policy.html |
 
 ## 앱 설명 (한국어)
 
@@ -77,8 +80,9 @@
 > ✨ WordPang만의 특별한 기능
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 💡 8가지 스마트 힌트
+> 💡 8가지 스마트 힌트 + 🔊 발음 듣기
 > 막힐 때 예시문, 뜻, 발음, 첫 글자 등 도움을 받아요.
+> 발음 힌트에선 스피커 버튼으로 직접 들을 수 있어요!
 > 포인트를 아끼며 전략적으로 사용하는 것도 실력!
 >
 > 🔄 과학적 복습 시스템
@@ -93,7 +97,7 @@
 > 매일 새로운 단어 1개 도전. 연속 기록을 세워보세요!
 >
 > 🏋️ 연습 모드
-> 5~10분 집중 세션. 등하교길에 딱!
+> 3 · 5 · 10단어 중 목표를 선택해서 집중 세션. 등하교길에 딱!
 >
 > ✏️ 손그림 디자인
 > 크레용으로 그린 듯한 따뜻한 디자인.
@@ -188,11 +192,11 @@
 > ✨ WHAT MAKES WORDPANG SPECIAL
 > ━━━━━━━━━━━━━━━━━━━━
 >
-> 💡 8 Smart Hints — example sentences, meanings, pronunciation, rhyming & more
+> 💡 8 Smart Hints + 🔊 Hear Pronunciation — tap the speaker to hear the word
 > 🔄 Spaced Repetition — science-backed review at the perfect timing
 > 🏆 21 Achievement Badges — stay motivated with fun challenges
 > 📅 Daily Word — a new word every day, keep your streak alive
-> 🏋️ Practice Mode — focused 5-10 min sessions
+> 🏋️ Practice Mode — choose 3, 5, or 10 words per session
 > ✏️ Hand-Drawn Design — warm, crayon-style UI kids love
 >
 > ━━━━━━━━━━━━━━━━━━━━

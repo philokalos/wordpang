@@ -45,6 +45,7 @@ export default {
       },
     },
     privacyPolicyUrl: 'https://philokalos.github.io/wordpang/privacy-policy.html',
+    supportUrl: 'https://philokalos.github.io/wordpang/',
     experiments: {
       typedRoutes: true,
     },
