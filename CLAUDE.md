@@ -46,3 +46,9 @@ npm run build:ios  # EAS Build (production)
 ## Deployment
 
 EAS Build → TestFlight → App Store
+
+---
+
+## VVCS
+
+이 프로젝트는 VVCS를 따릅니다. 상세 워크플로우는 루트 `CLAUDE.md` 참조.
